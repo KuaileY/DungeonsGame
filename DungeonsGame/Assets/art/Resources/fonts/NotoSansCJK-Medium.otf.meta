@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 9e2ee07bd59c7d2498248197e53753d0
+timeCreated: 1475855863
+licenseType: Pro
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Noto Sans CJK
+  fontNames:
+  - Noto Sans CJK
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
