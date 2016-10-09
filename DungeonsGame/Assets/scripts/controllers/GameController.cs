@@ -28,7 +28,10 @@ public class GameController : MonoBehaviour
     {
         return new Feature("Systems")
             //input
-
+            //create
+            .Add(pools.CreateSystem(new UISystem()))
+            .Add(pools.board.CreateSystem(new GameBoardSystem()))
+            .Add(pools.CreateSystem(new GameStartSystem()))
             ;
     }
 }

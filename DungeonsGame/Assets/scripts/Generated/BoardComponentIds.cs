@@ -8,11 +8,15 @@
 //------------------------------------------------------------------------------
 public static class BoardComponentIds {
 
-    public const int TotalComponents = 0;
+    public const int GameBoard = 0;
+
+    public const int TotalComponents = 1;
 
     public static readonly string[] componentNames = {
+        "GameBoard"
     };
 
     public static readonly System.Type[] componentTypes = {
+        typeof(GameBoardComponent)
     };
 }
