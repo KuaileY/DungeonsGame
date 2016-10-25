@@ -1,4 +1,5 @@
-﻿using Entitas;
+﻿using System.Collections.Generic;
+using Entitas;
 using Entitas.CodeGenerator;
 
 [Board,SingleEntity]

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <doc>
     <assembly>
-        <name>DOTweenEditor</name>
+        <name>DOTweenEditor</Room>
     </assembly>
     <members>
         <member name="M:DG.DOTweenEditor.Core.EditorUtils.SetEditorTexture(UnityEngine.Texture2D,UnityEngine.FilterMode,System.Int32)">

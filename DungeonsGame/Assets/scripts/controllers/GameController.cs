@@ -28,10 +28,18 @@ public class GameController : MonoBehaviour
     {
         return new Feature("Systems")
             //input
+            .Add(pools.input.CreateSystem(new LoadXMLSystem()))
+            .Add(pools.input.CreateSystem(new LoadSpritesSystem()))
             //create
-            .Add(pools.CreateSystem(new UISystem()))
+            //.Add(pools.CreateSystem(new UISystem()))
             .Add(pools.board.CreateSystem(new GameBoardSystem()))
+            //game logic
             .Add(pools.CreateSystem(new GameStartSystem()))
+            //common
+            .Add(pools.CreateSystem(new AddViewSystem()))
+            .Add(pools.CreateSystem(new RenderPositionSystem()))
+            // Destroy
+            .Add(pools.CreateSystem(new DestroyEntitySystem()))
             ;
     }
 }

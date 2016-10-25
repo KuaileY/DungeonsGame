@@ -8,15 +8,48 @@
 //------------------------------------------------------------------------------
 public static class BoardComponentIds {
 
-    public const int GameBoard = 0;
+    public const int Destroy = 0;
+    public const int Holder = 1;
+    public const int Asset = 2;
+    public const int Pool = 3;
+    public const int Position = 4;
+    public const int Range = 5;
+    public const int View = 6;
+    public const int ViewObjectPool = 7;
+    public const int BaseFloor = 8;
+    public const int GameBoard = 9;
+    public const int Grid = 10;
+    public const int Sprite = 11;
 
-    public const int TotalComponents = 1;
+    public const int TotalComponents = 12;
 
     public static readonly string[] componentNames = {
-        "GameBoard"
+        "Destroy",
+        "Holder",
+        "Asset",
+        "Pool",
+        "Position",
+        "Range",
+        "View",
+        "ViewObjectPool",
+        "BaseFloor",
+        "GameBoard",
+        "Grid",
+        "Sprite"
     };
 
     public static readonly System.Type[] componentTypes = {
-        typeof(GameBoardComponent)
+        typeof(DestroyComponent),
+        typeof(HolderComponent),
+        typeof(AssetComponent),
+        typeof(PoolComponent),
+        typeof(PositionComponent),
+        typeof(RangeComponent),
+        typeof(ViewComponent),
+        typeof(ViewObjectPoolComponent),
+        typeof(BaseFloorComponent),
+        typeof(GameBoardComponent),
+        typeof(GridComponent),
+        typeof(SpriteComponent)
     };
 }

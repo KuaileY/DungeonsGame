@@ -8,11 +8,27 @@
 //------------------------------------------------------------------------------
 public static class InputComponentIds {
 
-    public const int TotalComponents = 0;
+    public const int Destroy = 0;
+    public const int Holder = 1;
+    public const int FileList = 2;
+    public const int SpriteList = 3;
+    public const int XML = 4;
+
+    public const int TotalComponents = 5;
 
     public static readonly string[] componentNames = {
+        "Destroy",
+        "Holder",
+        "FileList",
+        "SpriteList",
+        "XML"
     };
 
     public static readonly System.Type[] componentTypes = {
+        typeof(DestroyComponent),
+        typeof(HolderComponent),
+        typeof(FileListComponent),
+        typeof(SpriteListComponent),
+        typeof(XMLComponent)
     };
 }

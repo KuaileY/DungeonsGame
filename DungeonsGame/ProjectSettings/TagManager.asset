@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Player
   layers:
   - Default
   - TransparentFX
@@ -13,7 +14,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - BlockingLayer
   - 
   - 
   - 
@@ -40,4 +41,25 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Floor
+    uniqueID: 0
+    locked: 0
+  - name: FloorEffect
+    uniqueID: 1
+    locked: 0
+  - name: Shadow
+    uniqueID: 2
+    locked: 0
+  - name: Items
+    uniqueID: 3
+    locked: 0
+  - name: Units
+    uniqueID: 4
+    locked: 0
+  - name: Effect
+    uniqueID: 5
+    locked: 0
+  - name: UI
+    uniqueID: 6
     locked: 0

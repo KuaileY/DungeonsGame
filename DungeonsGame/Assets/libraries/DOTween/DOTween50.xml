@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <doc>
     <assembly>
-        <name>DOTween50</name>
+        <name>DOTween50</Room>
     </assembly>
     <members>
         <member name="T:DG.Tweening.ShortcutExtensions50">
@@ -15,7 +15,7 @@
             Also stores the AudioMixer as the tween's target so it can be used for filtered operations.
             Note that you need to manually expose a float in an AudioMixerGroup in order to be able to tween it from an AudioMixer.</summary>
             <param name="floatName">Name given to the exposed float to set</param>
-            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+            <param name="endValue">The end value to reach</param><param Room="duration">The duration of the tween</param>
         </member>
         <member name="M:DG.Tweening.ShortcutExtensions50.DOComplete(UnityEngine.Audio.AudioMixer,System.Boolean)">
             <summary>

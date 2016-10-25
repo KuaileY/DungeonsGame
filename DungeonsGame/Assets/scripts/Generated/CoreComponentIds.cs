@@ -8,11 +8,36 @@
 //------------------------------------------------------------------------------
 public static class CoreComponentIds {
 
-    public const int TotalComponents = 0;
+    public const int Destroy = 0;
+    public const int Holder = 1;
+    public const int Asset = 2;
+    public const int Pool = 3;
+    public const int Position = 4;
+    public const int Range = 5;
+    public const int View = 6;
+    public const int ViewObjectPool = 7;
+
+    public const int TotalComponents = 8;
 
     public static readonly string[] componentNames = {
+        "Destroy",
+        "Holder",
+        "Asset",
+        "Pool",
+        "Position",
+        "Range",
+        "View",
+        "ViewObjectPool"
     };
 
     public static readonly System.Type[] componentTypes = {
+        typeof(DestroyComponent),
+        typeof(HolderComponent),
+        typeof(AssetComponent),
+        typeof(PoolComponent),
+        typeof(PositionComponent),
+        typeof(RangeComponent),
+        typeof(ViewComponent),
+        typeof(ViewObjectPoolComponent)
     };
 }

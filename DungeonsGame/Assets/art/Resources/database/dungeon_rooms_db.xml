@@ -1,0 +1,611 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<rooms>
+    <!--
+Legenda:
+. - Floor
+# - Wall
+- Empty
+W - Water
+L - Lava
+A - Acid
+D - Door Up and Down Doors
+d - Door Left and Right Doors
+S - Stairs Up
+s - Stairs Down
+-->
+    <!--name: "entrance" size: "11x7"-->
+    <room name="entrance" size_x="11" size_y="7" type="dungeon_entrance" probability="0">
+        <data value="#####d#####" />
+        <data value="#.........#" />
+        <data value="#.........#" />
+        <data value="d.........d" />
+        <data value="#.........#" />
+        <data value="#.........#" />
+        <data value="#####d#####" />
+        <object name="DungeonStart" tx="5" ty="3" type="custom">
+            <property name="can_be_walked" value="true" />
+            <property name="description" value="You can&apos;t go back anymore!" />
+            <property name="image" value="dungeon_entrance" />
+            <property name="label" value="Teleport tile" />
+            <property name="sheet" value="common_floor_objects" />
+            <property name="sx" value="1" />
+            <property name="sy" value="1" />
+        </object>
+        <object name="initial_death_sign" tx="5" ty="2" type="hazard">
+            <property name="amount_damage" value="1.0" />
+            <property name="damage_percent" value="1" />
+            <property name="message_on_use" value="muahahaha!" />
+            <property name="sx" value="1" />
+            <property name="sy" value="1" />
+        </object>
+        <object name="Carpet" tx="4" ty="2" type="custom">
+            <property name="can_be_walked" value="true" />
+            <property name="cast_shadow" value="0" />
+            <property name="description" value="Carpet" />
+            <property name="image" value="carpet_blue" />
+            <property name="is_interactive" value="0" />
+            <property name="label" value="Carpet" />
+            <property name="sheet" value="common_floor_objects" />
+            <property name="sx" value="1" />
+            <property name="sy" value="1" />
+            <property name="z_on_ground" value="1" />
+        </object>
+    </room>
+    <!--name: "common_boss_room" size: "12x12"-->
+    <room name="common_boss_room" size_x="12" size_y="12" type="boss" probability="0">
+        <data value="-#####d#####" />
+        <data value="-##.......##" />
+        <data value="-#.........#" />
+        <data value="-#..aa.....#" />
+        <data value="-#..aa.....#" />
+        <data value="-d.....aa..d" />
+        <data value="-#.....aa..#" />
+        <data value="-#..aa.....#" />
+        <data value="-#..aa.....#" />
+        <data value="-#.........#" />
+        <data value="-##.......##" />
+        <data value="-#####d#####" />
+        <object name="candles_pedestral" tx="9" ty="2" type="scenario">
+            <property name="sx" value="1" />
+            <property name="sy" value="1" />
+        </object>
+        <object name="candles_pedestral" tx="3" ty="2" type="scenario">
+            <property name="sx" value="1" />
+            <property name="sy" value="1" />
+        </object>
+        <object name="candles_pedestral" tx="9" ty="9" type="scenario">
+            <property name="sx" value="1" />
+            <property name="sy" value="1" />
+        </object>
+        <object name="candles_pedestral" tx="3" ty="9" type="scenario">
+            <property name="sx" value="1" />
+            <property name="sy" value="1" />
+        </object>
+        <object name="boss" tx="6" ty="5" type="entity">
+            <property name="introduction_talk" value="BOSS_TALK" />
+            <property name="stats_Room" value="regular_boss" />
+            <property name="sx" value="1" />
+            <property name="sy" value="1" />
+        </object>
+    </room>
+    <!--name: "common_boss_room_2" size: "12x10"-->
+    <room name="common_boss_room_2" size_x="12" size_y="10" type="boss" probability="0">
+        <data value="-#####d#####" />
+        <data value="-##.......##" />
+        <data value="-#.........#" />
+        <data value="-#.........#" />
+        <data value="-#.........d" />
+        <data value="-d.........#" />
+        <data value="-#.........#" />
+        <data value="-#.........#" />
+        <data value="-##.......##" />
+        <data value="-#####d#####" />
+        <object name="candles_pedestral" tx="9" ty="2" type="scenario">
+            <property name="sx" value="1" />
+            <property name="sy" value="1" />
+        </object>
+        <object name="candles_pedestral" tx="3" ty="2" type="scenario">
+            <property name="sx" value="1" />
+            <property name="sy" value="1" />
+        </object>
+        <object name="candles_pedestral" tx="9" ty="7" type="scenario">
+            <property name="sx" value="1" />
+            <property name="sy" value="1" />
+        </object>
+        <object name="candles_pedestral" tx="3" ty="7" type="scenario">
+            <property name="sx" value="1" />
+            <property name="sy" value="1" />
+        </object>
+        <object name="Carpet" tx="5" ty="3" type="custom">
+            <property name="can_be_walked" value="true" />
+            <property name="cast_shadow" value="0" />
+            <property name="description" value="Carpet" />
+            <property name="image" value="carpet_red" />
+            <property name="is_interactive" value="0" />
+            <property name="label" value="Carpet" />
+            <property name="sheet" value="common_floor_objects" />
+            <property name="sx" value="3" />
+            <property name="sy" value="3" />
+            <property name="z_on_ground" value="1" />
+        </object>
+        <object name="boss" tx="6" ty="4" type="entity">
+            <property name="introduction_talk" value="BOSS_TALK" />
+            <property name="stats_Room" value="regular_boss" />
+            <property name="sx" value="1" />
+            <property name="sy" value="1" />
+        </object>
+    </room>
+    <!--name: "common_boss_room_3" size: "8x11"-->
+    <room name="common_boss_room_3" size_x="8" size_y="11" type="boss" probability="0">
+        <data value="-###d###" />
+        <data value="-#.....#" />
+        <data value="-#.....#" />
+        <data value="-#.....#" />
+        <data value="-#.....d" />
+        <data value="-d.....#" />
+        <data value="-#.....#" />
+        <data value="-#.....#" />
+        <data value="-#.....#" />
+        <data value="-###d###" />
+        <data value="--------" />
+        <object name="candles_pedestral" tx="3" ty="2" type="scenario">
+            <property name="sx" value="1" />
+            <property name="sy" value="1" />
+        </object>
+        <object name="Carpet" tx="3" ty="3" type="custom">
+            <property name="can_be_walked" value="true" />
+            <property name="cast_shadow" value="0" />
+            <property name="description" value="Carpet" />
+            <property name="image" value="carpet_red_horizontal" />
+            <property name="is_interactive" value="0" />
+            <property name="label" value="Carpet" />
+            <property name="sheet" value="common_floor_objects" />
+            <property name="sx" value="3" />
+            <property name="sy" value="2" />
+            <property name="z_on_ground" value="1" />
+        </object>
+        <object name="candles_pedestral" tx="5" ty="2" type="scenario">
+            <property name="sx" value="1" />
+            <property name="sy" value="1" />
+        </object>
+        <object name="Carpet" tx="3" ty="5" type="custom">
+            <property name="can_be_walked" value="true" />
+            <property name="cast_shadow" value="0" />
+            <property name="description" value="Carpet" />
+            <property name="image" value="carpet_blue_horizontal" />
+            <property name="is_interactive" value="0" />
+            <property name="label" value="Carpet" />
+            <property name="sheet" value="common_floor_objects" />
+            <property name="sx" value="3" />
+            <property name="sy" value="2" />
+            <property name="z_on_ground" value="1" />
+        </object>
+        <object name="boss" tx="4" ty="5" type="entity">
+            <property name="introduction_talk" value="BOSS_TALK" />
+            <property name="stats_Room" value="regular_boss" />
+            <property name="sx" value="1" />
+            <property name="sy" value="1" />
+        </object>
+    </room>
+    <!--name: "common_L_shaped_10_9" size: "10x8"-->
+    <room name="common_L_shaped_10_9" size_x="10" size_y="8" type="regular" probability="0.4">
+        <data value="----###d##" />
+        <data value="----#....#" />
+        <data value="----#....#" />
+        <data value="#####....#" />
+        <data value="#........d" />
+        <data value="d........#" />
+        <data value="#........#" />
+        <data value="####d#####" />
+    </room>
+    <!--name: "common_L_shaped_11_9" size: "11x8"-->
+    <room name="common_L_shaped_11_9" size_x="11" size_y="8" type="regular" probability="0.4">
+        <data value="##d###-----" />
+        <data value="#....#-----" />
+        <data value="#....######" />
+        <data value="d.........#" />
+        <data value="#.........d" />
+        <data value="#.........#" />
+        <data value="#.........#" />
+        <data value="#####d#####" />
+    </room>
+    <!--name: "common_secret_room_11x11" size: "11x9"-->
+    <room name="common_secret_room_11x11" size_x="11" size_y="9" type="hidden" probability="0.0">
+        <data value="#####d#####" />
+        <data value="#.........#" />
+        <data value="#.........#" />
+        <data value="#.........#" />
+        <data value="d...www...d" />
+        <data value="#...www...#" />
+        <data value="#.........#" />
+        <data value="#.........#" />
+        <data value="#####d#####" />
+        <object name="treasure_chest" tx="5" ty="3" type="treasure_chest">
+            <property name="contents" value="rare" />
+        </object>
+        <object name="hp_fountain" tx="3" ty="4" type="fountain" />
+        <object name="mana_fountain" tx="7" ty="4" type="fountain" />
+        <object name="treasure_chest" tx="5" ty="6" type="treasure_chest">
+            <property name="contents" value="rare" />
+        </object>
+        <object name="candles_pedestral" tx="7" ty="3" type="scenario">
+            <property name="sx" value="1" />
+            <property name="sy" value="1" />
+        </object>
+    </room>
+    <!--name: "common_secret_room_11x9_small_chests" size: "11x9"-->
+    <room name="common_secret_room_11x9_small_chests" size_x="11" size_y="9" type="hidden" probability="0.0">
+        <data value="#####d#####" />
+        <data value="#.........#" />
+        <data value="#.........#" />
+        <data value="#.........#" />
+        <data value="d.........d" />
+        <data value="#.........#" />
+        <data value="#.........#" />
+        <data value="#.........#" />
+        <data value="#####d#####" />
+        <object name="treasure_chest" tx="5" ty="2" type="treasure_chest">
+            <property name="contents" value="regular" />
+        </object>
+        <object name="treasure_chest" tx="3" ty="4" type="treasure_chest">
+            <property name="contents" value="regular" />
+        </object>
+        <object name="treasure_chest" tx="5" ty="4" type="treasure_chest">
+            <property name="contents" value="rare" />
+        </object>
+        <object name="treasure_chest" tx="7" ty="4" type="treasure_chest">
+            <property name="contents" value="regular" />
+        </object>
+        <object name="treasure_chest" tx="5" ty="6" type="treasure_chest">
+            <property name="contents" value="regular" />
+        </object>
+        <object name="Carpet" tx="4" ty="3" type="custom">
+            <property name="can_be_walked" value="true" />
+            <property name="cast_shadow" value="0" />
+            <property name="description" value="Carpet" />
+            <property name="image" value="carpet_blue" />
+            <property name="is_interactive" value="0" />
+            <property name="label" value="Carpet" />
+            <property name="sheet" value="common_floor_objects" />
+            <property name="sx" value="3" />
+            <property name="sy" value="3" />
+            <property name="z_on_ground" value="1" />
+        </object>
+    </room>
+    <!--name: "common_secret_room_9x9" size: "9x9"-->
+    <room name="common_secret_room_9x9" size_x="9" size_y="9" type="hidden" probability="0.0">
+        <data value="####d####" />
+        <data value="#.......#" />
+        <data value="#.......#" />
+        <data value="#.......#" />
+        <data value="d.......d" />
+        <data value="#.......#" />
+        <data value="#.......#" />
+        <data value="#.......#" />
+        <data value="####d####" />
+        <object name="hp_fountain" tx="2" ty="3" type="fountain" />
+        <object name="treasure_chest" tx="6" ty="3" type="treasure_chest">
+            <property name="contents" value="rare" />
+        </object>
+        <object name="treasure_chest" tx="6" ty="4" type="treasure_chest">
+            <property name="contents" value="rare" />
+        </object>
+        <object name="treasure_chest" tx="2" ty="5" type="treasure_chest">
+            <property name="contents" value="regular" />
+        </object>
+        <object name="treasure_chest" tx="6" ty="5" type="treasure_chest">
+            <property name="contents" value="regular" />
+        </object>
+        <object name="Carpet" tx="3" ty="3" type="custom">
+            <property name="can_be_walked" value="true" />
+            <property name="cast_shadow" value="0" />
+            <property name="description" value="Carpet" />
+            <property name="image" value="carpet_red" />
+            <property name="is_interactive" value="0" />
+            <property name="label" value="Carpet" />
+            <property name="sheet" value="common_floor_objects" />
+            <property name="sx" value="3" />
+            <property name="sy" value="3" />
+            <property name="z_on_ground" value="1" />
+        </object>
+    </room>
+    <!--name: "common_shopkeeper_room" size: "8x7"-->
+    <room name="common_shopkeeper_room" size_x="8" size_y="7" type="shop" probability="0">
+        <data value="-###d###" />
+        <data value="-#.....#" />
+        <data value="-#.....#" />
+        <data value="-d.....d" />
+        <data value="-#.....#" />
+        <data value="-#.....#" />
+        <data value="-###d###" />
+        <object name="shopkeeper" tx="4" ty="2" type="entity" />
+        <object name="Carpet" tx="3" ty="2" type="custom">
+            <property name="can_be_walked" value="true" />
+            <property name="cast_shadow" value="0" />
+            <property name="description" value="Carpet" />
+            <property name="image" value="carpet_blue_horizontal" />
+            <property name="is_interactive" value="0" />
+            <property name="label" value="Carpet" />
+            <property name="sheet" value="common_floor_objects" />
+            <property name="sx" value="3" />
+            <property name="sy" value="2" />
+            <property name="z_on_ground" value="1" />
+        </object>
+        <object name="candles_pedestral" tx="5" ty="2" type="scenario">
+            <property name="sx" value="1" />
+            <property name="sy" value="1" />
+        </object>
+        <object name="candles_pedestral" tx="3" ty="2" type="scenario">
+            <property name="sx" value="1" />
+            <property name="sy" value="1" />
+        </object>
+    </room>
+    <!--name: "common_square_11_9" size: "11x8"-->
+    <room name="common_square_11_9" size_x="11" size_y="8" type="regular" probability="0.55">
+        <data value="#####d#####" />
+        <data value="#.........#" />
+        <data value="#.........#" />
+        <data value="d.........#" />
+        <data value="#.........d" />
+        <data value="#.........#" />
+        <data value="#.........#" />
+        <data value="#####d#####" />
+    </room>
+    <!--name: "common_square_large_map_12_12" size: "12x12"-->
+    <room name="common_square_large_map_12_12" size_x="12" size_y="12" type="regular" probability="0.7">
+        <data value="--####d#####" />
+        <data value="--#........#" />
+        <data value="###........#" />
+        <data value="#..........#" />
+        <data value="#....####..#" />
+        <data value="#....####..#" />
+        <data value="#....####..d" />
+        <data value="d..........#" />
+        <data value="#..........#" />
+        <data value="#..........#" />
+        <data value="#..........#" />
+        <data value="######d#####" />
+    </room>
+    <!--name: "common_square_large_map_15_15" size: "15x15"-->
+    <room name="common_square_large_map_15_15" size_x="15" size_y="15" type="regular" probability="0.7">
+        <data value="--#####d#####--" />
+        <data value="--#.........#--" />
+        <data value="###.........###" />
+        <data value="#.............#" />
+        <data value="#.............#" />
+        <data value="#....#####....#" />
+        <data value="#....#####....d" />
+        <data value="d....#####....#" />
+        <data value="#....#####....#" />
+        <data value="#.............#" />
+        <data value="#.............#" />
+        <data value="#.............#" />
+        <data value="###.........###" />
+        <data value="--#.........#--" />
+        <data value="--#####d#####--" />
+    </room>
+    <!--name: "common_square_room_11_9" size: "11x8"-->
+    <room name="common_square_room_11_9" size_x="11" size_y="8" type="regular" probability="0.7">
+        <data value="#####d#####" />
+        <data value="#.........#" />
+        <data value="#.........#" />
+        <data value="#.........#" />
+        <data value="d.........d" />
+        <data value="#.........#" />
+        <data value="#.........#" />
+        <data value="#####d#####" />
+        <object name="carpet" tx="4" ty="3" type="custom">
+            <property name="can_be_walked" value="true" />
+            <property name="cast_shadow" value="0" />
+            <property name="image" value="carpet_blue_horizontal" />
+            <property name="is_interactive" value="0" />
+            <property name="sheet" value="common_floor_objects" />
+            <property name="sx" value="3" />
+            <property name="sy" value="2" />
+            <property name="z_on_ground" value="1" />
+        </object>
+        <object name="candles_pedestral" tx="3" ty="3" type="scenario">
+            <property name="sx" value="1" />
+            <property name="sy" value="1" />
+        </object>
+        <object name="candles_pedestral" tx="7" ty="3" type="scenario">
+            <property name="sx" value="1" />
+            <property name="sy" value="1" />
+        </object>
+    </room>
+    <!--name: "common_square_room_13_9" size: "13x9"-->
+    <room name="common_square_room_13_9" size_x="13" size_y="9" type="regular" probability="0.7">
+        <data value="--###d####---" />
+        <data value="###......####" />
+        <data value="#...........#" />
+        <data value="#....###....d" />
+        <data value="d....###....#" />
+        <data value="#....###....#" />
+        <data value="###........##" />
+        <data value="--#........##" />
+        <data value="--######d###-" />
+    </room>
+    <!--name: "common_square_room_8_14" size: "8x14"-->
+    <room name="common_square_room_8_14" size_x="8" size_y="14" type="regular" probability="0.3">
+        <data value="###d####" />
+        <data value="#......#" />
+        <data value="#......#" />
+        <data value="#......#" />
+        <data value="d...##.#" />
+        <data value="#...##.#" />
+        <data value="#......#" />
+        <data value="#......#" />
+        <data value="#......#" />
+        <data value="#..##..d" />
+        <data value="#..##..#" />
+        <data value="#......#" />
+        <data value="#......#" />
+        <data value="####d###" />
+        <object name="treasure_chest" tx="3" ty="4" type="treasure_chest">
+            <property name="contents" value="regular" />
+        </object>
+        <object name="treasure_chest" tx="4" ty="8" type="treasure_chest">
+            <property name="contents" value="regular" />
+        </object>
+        <object name="carpet" tx="2" ty="4" type="custom">
+            <property name="can_be_walked" value="true" />
+            <property name="cast_shadow" value="0" />
+            <property name="image" value="carpet_blue_square" />
+            <property name="is_interactive" value="0" />
+            <property name="sheet" value="common_floor_objects" />
+            <property name="sx" value="2" />
+            <property name="sy" value="2" />
+            <property name="z_on_ground" value="1" />
+        </object>
+    </room>
+    <!--name: "common_square_room_8_6" size: "8x6"-->
+    <room name="common_square_room_8_6" size_x="8" size_y="6" type="regular" probability="0.7">
+        <data value="####d###" />
+        <data value="#......#" />
+        <data value="d......d" />
+        <data value="#......#" />
+        <data value="####...#" />
+        <data value="---##d##" />
+    </room>
+    <!--name: "common_water_acid_10x10" size: "10x10"-->
+    <room name="common_water_acid_10x10" size_x="10" size_y="10" type="regular" probability="0.4">
+        <data value="####d#####" />
+        <data value="#........#" />
+        <data value="#........#" />
+        <data value="#..a..a..#" />
+        <data value="d..a..a..#" />
+        <data value="#..a..a..d" />
+        <data value="#..a..a..#" />
+        <data value="#........#" />
+        <data value="#........#" />
+        <data value="####d#####" />
+    </room>
+    <!--name: "common_water_lava" size: "11x10"-->
+    <room name="common_water_lava" size_x="11" size_y="10" type="regular" probability="0.4">
+        <data value="#####d#####" />
+        <data value="#.........#" />
+        <data value="#.........#" />
+        <data value="#.........#" />
+        <data value="d..ll.ww..#" />
+        <data value="#..ll.ww..d" />
+        <data value="#..ll.ww..#" />
+        <data value="#.........#" />
+        <data value="#.........#" />
+        <data value="#####d#####" />
+    </room>
+    <!--name: "common_water_lava_10x10" size: "10x10"-->
+    <room name="common_water_lava_10x10" size_x="10" size_y="10" type="regular" probability="0.4">
+        <data value="####d#####" />
+        <data value="#........#" />
+        <data value="#........#" />
+        <data value="#........#" />
+        <data value="d..llll..#" />
+        <data value="#..llll..d" />
+        <data value="#........#" />
+        <data value="#........#" />
+        <data value="#........#" />
+        <data value="####d#####" />
+    </room>
+    <!--name: "common_water_room_10x10" size: "10x10"-->
+    <room name="common_water_room_10x10" size_x="10" size_y="10" type="regular" probability="0.4">
+        <data value="####d#####" />
+        <data value="#........#" />
+        <data value="#........#" />
+        <data value="#..wwww..#" />
+        <data value="d........#" />
+        <data value="#........d" />
+        <data value="#..wwww..#" />
+        <data value="#........#" />
+        <data value="#........#" />
+        <data value="####d#####" />
+    </room>
+    <!--name: "common_water_room_3" size: "11x11"-->
+    <room name="common_water_room_3" size_x="11" size_y="11" type="regular" probability="0.5">
+        <data value="#####d#####" />
+        <data value="#.........#" />
+        <data value="#.........#" />
+        <data value="#.........#" />
+        <data value="d...www...#" />
+        <data value="#...www...d" />
+        <data value="#...www...#" />
+        <data value="#.........#" />
+        <data value="#.........#" />
+        <data value="#.........#" />
+        <data value="#####d#####" />
+    </room>
+    <!--name: "common_water_swamp_10x10" size: "10x10"-->
+    <room name="common_water_swamp_10x10" size_x="10" size_y="10" type="regular" probability="0.4">
+        <data value="####d#####" />
+        <data value="#........#" />
+        <data value="#........#" />
+        <data value="#..mmmm..#" />
+        <data value="d..mmmm..#" />
+        <data value="#..mmmm..d" />
+        <data value="#..mmmm..#" />
+        <data value="#........#" />
+        <data value="#........#" />
+        <data value="####d#####" />
+    </room>
+    <!--name: "final_boss" size: "13x11"-->
+    <room name="final_boss" size_x="13" size_y="11" type="final_boss" probability="0">
+        <data value="######d######" />
+        <data value="#...........#" />
+        <data value="#...........#" />
+        <data value="#...........#" />
+        <data value="d...........d" />
+        <data value="#..w.....w..#" />
+        <data value="#..w.....w..#" />
+        <data value="#...........#" />
+        <data value="#...........#" />
+        <data value="#...........#" />
+        <data value="######d######" />
+        <object name="candles_pedestral" tx="3" ty="4" type="scenario">
+            <property name="sx" value="1" />
+            <property name="sy" value="1" />
+        </object>
+        <object name="candles_pedestral" tx="3" ty="7" type="scenario">
+            <property name="sx" value="1" />
+            <property name="sy" value="1" />
+        </object>
+        <object name="candles_pedestral" tx="9" ty="4" type="scenario">
+            <property name="sx" value="1" />
+            <property name="sy" value="1" />
+        </object>
+        <object name="candles_pedestral" tx="9" ty="7" type="scenario">
+            <property name="sx" value="1" />
+            <property name="sy" value="1" />
+        </object>
+        <object name="Carpet" tx="5" ty="4" type="custom">
+            <property name="can_be_walked" value="true" />
+            <property name="cast_shadow" value="0" />
+            <property name="description" value="Carpet" />
+            <property name="image" value="carpet_blue_horizontal" />
+            <property name="is_interactive" value="0" />
+            <property name="label" value="Carpet" />
+            <property name="sheet" value="common_floor_objects" />
+            <property name="sx" value="3" />
+            <property name="sy" value="2" />
+            <property name="z_on_ground" value="1" />
+        </object>
+        <object name="boss" tx="6" ty="5" type="entity">
+            <property name="custom_loot" value="1" />
+            <property name="custom_loot_item0" value="key_item6" />
+            <property name="enemy_custom_visual" value="final_boss" />
+            <property name="introduction_talk" value="FINAL_BOSS_TALK" />
+            <property name="stats_equipment" value="final_boss" />
+            <property name="stats_Room" value="final_boss" />
+            <property name="sx" value="1" />
+            <property name="sy" value="1" />
+        </object>
+        <object name="treasure_chest" tx="6" ty="4" type="treasure_chest">
+            <property name="contents" value="rare" />
+            <property name="custom_loot" value="1" />
+            <property name="custom_loot_item0" value="lantern_of_all_light" />
+            <property name="is_locked" value="1" />
+            <property name="is_open" value="0" />
+            <property name="required_key" value="key_item6" />
+            <property name="sx" value="1" />
+            <property name="sy" value="1" />
+        </object>
+    </room>
+</rooms>
