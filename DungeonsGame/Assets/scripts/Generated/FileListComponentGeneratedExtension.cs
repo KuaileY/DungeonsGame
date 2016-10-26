@@ -17,13 +17,13 @@ namespace Entitas {
 
         public Entity AddFileList(System.Collections.Generic.Dictionary<string, System.Xml.XmlDocument> newName) {
             var component = CreateComponent<FileListComponent>(InputComponentIds.FileList);
-            component.name = newName;
+            component.fileDic = newName;
             return AddComponent(InputComponentIds.FileList, component);
         }
 
         public Entity ReplaceFileList(System.Collections.Generic.Dictionary<string, System.Xml.XmlDocument> newName) {
             var component = CreateComponent<FileListComponent>(InputComponentIds.FileList);
-            component.name = newName;
+            component.fileDic = newName;
             ReplaceComponent(InputComponentIds.FileList, component);
             return this;
         }

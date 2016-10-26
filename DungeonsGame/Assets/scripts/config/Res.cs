@@ -1,6 +1,9 @@
 ﻿
+using System.Collections.Generic;
 using UnityEngine;
 
+
+#region levelData----
 public enum Directions
 {
     North, East, South, West, Center,
@@ -20,8 +23,47 @@ public struct SingleRoom
     public GameObject[,] tiles;
     public int[] data;
 }
+public struct SingleGrid
+{
+    public List<SingleRoom> rooms;
+    public  Tile[,] grids;
+    public string name;
+    public int width;
+    public int height;
+    public struct Tile
+    {
+        public int roomID;
+        public int roomX;
+        public int roomY;
+        public TileType type;
+    }
+}
+public struct LevelData
+{
+    public static List<SingleGrid> grids;
+}
+#endregion
+
 public static class Res
 {
+    #region Save----
+    public static readonly string PathURL =
+#if UNITY_ANDROID   //安卓  
+        "jar:file://" + Application.dataPath + "!/assets/";  
+#elif UNITY_IPHONE  //iPhone  
+        Application.dataPath + "/Raw/";  
+#elif UNITY_STANDALONE_WIN || UNITY_EDITOR  //windows平台和web平台  
+        Application.dataPath + "/StreamingAssets/";
+#else
+        string.Empty;  
+#endif
+
+    public enum Files
+    {
+        levelData,
+    }
+    #endregion
+
     #region Board----
     public const int columns = 80;
     public const int rows       = 80;

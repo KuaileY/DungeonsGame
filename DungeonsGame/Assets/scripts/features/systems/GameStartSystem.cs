@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameStartSystem:IInitializeSystem,ISetPools
+public class GameStartSystem:IInitializeSystem,ISetPools,IReactiveSystem
 {
+    public TriggerOnEvent trigger { get { return Matcher.AnyOf(InputMatcher.NewGame,InputMatcher.LoadGame).OnEntityAdded(); } }
     Pools _pools;
     public void SetPools(Pools pools)
     {
@@ -18,22 +19,26 @@ public class GameStartSystem:IInitializeSystem,ISetPools
         _pools.input.CreateEntity().AddXML(Res.RoomsXml);
         //创建保持对象
         _pools.input.CreateEntity().AddHolder(new Dictionary<Res.InPools, UnityEngine.Transform>());
-        //创建地图
-        _pools.board.CreateEntity().AddGameBoard(1).AddPool(Res.InPools.Board);
-        initBoard();
+        //建立数据
+        LevelData.grids = new List<SingleGrid>();
     }
 
-    void initBoard()
+    public void Execute(List<Entity> entities)
     {
-        GridComponent.Tile[,] grids = new GridComponent.Tile[Res.columns, Res.rows];
-        for (int x = 0; x < Res.columns; x++)
+        if (entities.SingleEntity().isLoadGame)
         {
-            for (int y = 0; y < Res.rows; y++)
-            {
-                grids[x, y].type = TileType.empty;
-            }
+            Debug.Log("load game");
+            _pools.input.CreateEntity().IsLoad(true);
         }
-        _pools.board.CreateEntity().AddGrid(new List<SingleRoom>(),grids,Res.maps[0],Res.columns,Res.rows);
+        if (entities.SingleEntity().isNewGame)
+        {
+            Debug.Log("new game");
+            //创建地图
+            _pools.board.CreateEntity().AddGameBoard(1).AddPool(Res.InPools.Board);
+        }
+        entities.SingleEntity().IsDestroy(true);
     }
+
+
 }
 

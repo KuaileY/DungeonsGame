@@ -18,7 +18,7 @@ public sealed class LoadXMLSystem:IReactiveSystem,ISetPool
             TextAsset textAsset = Resources.Load<TextAsset>(e.xML.name);
             var _roomsXml = new XmlDocument();
             _roomsXml.LoadXml(textAsset.text);
-            _pool.fileList.name.Add(e.xML.name, _roomsXml);
+            _pool.fileList.fileDic.Add(e.xML.name, _roomsXml);
             e.isDestroy = true;
         }
     }

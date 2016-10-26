@@ -28,13 +28,19 @@ public class GameController : MonoBehaviour
     {
         return new Feature("Systems")
             //input
+            .Add(pools.input.CreateSystem(new InputSystem()))
+            .Add(pools.input.CreateSystem(new ProcessInputSystem()))
+
             .Add(pools.input.CreateSystem(new LoadXMLSystem()))
             .Add(pools.input.CreateSystem(new LoadSpritesSystem()))
+            .Add(pools.input.CreateSystem(new GameLoadSystem()))
+            .Add(pools.input.CreateSystem(new GameSaveSystem()))
             //create
             //.Add(pools.CreateSystem(new UISystem()))
-            .Add(pools.board.CreateSystem(new GameBoardSystem()))
+            .Add(pools.board.CreateSystem(new CreateBoardSystem()))
+            .Add(pools.board.CreateSystem(new LoadBoardSystem()))
             //game logic
-            .Add(pools.CreateSystem(new GameStartSystem()))
+            .Add(pools.input.CreateSystem(new GameStartSystem()))
             //common
             .Add(pools.CreateSystem(new AddViewSystem()))
             .Add(pools.CreateSystem(new RenderPositionSystem()))
