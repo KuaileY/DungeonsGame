@@ -40,6 +40,7 @@ public static class InputComponentIds {
         typeof(FileListComponent),
         typeof(InputComponent),
         typeof(LoadComponent),
+        typeof(LoadGameComponent),
         typeof(NewGameComponent),
         typeof(SaveComponent),
         typeof(SpriteListComponent),

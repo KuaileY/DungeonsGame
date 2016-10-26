@@ -13,7 +13,7 @@ public sealed class AddViewSystem : ISetPools, IInitializeSystem, IEntityCollect
     {
         _pools = pools;
         _entityCollector = new[] { pools.board, pools.core }
-            .CreateEntityCollector(Matcher.AllOf(BoardMatcher.Asset));
+            .CreateEntityCollector(Matcher.AnyOf(BoardMatcher.Asset,CoreMatcher.Asset));
     }
 
     public void Initialize()
@@ -30,7 +30,7 @@ public sealed class AddViewSystem : ISetPools, IInitializeSystem, IEntityCollect
     {
         foreach (var e in entities)
         {
-            var gameObject = AssetsExtension.Instantiate<GameObject>(Res.mapsPrefabPath + e.asset.name);
+            var gameObject = AssetsExtension.Instantiate<GameObject>(Res.PrefabPath + e.asset.name);
             gameObject.transform.SetParent(_pools.input.holder.poolDic[e.pool.name], false);
             gameObject.Link(e, PoolExtension.GetPool(e.pool.name));
             e.AddView(gameObject.GetComponent<IViewController>());

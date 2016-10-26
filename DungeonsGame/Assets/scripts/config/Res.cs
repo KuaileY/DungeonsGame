@@ -12,6 +12,7 @@ public enum TileType
 {
     empty, floor, wall_in, wall_out, door, corner, roof, water, stairDown, stairUp, Obstacle, Normal,
 }
+
 public struct SingleRoom
 {
     public string name;
@@ -46,6 +47,8 @@ public struct LevelData
 
 public static class Res
 {
+    public const string player = "GameElements/Player";
+    
     #region Save----
     public static readonly string PathURL =
 #if UNITY_ANDROID   //安卓  
@@ -77,6 +80,22 @@ public static class Res
         BigRoom, BigRoom1, MiddleRoom, MiddleRoom1, SmallRoom,
     }
 
+    public static readonly char[] TileTypeChar =
+    {
+        '-',    //empty
+        '.',    //floor
+        '#',   //wall_in
+        '#',    //wall_out
+        '+',    //door
+        '*',    //corner
+        '*',    //roof
+        '~',    //water
+        '<',    //stairDown
+        '>',    //stairUp
+        '^',    //Obstacle
+        '.',    //Normal
+    };
+
     #endregion
 
     #region View----
@@ -89,7 +108,7 @@ public static class Res
     #endregion
 
     #region Maps----
-    public static string mapsPrefabPath = "Prefabs/Maps/";
+    public static string PrefabPath = "Prefabs/";
     public static string mapsTexturePath = "Sprites/dungeon/";
 
     public static readonly string[] maps =
