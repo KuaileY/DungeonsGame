@@ -37,10 +37,13 @@ public class GameController : MonoBehaviour
             .Add(pools.input.CreateSystem(new GameSaveSystem()))
             //create
             //.Add(pools.CreateSystem(new UISystem()))
-            .Add(pools.CreateSystem(new CreateGameItemsCacheSystem()))
+            .Add(pools.CreateSystem(new DungeonItemsCacheSystem()))
             .Add(pools.board.CreateSystem(new CreateBoardSystem()))
             .Add(pools.board.CreateSystem(new LoadBoardSystem()))
             .Add(pools.core.CreateSystem(new DungeonSystem()))
+            //behaviour
+            .Add(pools.input.CreateSystem(new TurnSystem()))
+            .Add(pools.core.CreateSystem(new MoveSystem()))
             //game logic
             .Add(pools.input.CreateSystem(new GameStartSystem()))
             //common

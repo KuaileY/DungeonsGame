@@ -13,7 +13,7 @@ public sealed class RenderPositionSystem : ISetPools, IEntityCollectorSystem
     public void SetPools(Pools pools)
     {
         _entityCollector = new[] {pools.board,pools.core}
-            .CreateEntityCollector(Matcher.AllOf(BoardMatcher.View, BoardMatcher.Position));
+            .CreateEntityCollector(Matcher.AllOf(CoreMatcher.View, CoreMatcher.Position));
     }
 
     public void Execute(List<Entity> entities)

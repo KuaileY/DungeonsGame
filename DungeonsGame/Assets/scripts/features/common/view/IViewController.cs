@@ -4,7 +4,7 @@ using UnityEngine;
 public interface IViewController {
 
     GameObject gameObject { get; }
-    Vector2 position { get; set; }
+    Vector3 position { get; set; }
 
     void Link(Entity entity, Pool pool);
 

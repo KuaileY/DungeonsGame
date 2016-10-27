@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class ViewController : MonoBehaviour, IViewController {
 
-    public virtual Vector2 position {
+    public virtual Vector3 position {
         get { return transform.localPosition; }
         set { transform.localPosition = value; }
     }

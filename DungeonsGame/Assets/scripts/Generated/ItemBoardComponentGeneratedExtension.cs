@@ -15,13 +15,13 @@ namespace Entitas {
         public ItemBoardComponent itemBoard { get { return (ItemBoardComponent)GetComponent(CoreComponentIds.ItemBoard); } }
         public bool hasItemBoard { get { return HasComponent(CoreComponentIds.ItemBoard); } }
 
-        public Entity AddItemBoard(System.Collections.Generic.List<ItemBoardComponent.rect> newRoomList) {
+        public Entity AddItemBoard(SingleGrid newRoomList) {
             var component = CreateComponent<ItemBoardComponent>(CoreComponentIds.ItemBoard);
             component.roomList = newRoomList;
             return AddComponent(CoreComponentIds.ItemBoard, component);
         }
 
-        public Entity ReplaceItemBoard(System.Collections.Generic.List<ItemBoardComponent.rect> newRoomList) {
+        public Entity ReplaceItemBoard(SingleGrid newRoomList) {
             var component = CreateComponent<ItemBoardComponent>(CoreComponentIds.ItemBoard);
             component.roomList = newRoomList;
             ReplaceComponent(CoreComponentIds.ItemBoard, component);
@@ -39,7 +39,7 @@ namespace Entitas {
         public ItemBoardComponent itemBoard { get { return itemBoardEntity.itemBoard; } }
         public bool hasItemBoard { get { return itemBoardEntity != null; } }
 
-        public Entity SetItemBoard(System.Collections.Generic.List<ItemBoardComponent.rect> newRoomList) {
+        public Entity SetItemBoard(SingleGrid newRoomList) {
             if(hasItemBoard) {
                 throw new EntitasException("Could not set itemBoard!\n" + this + " already has an entity with ItemBoardComponent!",
                     "You should check if the pool already has a itemBoardEntity before setting it or use pool.ReplaceItemBoard().");
@@ -49,7 +49,7 @@ namespace Entitas {
             return entity;
         }
 
-        public Entity ReplaceItemBoard(System.Collections.Generic.List<ItemBoardComponent.rect> newRoomList) {
+        public Entity ReplaceItemBoard(SingleGrid newRoomList) {
             var entity = itemBoardEntity;
             if(entity == null) {
                 entity = SetItemBoard(newRoomList);

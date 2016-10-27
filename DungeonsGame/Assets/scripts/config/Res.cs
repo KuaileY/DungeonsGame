@@ -48,7 +48,7 @@ public struct LevelData
 public static class Res
 {
     public const string player = "GameElements/Player";
-    
+    public const float moveTime = 0.3f;
     #region Save----
     public static readonly string PathURL =
 #if UNITY_ANDROID   //安卓  
@@ -70,7 +70,7 @@ public static class Res
     #region Board----
     public const int columns = 80;
     public const int rows       = 80;
-    public const int roomCount = 28;
+    public const int roomCount = 2;
     public const string RoomsXml = "database/dungeon_rooms";
     public static string RoomsPath = "Tmxs/";
 
@@ -186,4 +186,5 @@ public static class Res
         Core,
         Input
     }
+
 }

@@ -21,6 +21,11 @@ public class GameStartSystem:IInitializeSystem,ISetPools,IReactiveSystem
         _pools.input.CreateEntity().AddHolder(new Dictionary<Res.InPools, UnityEngine.Transform>());
         //建立数据
         LevelData.grids = new List<SingleGrid>();
+        //建立摄像机
+        var camera = GameObject.FindObjectOfType<Camera>();
+        _pools.core.CreateEntity()
+            .IsCamera(true)
+            .AddView(camera.GetComponent<ViewController>());
     }
 
     public void Execute(List<Entity> entities)

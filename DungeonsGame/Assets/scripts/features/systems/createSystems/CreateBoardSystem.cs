@@ -37,7 +37,7 @@ public class CreateBoardSystem : IReactiveSystem, ISetPools
     {
         TestLoadConfig.log.Trace("gameBoard floor:" + floor);
         createFirstRoom(randomName());
-        //createAfterRooms();
+        createAfterRooms();
     }
 
     void createAfterRooms()

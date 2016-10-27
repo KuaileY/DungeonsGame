@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Entitas;
 using UnityEngine;
+using UniRx;
 
 public sealed class DungeonSystem: IReactiveSystem, ISetPools
 {
@@ -23,6 +24,8 @@ public sealed class DungeonSystem: IReactiveSystem, ISetPools
         //Debug.Log("rooms:"+LevelData.grids[0].rooms.Count);
         var entity = entities.SingleEntity();
         _grid = LevelData.grids[entity.dungeon.value - 1];
+        //创建条目缓存
+        _pools.core.CreateEntity().AddItemBoard(LevelData.grids[0]);
         //清空缓存
         //clearGrid();
         //创建场景
@@ -34,14 +37,17 @@ public sealed class DungeonSystem: IReactiveSystem, ISetPools
         //做一个坐标集合，以防止元素重叠。
         initialPosList(value);
         //创建玩家角色
-        createPlayer(0);
-
+        var player = createPlayer(10);
+        Debug.Log("x: " + player.position.value.x + " , y: " + player.position.value.y);
+        var pos = player.position.value + new Vector3(0, 0, -10);
+        //建立摄像机位置
+        _pools.core.cameraEntity.AddPosition(0,pos);
     }
 
-    void createPlayer(int i)
+    Entity createPlayer(int i)
     {
-        _pools.core.CreateEntity()
-            .AddPosition(PositionList[0][i] + _grid.rooms[0].pos )
+        return _pools.core.CreateEntity()
+            .AddPosition(0,PositionList[0][i] + _grid.rooms[0].pos)
             .IsInteractive(true)
             .IsControlable(true)
             .AddPool(Res.InPools.Core)

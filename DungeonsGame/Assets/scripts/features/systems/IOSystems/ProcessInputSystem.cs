@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using Entitas;
+using UniRx;
+using UnityEngine;
 
 public sealed class ProcessInputSystem :ISetPools,IReactiveSystem
 {
@@ -14,6 +16,10 @@ public sealed class ProcessInputSystem :ISetPools,IReactiveSystem
     {
         var inputEntity = entities.SingleEntity();
         var input = inputEntity.input;
+
+
+        //激活当前回合（触发TrunSystem)
+        _pools.input.isActiveTurn = true;
     }
 
 }
