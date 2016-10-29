@@ -27,6 +27,8 @@ public class GameController : MonoBehaviour
     Systems createSystems(Pools pools)
     {
         return new Feature("Systems")
+            //Test
+            .Add(pools.CreateSystem(new TestSystem()))
             //input
             .Add(pools.input.CreateSystem(new InputSystem()))
             .Add(pools.input.CreateSystem(new ProcessInputSystem()))

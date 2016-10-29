@@ -75,7 +75,7 @@ public sealed class LoadBoardSystem:IReactiveSystem, ISetPools
 
     GameObject LoadTile(int y, int x, int gid, SingleRoom room, int height)
     {
-        GameObject go = new GameObject(string.Format("{0},{1}", x, y), typeof(SpriteRenderer));
+        GameObject go = new GameObject(string.Format("{0},{1},{2}",room.id, x, y), typeof(SpriteRenderer));
         int xx = x;
         int yy = -y + height;
         go.transform.position = new Vector2(xx, yy) + room.pos;

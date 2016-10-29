@@ -13,7 +13,7 @@ public class CreateBoardSystem : IReactiveSystem, ISetPools
     //门的位置
     Vector2 _doorPos;
     //方向
-    Directions _dir;
+    Vector2 _dir = new Vector2(0, 0);
     //保持对象
     Transform _trans;
     //当前画布
@@ -61,7 +61,7 @@ public class CreateBoardSystem : IReactiveSystem, ISetPools
         int y = (int)pos.y;
         if (checkArea(x, y, x + fw, y + fh))
         {
-            if (_dir == Directions.North)
+            if (_dir.y==1)
             {
                 pos -= new Vector2(0, 2);
             }
@@ -77,71 +77,76 @@ public class CreateBoardSystem : IReactiveSystem, ISetPools
         int tx = (int)_doorPos.x;
         int ty = (int)_doorPos.y;
         var grid = _grid.grids[tx, ty];
-        grid.type = TileType.door;
+        //grid.type = TileType.door;
         var _rooms = _grid.rooms;
-        switch (_dir)
+        if (_dir.y == 1)
         {
-            case Directions.North:
-                var nGrid = _grid.grids[tx, ty + 1];
-                setTile(grid.roomID, grid.roomX, grid.roomY, _rooms);
-                setTile(grid.roomID, grid.roomX + 1, grid.roomY, _rooms, 22);
-                setTile(grid.roomID, grid.roomX - 1, grid.roomY, _rooms, 24);
+            var nGrid = _grid.grids[tx, ty + 1];
+            setTile(grid.roomID, grid.roomX, grid.roomY, _rooms, 0, TileType.door);
+            setTile(grid.roomID, grid.roomX + 1, grid.roomY, _rooms, 22);
+            setTile(grid.roomID, grid.roomX - 1, grid.roomY, _rooms, 24);
 
-                setTile(grid.roomID, grid.roomX, grid.roomY + 1, _rooms);
-                setTile(grid.roomID, grid.roomX + 1, grid.roomY + 1, _rooms, 14);
-                setTile(grid.roomID, grid.roomX - 1, grid.roomY + 1, _rooms, 16);
+            setTile(grid.roomID, grid.roomX, grid.roomY + 1, _rooms);
+            setTile(grid.roomID, grid.roomX + 1, grid.roomY + 1, _rooms, 14);
+            setTile(grid.roomID, grid.roomX - 1, grid.roomY + 1, _rooms, 16);
 
-                setTile(nGrid.roomID, nGrid.roomX, nGrid.roomY, _rooms);
-                setTile(nGrid.roomID, nGrid.roomX + 1, nGrid.roomY, _rooms, 22);
-                setTile(nGrid.roomID, nGrid.roomX - 1, nGrid.roomY, _rooms, 24);
-                break;
-            case Directions.South:
-                var sGrid = _grid.grids[tx, ty - 2];
-                setTile(grid.roomID, grid.roomX, grid.roomY, _rooms);
-                setTile(grid.roomID, grid.roomX + 1, grid.roomY, _rooms, 22);
-                setTile(grid.roomID, grid.roomX - 1, grid.roomY, _rooms, 24);
+            setTile(nGrid.roomID, nGrid.roomX, nGrid.roomY, _rooms);
+            setTile(nGrid.roomID, nGrid.roomX + 1, nGrid.roomY, _rooms, 22);
+            setTile(nGrid.roomID, nGrid.roomX - 1, nGrid.roomY, _rooms, 24);
+        }
+        if (_dir.y == -1)
+        {
+            var sGrid = _grid.grids[tx, ty - 2];
+            setTile(grid.roomID, grid.roomX, grid.roomY, _rooms, 0, TileType.door);
+            setTile(grid.roomID, grid.roomX + 1, grid.roomY, _rooms, 22);
+            setTile(grid.roomID, grid.roomX - 1, grid.roomY, _rooms, 24);
 
-                setTile(sGrid.roomID, sGrid.roomX, sGrid.roomY, _rooms);
-                setTile(sGrid.roomID, sGrid.roomX, sGrid.roomY - 1, _rooms);
-                setTile(sGrid.roomID, sGrid.roomX + 1, sGrid.roomY, _rooms, 14);
-                setTile(sGrid.roomID, sGrid.roomX - 1, sGrid.roomY, _rooms, 16);
+            setTile(sGrid.roomID, sGrid.roomX, sGrid.roomY, _rooms);
+            setTile(sGrid.roomID, sGrid.roomX, sGrid.roomY - 1, _rooms);
+            setTile(sGrid.roomID, sGrid.roomX + 1, sGrid.roomY, _rooms, 14);
+            setTile(sGrid.roomID, sGrid.roomX - 1, sGrid.roomY, _rooms, 16);
 
-                setTile(sGrid.roomID, sGrid.roomX + 1, sGrid.roomY - 1, _rooms, 22);
-                setTile(sGrid.roomID, sGrid.roomX - 1, sGrid.roomY - 1, _rooms, 24);
-                break;
-            case Directions.East:
-                var eGrid = _grid.grids[tx + 1, ty];
-                setTile(grid.roomID, grid.roomX, grid.roomY, _rooms, 10);
-                setTile(grid.roomID, grid.roomX, grid.roomY + 1, _rooms);
-                setTile(grid.roomID, grid.roomX, grid.roomY - 1, _rooms, 20);
-                setTile(grid.roomID, grid.roomX, grid.roomY + 2, _rooms, 21);
+            setTile(sGrid.roomID, sGrid.roomX + 1, sGrid.roomY - 1, _rooms, 22);
+            setTile(sGrid.roomID, sGrid.roomX - 1, sGrid.roomY - 1, _rooms, 24);
+        }
+        if (_dir.x == 1)
+        {
+            var eGrid = _grid.grids[tx + 1, ty];
+            setTile(grid.roomID, grid.roomX, grid.roomY, _rooms, 10);
+            setTile(grid.roomID, grid.roomX, grid.roomY + 1, _rooms, 0, TileType.door);
+            setTile(grid.roomID, grid.roomX, grid.roomY - 1, _rooms, 20);
+            setTile(grid.roomID, grid.roomX, grid.roomY + 2, _rooms, 21);
 
-                setTile(eGrid.roomID, eGrid.roomX, eGrid.roomY, _rooms, 10);
-                setTile(eGrid.roomID, eGrid.roomX, eGrid.roomY - 1, _rooms, 20);
-                setTile(eGrid.roomID, eGrid.roomX, eGrid.roomY + 2, _rooms, 21);
-                setTile(eGrid.roomID, eGrid.roomX, eGrid.roomY + 1, _rooms);
-                break;
-            case Directions.West:
-                var wGrid = _grid.grids[tx - 1, ty];
-                setTile(grid.roomID, grid.roomX, grid.roomY, _rooms, 10);
-                setTile(grid.roomID, grid.roomX, grid.roomY + 1, _rooms);
-                setTile(grid.roomID, grid.roomX, grid.roomY - 1, _rooms, 20);
-                setTile(grid.roomID, grid.roomX, grid.roomY + 2, _rooms, 21);
+            setTile(eGrid.roomID, eGrid.roomX, eGrid.roomY, _rooms, 10);
+            setTile(eGrid.roomID, eGrid.roomX, eGrid.roomY - 1, _rooms, 20);
+            setTile(eGrid.roomID, eGrid.roomX, eGrid.roomY + 2, _rooms, 21);
+            setTile(eGrid.roomID, eGrid.roomX, eGrid.roomY + 1, _rooms);
+        }
+        if (_dir.x == -1)
+        {
+            var wGrid = _grid.grids[tx - 1, ty];
+            setTile(grid.roomID, grid.roomX, grid.roomY, _rooms, 10);
+            setTile(grid.roomID, grid.roomX, grid.roomY + 1, _rooms, 0, TileType.door);
+            setTile(grid.roomID, grid.roomX, grid.roomY - 1, _rooms, 20);
+            setTile(grid.roomID, grid.roomX, grid.roomY + 2, _rooms, 21);
 
-                setTile(wGrid.roomID, wGrid.roomX, wGrid.roomY, _rooms, 10);
-                setTile(wGrid.roomID, wGrid.roomX, wGrid.roomY - 1, _rooms, 20);
-                setTile(wGrid.roomID, wGrid.roomX, wGrid.roomY + 2, _rooms, 21);
-                setTile(wGrid.roomID, wGrid.roomX, wGrid.roomY + 1, _rooms);
-                break;
-
+            setTile(wGrid.roomID, wGrid.roomX, wGrid.roomY, _rooms, 10);
+            setTile(wGrid.roomID, wGrid.roomX, wGrid.roomY - 1, _rooms, 20);
+            setTile(wGrid.roomID, wGrid.roomX, wGrid.roomY + 2, _rooms, 21);
+            setTile(wGrid.roomID, wGrid.roomX, wGrid.roomY + 1, _rooms);
         }
     }
 
-    void setTile(int id, int x, int y, List<SingleRoom> rooms, int sp = 0)
+    void setTile(int id, int x, int y, List<SingleRoom> rooms, int sp = 0,TileType type=TileType.floor)
     {
-        if (sp == 0)
-            sp = Random.Range(0, 7);
         var curRoom = rooms[id-1];
+        if (sp == 0)
+        {
+            sp = Random.Range(0, 7);
+            curRoom.grid[x, y] = TileType.floor;
+            if (type != TileType.floor)
+                curRoom.grid[x, y] = type;
+        }
         curRoom.tiles[x, y].GetComponent<SpriteRenderer>().sprite = _pools.input.spriteList.sprites[_grid.name][sp];
         int i = y * curRoom.width + x;
         //Debug.Log("x:" + x + " ," + "y:" + y + " ,i: " + i+",data:"+curRoom.Data.Length);
@@ -181,22 +186,22 @@ public class CreateBoardSystem : IReactiveSystem, ISetPools
                 bool topBottom = top == TileType.roof && bottom == TileType.roof;
                 if (top == TileType.empty && leftRight)
                 {
-                    _dir = Directions.North;
+                    _dir = new Vector2(0,1);
                     NotInRoof = false;
                 }
                 else if (bottom == TileType.wall_out && leftRight)
                 {
-                    _dir = Directions.South;
+                    _dir = new Vector2(0,-1);
                     NotInRoof = false;
                 }
                 else if (left == TileType.empty && topBottom)
                 {
-                    _dir = Directions.West;
+                    _dir = new Vector2(-1,0);
                     NotInRoof = false;
                 }
                 else if (right == TileType.empty && topBottom)
                 {
-                    _dir = Directions.East;
+                    _dir = new Vector2(1,0);
                     NotInRoof = false;
                 }
                 roomID = grids[x, y].roomID;
@@ -210,12 +215,12 @@ public class CreateBoardSystem : IReactiveSystem, ISetPools
         Vector2 Pos = _doorPos;
         roomName = randomName();
         RoomExtension.setWH(out fw, out fh, roomName, _pools.input.fileList.fileDic[Res.RoomsXml]);
-        if (_dir == Directions.North || _dir == Directions.South)
+        if (_dir.y == -1 || _dir.y == 1)
         {
             if (Pos.x - fw / 2 - 1 < 1 || Pos.x + fw / 2 + 1 > Res.columns - 1)
                 return false;
             Pos.x -= Mathf.CeilToInt(fw * 0.5f);
-            if (_dir == Directions.North)
+            if (_dir.y == 1)
             {
                 Pos.y += 1;
                 if (Pos.y + fh > Res.rows - 1)
@@ -233,7 +238,7 @@ public class CreateBoardSystem : IReactiveSystem, ISetPools
             if (Pos.y - fh / 2 - 1 < 1 || Pos.y + fh / 2 + 1 > Res.rows - 1)
                 return false;
             Pos.y -= Mathf.CeilToInt(fh * 0.5f);
-            if (_dir == Directions.East)
+            if (_dir.x == 1)
             {
                 Pos.x += 1;
                 if (Pos.x + fw > Res.columns - 1)
@@ -295,6 +300,7 @@ public class CreateBoardSystem : IReactiveSystem, ISetPools
         room.width = width;
         room.height = height;
         room.name = name;
+        room.dir = _dir;
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
@@ -338,7 +344,7 @@ public class CreateBoardSystem : IReactiveSystem, ISetPools
 
     GameObject AddTile(TiledLayer layer, int y, int x, int gid, SingleRoom room, int height)
     {
-        GameObject go = new GameObject(string.Format("{0},{1}", x, y), typeof(SpriteRenderer));
+        GameObject go = new GameObject(string.Format("{0},{1},{2}",room.id, x, y), typeof(SpriteRenderer));
         go.AddComponent<BoxCollider2D>();
         var type = (TileType)Enum.Parse(typeof(TileType), layer.Name);
         int xx = x;
@@ -348,7 +354,7 @@ public class CreateBoardSystem : IReactiveSystem, ISetPools
         var pos = new Vector2(xx, yy) + room.pos;
         go.transform.position = pos;
         //在北边的情况
-        if (_dir == Directions.North)
+        if (_dir.y == 1)
         {
             if (_grid.grids[(int)room.pos.x + xx, (int)room.pos.y + yy].type != TileType.empty)
             {
@@ -358,7 +364,7 @@ public class CreateBoardSystem : IReactiveSystem, ISetPools
             }
         }
         //在南边的情况
-        if (_dir == Directions.South)
+        if (_dir.y == -1)
         {
             var grid = _grid.grids[(int)room.pos.x + xx, (int)room.pos.y + yy];
             if (grid.type != TileType.empty)
@@ -372,6 +378,7 @@ public class CreateBoardSystem : IReactiveSystem, ISetPools
                 grid.type = type;
                 grid.roomX = xx;
                 grid.roomY = yy;
+                obj.name = string.Format("{0},{1},{2}", _roomCount, xx, yy);
                 return obj;
             }
         }

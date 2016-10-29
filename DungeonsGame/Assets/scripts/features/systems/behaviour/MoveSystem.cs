@@ -33,7 +33,6 @@ public sealed class MoveSystem:IReactiveSystem,ISetPool
     void moveCamera(Entity entity)
     {
         var camera = _pool.cameraEntity;
-        camera.position.roomId = entity.position.roomId;
         camera.position.value = entity.position.value+new Vector3(0,0,-10);
         _pool.cameraEntity.AddMove(0.1f);
     }

@@ -7,15 +7,15 @@ using Entitas;
 using Entitas.CodeGenerator;
 using UnityEngine;
 
-public sealed class GameSaveSystem:IReactiveSystem,ISetPool
+public sealed class GameSaveSystem:IReactiveSystem,ISetPools
 {
     public TriggerOnEvent trigger { get { return InputMatcher.Save.OnEntityAdded(); } }
-    Pool _pool;
+    Pools _pools;
     Dictionary<TileType, char> _tileTypeChar = new Dictionary<TileType, char>();
 
-    public void SetPool(Pool pool)
+    public void SetPools(Pools pools)
     {
-        _pool = pool;
+        _pools = pools;
     }
     public void Execute(List<Entity> entities)
     {
@@ -31,8 +31,16 @@ public sealed class GameSaveSystem:IReactiveSystem,ISetPool
         {
             Directory.CreateDirectory(path.ToString());
         }
-        XmlDocument xdoc = SaveLevelData(LevelData.grids);
+        XmlDocument levelXml = SaveLevelData(LevelData.grids);
+        XmlDocument itemsXml = SaveItemsData();
 
+        formatXml(levelXml, path, Res.Files.levelData.ToString());
+        formatXml(itemsXml, path, Res.Files.itemsData.ToString());
+
+    }
+
+    void formatXml(XmlDocument xdoc, StringBuilder path,string name)
+    {
         StringWriter sw = new StringWriter();
         using (XmlTextWriter writer = new XmlTextWriter(sw))
         {
@@ -41,9 +49,15 @@ public sealed class GameSaveSystem:IReactiveSystem,ISetPool
             xdoc.WriteContentTo(writer);
             writer.Close();
         }
-        string levelData = sw.ToString();
-        string mapFile = path.ToString() + Res.Files.levelData.ToString();
-        SaveElement(mapFile, levelData);
+        string data = sw.ToString();
+        string file = path.ToString() + name;
+        SaveElement(file, data);
+    }
+
+    XmlDocument SaveItemsData()
+    {
+        XmlDocument xdoc = createXML();
+        return xdoc;
     }
 
     XmlDocument SaveLevelData(List<SingleGrid> grids)
@@ -67,11 +81,15 @@ public sealed class GameSaveSystem:IReactiveSystem,ISetPool
                 roomE.SetAttribute("height", room.height.ToString());
                 roomE.SetAttribute("x", room.pos.x.ToString());
                 roomE.SetAttribute("y", room.pos.y.ToString());
+                roomE.SetAttribute("dirX", room.dir.x.ToString());
+                roomE.SetAttribute("dirY",room.dir.y.ToString());
 
                 XmlElement baseFloorE = (XmlElement)roomE.AppendChild(xdoc.CreateElement("baseFloor"));
                 XmlElement dataE = (XmlElement) roomE.AppendChild(xdoc.CreateElement("data"));
+                XmlElement itemsE = (XmlElement) roomE.AppendChild(xdoc.CreateElement("items"));
                 baseFloorE.SetAttribute("encoding", "csv");
                 dataE.SetAttribute("encoding", "csv");
+                #region baseFloorE
                 for (int k = 0; k < room.data.Length; k++)
                 {
                     if (k % room.width == 0)
@@ -80,7 +98,8 @@ public sealed class GameSaveSystem:IReactiveSystem,ISetPool
                     }
                     baseFloorE.InnerText += room.data[k] + ",";
                 }
-
+                #endregion
+                #region dataE
                 for (int y = 0; y < room.height; y++)
                 {
                     dataE.InnerText += "\r\n";
@@ -90,6 +109,19 @@ public sealed class GameSaveSystem:IReactiveSystem,ISetPool
                         dataE.InnerText += Res.TileTypeChar[_];
                     }
                 }
+                #endregion
+                #region itemsE
+                var items = _pools.core.dungeonItemsCache;
+                for (int yy = 0; yy < room.height-2; yy++)
+                {
+                    for (int xx = 0; xx < room.width-1; xx++)
+                    {
+                        if (items.roomList[room.id - 1][xx, yy] != null)
+                            itemsE.InnerText += string.Format("{0},{1},{2},{3}", room.id, xx, yy, 1111) + '|';
+                    }
+                }
+                
+                #endregion
                 j++;
             }
             i++;

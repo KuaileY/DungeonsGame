@@ -17,14 +17,16 @@ public static class CoreComponentIds {
     public const int ViewObjectPool = 6;
     public const int Camera = 7;
     public const int Controlable = 8;
-    public const int Dungeon = 9;
-    public const int DungeonItemsCache = 10;
-    public const int Interactive = 11;
-    public const int ItemBoard = 12;
-    public const int Movable = 13;
-    public const int Move = 14;
+    public const int Dir = 9;
+    public const int Dungeon = 10;
+    public const int DungeonItemsCache = 11;
+    public const int Interactive = 12;
+    public const int ItemBoard = 13;
+    public const int Movable = 14;
+    public const int Move = 15;
+    public const int Room = 16;
 
-    public const int TotalComponents = 15;
+    public const int TotalComponents = 17;
 
     public static readonly string[] componentNames = {
         "Destroy",
@@ -36,12 +38,14 @@ public static class CoreComponentIds {
         "ViewObjectPool",
         "Camera",
         "Controlable",
+        "Dir",
         "Dungeon",
         "DungeonItemsCache",
         "Interactive",
         "ItemBoard",
         "Movable",
-        "Move"
+        "Move",
+        "Room"
     };
 
     public static readonly System.Type[] componentTypes = {
@@ -54,11 +58,13 @@ public static class CoreComponentIds {
         typeof(ViewObjectPoolComponent),
         typeof(CameraComponent),
         typeof(ControlableComponent),
+        typeof(DirComponent),
         typeof(DungeonComponent),
         typeof(DungeonItemsCacheComponent),
         typeof(InteractiveComponent),
         typeof(ItemBoardComponent),
         typeof(MovableComponent),
-        typeof(MoveComponent)
+        typeof(MoveComponent),
+        typeof(RoomComponent)
     };
 }

@@ -3,19 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-#region levelData----
-public enum Directions
-{
-    North, East, South, West, Center,
-}
+#region Data----
+//levelData---------------
 public enum TileType
 {
     empty, floor, wall_in, wall_out, door, corner, roof, water, stairDown, stairUp, Obstacle, Normal,
 }
-
 public struct SingleRoom
 {
     public string name;
+    public Vector2 dir;
     public int id;
     public int width;
     public int height;
@@ -43,11 +40,27 @@ public struct LevelData
 {
     public static List<SingleGrid> grids;
 }
+//itemsData--------------
+public struct SingleItem
+{
+    public int id;
+    public int dungeonId;
+    public Res.InPools inPool;
+    public Dictionary<Component, Object> status;
+}
+
+public struct ItemsData
+{
+    public static HashSet<SingleItem> items;
+}
 #endregion
 
 public static class Res
 {
     public const string player = "GameElements/Player";
+    public const string food = "GameElements/Food";
+    public const string door = "Items/door_close";
+
     public const float moveTime = 0.3f;
     #region Save----
     public static readonly string PathURL =
@@ -64,13 +77,14 @@ public static class Res
     public enum Files
     {
         levelData,
+        itemsData,
     }
     #endregion
 
     #region Board----
     public const int columns = 80;
     public const int rows       = 80;
-    public const int roomCount = 2;
+    public const int roomCount = 3;
     public const string RoomsXml = "database/dungeon_rooms";
     public static string RoomsPath = "Tmxs/";
 

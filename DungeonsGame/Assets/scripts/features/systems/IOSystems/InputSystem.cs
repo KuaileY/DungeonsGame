@@ -20,8 +20,10 @@ public sealed class InputSystem : ISetPool, IExecuteSystem, ICleanupSystem
             if (hit.collider != null)
             {
                 var pos = hit.collider.transform.position;
+                string name = hit.collider.gameObject.name;
+                int roomID = int.Parse(name.Substring(0, name.IndexOf(',')));
                 _pool.CreateEntity()
-                    .AddInput((int) pos.x, (int) pos.y);
+                    .AddInput(roomID,(int) pos.x, (int) pos.y);
             }
             Debug.Log("mouseDown");
         }

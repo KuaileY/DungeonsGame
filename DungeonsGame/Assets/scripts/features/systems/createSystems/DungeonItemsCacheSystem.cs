@@ -16,22 +16,32 @@ public sealed class DungeonItemsCacheSystem:ISystem,ISetPools
         {
             CreateGameItemsCache((ItemBoardComponent)component);
         };
-//         gameBoard.OnEntityUpdated += (group, entity, index, previousComponent, newComponent) =>
-//         {
-//             CreateGameItemsCache((GameBoardComponent)newComponent);
-//         };
 
+        
         //添加Items
         var gameItem = _pool.GetGroup(Matcher.AllOf(CoreMatcher.Interactive, CoreMatcher.Position));
         gameItem.OnEntityAdded += (group, entity, index, component) =>
         {
             //TestLoadConfig.log.Trace("dungeonItem.OnEntityAdded");
-            var grid = _pool.dungeonItemsCache.roomList[entity.position.roomId];
-            var pos=_pool.itemBoard.roomList.rooms[entity.position.roomId].pos;
-            var x = (int)(entity.position.value.x - pos.x);
-            var y = (int) (entity.position.value.y - pos.y);
-            grid[x, y-1] = entity;
-            entityList[entity.position.roomId] = grid;
+            var grid = _pool.dungeonItemsCache.roomList[entity.room.roomId];
+            var room=_pool.itemBoard.roomList.rooms[entity.room.roomId];
+            var x = (int)(entity.position.value.x - room.pos.x);
+            var y = (int) (entity.position.value.y - room.pos.y);
+            //Debug.Log("roomId:" + entity.room.roomId + " ,x:" + x + " ,y:" + (y - 2));
+            if (entity.room.roomId != entity.room.oldRoomId)
+            {
+                if (entity.dir.value.x == 1)
+                    grid[x , y - 2] = entity;
+                if (entity.dir.value.x == -1)
+                    grid[x - 1, y - 2] = entity;
+                if (entity.dir.value.y == 1)
+                    grid[x, y - 2] = entity;
+                if (entity.dir.value.y == -1)
+                    grid[x, y - 2] = entity;
+            }
+            else
+                grid[x, y - 2] = entity;
+            entityList[entity.room.roomId] = grid;
             _pool.ReplaceDungeonItemsCache(entityList);
         };
 
@@ -41,15 +51,16 @@ public sealed class DungeonItemsCacheSystem:ISystem,ISetPools
             var pos = component as PositionComponent;
             if (pos == null)
                 pos = entity.position;
-            var grid = _pool.dungeonItemsCache.roomList[entity.position.roomId];
-            var roomPos = _pool.itemBoard.roomList.rooms[entity.position.roomId].pos;
+            int roomId;
+            var grid = _pool.dungeonItemsCache.roomList[entity.room.oldRoomId];
+            var roomPos = _pool.itemBoard.roomList.rooms[entity.room.oldRoomId].pos;
             var x = (int)(pos.value.x-roomPos.x);
             var y = (int)(pos.value.y-roomPos.y);
-            grid[x, y-1] = null;
-            entityList[entity.position.roomId] = grid;
+            grid[x, y-2] = null;
+            entityList[entity.room.oldRoomId] = grid;
             _pool.ReplaceDungeonItemsCache(entityList);
         };
-
+        
     }
 
     void CreateGameItemsCache(ItemBoardComponent gameItems)
@@ -57,7 +68,7 @@ public sealed class DungeonItemsCacheSystem:ISystem,ISetPools
         entityList.Clear();
         foreach (var room in gameItems.roomList.rooms)
         {
-            var grid = new Entity[room.width, room.height];
+            var grid = new Entity[room.width, room.height-1];
             foreach (var entity in _pool.GetEntities(CoreMatcher.Interactive))
             {
                 grid[(int)entity.position.value.x, (int)entity.position.value.y] = entity;
