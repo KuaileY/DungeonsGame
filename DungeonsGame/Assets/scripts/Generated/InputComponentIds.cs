@@ -18,9 +18,11 @@ public static class InputComponentIds {
     public const int NewGame = 7;
     public const int Save = 8;
     public const int SpriteList = 9;
-    public const int XML = 10;
+    public const int Tick = 10;
+    public const int Watch = 11;
+    public const int XML = 12;
 
-    public const int TotalComponents = 11;
+    public const int TotalComponents = 13;
 
     public static readonly string[] componentNames = {
         "Destroy",
@@ -33,6 +35,8 @@ public static class InputComponentIds {
         "NewGame",
         "Save",
         "SpriteList",
+        "Tick",
+        "Watch",
         "XML"
     };
 
@@ -47,6 +51,8 @@ public static class InputComponentIds {
         typeof(NewGameComponent),
         typeof(SaveComponent),
         typeof(SpriteListComponent),
+        typeof(TickComponent),
+        typeof(WatchComponent),
         typeof(XMLComponent)
     };
 }

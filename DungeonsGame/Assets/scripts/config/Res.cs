@@ -57,11 +57,29 @@ public struct ItemsData
 
 public static class Res
 {
-    public const string player = "GameElements/Player";
-    public const string food = "GameElements/Food";
-    public const string door = "Items/door_close";
 
+    #region prefabs----
+    public static class Prefabs
+    {
+        public const string player = "GameElements/Player";
+        public const string food = "GameElements/Food";
+        public const string door = "Items/door_close";
+    }
+    #endregion
+
+    public static string dataPath = Application.dataPath;
     public const float moveTime = 0.3f;
+
+    #region configs----
+    public static readonly string dataBasePath = dataPath+ "/art/Resources/database/";
+    public const string xlsxExtension = ".xlsx";
+    public enum configs
+    {
+        items,
+        levels,
+    }
+    #endregion
+
     #region Save----
     public static readonly string PathURL =
 #if UNITY_ANDROID   //安卓  
@@ -198,7 +216,8 @@ public static class Res
         //对象池
         Board,
         Core,
-        Input
+        Input,
+        Blueprints,
     }
 
 }

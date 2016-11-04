@@ -1,0 +1,23 @@
+<levels>
+  <lv1>
+    <string ID="int" roomName="string" minCount="int" maxCount="int" inRoom="bool" inRoomCount="int" outRoom="bool" outRoomCount="int" items1="int" items1Min="int" items1Max="int" items2="int" items2Min="int" itemsMax="int" />
+    <BigRoom ID="10101" roomName="BigRoom" minCount="2" maxCount="4" inRoom="FALSE" inRoomCount="0" outRoom="TRUE" outRoomCount="2" items1="11002" items1Min="1" items1Max="3" items2="11003" items2Min="2" itemsMax="4" />
+    <MiddleRoom ID="10102" roomName="MiddleRoom" minCount="2" maxCount="4" inRoom="TRUE" inRoomCount="1" outRoom="FALSE" outRoomCount="0" items1="11002" items1Min="1" items1Max="1" items2="11003" items2Min="1" itemsMax="3" />
+    <SmallRoom ID="10103" roomName="SmallRoom" minCount="1" maxCount="2" inRoom="FALSE" inRoomCount="0" outRoom="FALSE" outRoomCount="0" items1="11002" items1Min="1" items1Max="3" items2="11003" items2Min="0" itemsMax="1" />
+  </lv1>
+  <lv2>
+    <string ID="int" roomName="string" minCount="int" maxCount="int" inRoom="bool" inRoomCount="int" outRoom="bool" outRoomCount="int" items1="int" items1Min="int" items1Max="int" items2="int" items2Min="int" itemsMax="int" />
+    <BigRoom ID="10201" roomName="BigRoom" minCount="2" maxCount="4" inRoom="FALSE" inRoomCount="0" outRoom="TRUE" outRoomCount="1" items1="11002" items1Min="1" items1Max="3" items2="11003" items2Min="2" itemsMax="4" />
+    <MiddleRoom ID="10202" roomName="MiddleRoom" minCount="2" maxCount="4" inRoom="TRUE" inRoomCount="1" outRoom="TRUE" outRoomCount="1" items1="11002" items1Min="1" items1Max="1" items2="11003" items2Min="1" itemsMax="3" />
+    <MiddleRoom1 ID="10203" roomName="MiddleRoom1" minCount="2" maxCount="4" inRoom="TRUE" inRoomCount="1" outRoom="FALSE" outRoomCount="0" items1="11002" items1Min="1" items1Max="3" items2="11003" items2Min="0" itemsMax="1" />
+    <SmallRoom ID="10204" roomName="SmallRoom" minCount="1" maxCount="2" inRoom="FALSE" inRoomCount="0" outRoom="FALSE" outRoomCount="0" items1="11002" items1Min="1" items1Max="3" items2="11003" items2Min="0" itemsMax="1" />
+  </lv2>
+  <lv3>
+    <string ID="int" roomName="string" minCount="int" maxCount="int" inRoom="bool" inRoomCount="int" outRoom="bool" outRoomCount="int" items1="int" items1Min="int" items1Max="int" items2="int" items2Min="int" items2Max="int" />
+    <BigRoom ID="10201" roomName="BigRoom" minCount="2" maxCount="4" inRoom="FALSE" inRoomCount="0" outRoom="TRUE" outRoomCount="1" items1="11002" items1Min="1" items1Max="3" items2="11003" items2Min="2" items2Max="4" />
+    <BigRoom1 ID="10202" roomName="BigRoom1" minCount="2" maxCount="4" inRoom="FALSE" inRoomCount="0" outRoom="FALSE" outRoomCount="0" items1="11002" items1Min="1" items1Max="3" items2="11003" items2Min="2" items2Max="4" />
+    <MiddleRoom ID="10203" roomName="MiddleRoom" minCount="2" maxCount="4" inRoom="TRUE" inRoomCount="1" outRoom="TRUE" outRoomCount="1" items1="11002" items1Min="1" items1Max="1" items2="11003" items2Min="1" items2Max="3" />
+    <MiddleRoom1 ID="10204" roomName="MiddleRoom1" minCount="2" maxCount="4" inRoom="TRUE" inRoomCount="1" outRoom="FALSE" outRoomCount="0" items1="11002" items1Min="1" items1Max="3" items2="11003" items2Min="0" items2Max="1" />
+    <SmallRoom ID="10205" roomName="SmallRoom" minCount="1" maxCount="2" inRoom="FALSE" inRoomCount="0" outRoom="FALSE" outRoomCount="0" items1="11002" items1Min="1" items1Max="3" items2="11003" items2Min="0" items2Max="1" />
+  </lv3>
+</levels>

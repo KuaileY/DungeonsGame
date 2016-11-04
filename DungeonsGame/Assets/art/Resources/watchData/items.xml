@@ -1,0 +1,14 @@
+<items>
+  <creature>
+    <string ID="int" Name="string" Room="int,int" Position="int,int,vector3" Interactive="trigger" Dir="vector2" Pool="inPools" Asset="string" Controlable="trigger" />
+    <player ID="11001" Name="player" Room="0,0" Position="0,0,0|0|0" Interactive="1" Dir="0|0" Pool="Core" Asset="GameElements/Player" Controlable="1" />
+    <obstacle ID="11002" Name="obstacle" Room="0,0" Position="0,0,0|0|0" Interactive="1" Dir="0|0" Pool="Core" Asset="GameElements/Food" Controlable="null" />
+    <door ID="11003" Name="door" Room="0,0" Position="0,0,0|0|0" Interactive="1" Dir="0|0" Pool="Core" Asset="Items/door_close" Controlable="null" />
+  </creature>
+  <item>
+    <string ID="int" Name="string" Room="int,int" Position="int,int,vector3" Interactive="trigger" Dir="vector2" Pool="string" Asset="string" Controlable="trigger" />
+  </item>
+  <equipment>
+    <string ID="int" Name="string" Room="int,int" Position="int,int,vector3" Interactive="trigger" Dir="vector2" Pool="string" Asset="string" Controlable="trigger" />
+  </equipment>
+</items>

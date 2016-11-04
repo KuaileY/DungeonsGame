@@ -1,4 +1,5 @@
-﻿using Entitas;
+﻿using System;
+using Entitas;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,10 +14,8 @@ public class GameStartSystem:IInitializeSystem,ISetPools,IReactiveSystem
     public void Initialize()
     {
         //一些初始化的东西
-        //加载文件管理
-        _pools.input.CreateEntity().AddFileList(new Dictionary<string, System.Xml.XmlDocument>());
-        //加载房间配置
-        _pools.input.CreateEntity().AddXML(Res.RoomsXml);
+        //加载配置文件
+        loadConfig();
         //创建保持对象
         _pools.input.CreateEntity().AddHolder(new Dictionary<Res.InPools, UnityEngine.Transform>());
         //建立数据
@@ -26,6 +25,7 @@ public class GameStartSystem:IInitializeSystem,ISetPools,IReactiveSystem
         _pools.core.CreateEntity()
             .IsCamera(true)
             .AddView(camera.GetComponent<ViewController>());
+
     }
 
     public void Execute(List<Entity> entities)
@@ -43,8 +43,25 @@ public class GameStartSystem:IInitializeSystem,ISetPools,IReactiveSystem
             _pools.core.CreateEntity().AddDungeon(1);
         }
         entities.SingleEntity().IsDestroy(true);
+
+        //检查数据正确否
+        _pools.input.CreateEntity().IsWatch(true);
     }
 
+    void loadConfig()
+    {
+        //加载文件管理
+        _pools.input.CreateEntity().AddFileList(new Dictionary<string, System.Xml.XmlDocument>());
+        //加载房间配置
+        _pools.input.CreateEntity().AddXML(Res.RoomsXml);
 
+        foreach (var item in Enum.GetValues(typeof(Res.configs)))
+        {
+            string path = Res.dataBasePath + item + Res.xlsxExtension;
+            ExcelExtension.readExcel(path,_pools.input);
+        }
+
+
+    }
 }
 

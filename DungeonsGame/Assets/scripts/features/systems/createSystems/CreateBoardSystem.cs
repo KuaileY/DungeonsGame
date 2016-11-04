@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Xml;
 using Entitas;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -18,6 +19,11 @@ public class CreateBoardSystem : IReactiveSystem, ISetPools
     Transform _trans;
     //当前画布
     SingleGrid _grid;
+    //房间总数
+    int _total;
+    //当前房间
+    int _curRoomId;
+    List<string> _roomList=new List<string>();
     public void SetPools(Pools pools)
     {
         _pools = pools;
@@ -26,11 +32,40 @@ public class CreateBoardSystem : IReactiveSystem, ISetPools
     public void Execute(List<Entity> entities)
     {
         TestLoadConfig.log.Trace("CreateBoardSystem Execute");
+        init(entities);
+        int floor = _pools.board.gameBoard.floor;
+        createBoard(floor);
+    }
+
+    void init(List<Entity> entities)
+    {
         _trans = _pools.input.holder.poolDic[entities[0].pool.name];
         _grid = BoardExtension.createGrid(Res.columns, Res.rows, Res.maps[0]);
         LevelData.grids.Add(_grid);
-        int floor = _pools.board.gameBoard.floor;
-        createBoard(floor);
+        var levels = _pools.input.fileList.fileDic["levels"].SelectSingleNode("levels");
+        string name = "lv" + _pools.board.gameBoard.floor;
+        XmlElement curLevelData = null;
+        foreach (XmlElement node in levels.ChildNodes )
+        {
+            if (node.Name == name)
+            {
+                curLevelData = node;
+                break;
+            }
+        }
+        if (curLevelData == null)
+            throw new Exception("createBoardSystem init is wrong!");
+
+        for (int i = 1; i < curLevelData.ChildNodes.Count ; i++)
+        {
+            XmlElement item = (XmlElement)curLevelData.ChildNodes[i];
+            int num = Random.Range(int.Parse(item.GetAttribute("minCount")), int.Parse(item.GetAttribute("maxCount")));
+            for (int j = 0; j <= num; j++)
+            {
+                _roomList.Add(item.GetAttribute("roomName"));
+            }
+        }
+        _total = _roomList.Count;
     }
 
     void createBoard(int floor)
@@ -42,7 +77,7 @@ public class CreateBoardSystem : IReactiveSystem, ISetPools
 
     void createAfterRooms()
     {
-        while (_roomCount <= Res.roomCount)
+        while (_roomCount <= _total)
             createFeature(randomName());
     }
 
@@ -267,13 +302,16 @@ public class CreateBoardSystem : IReactiveSystem, ISetPools
         int width, height;
         RoomExtension.setWH(out width, out height, roomName, _pools.input.fileList.fileDic[Res.RoomsXml]);
         BuildRoom(roomName, width, height,pos);
+        _roomList.RemoveAt(_curRoomId);
         _roomCount++;
     }
 
     string randomName()
     {
-        int length = Enum.GetNames(typeof(Res.Rooms)).Length;
-        return Enum.GetName(typeof(Res.Rooms), UnityEngine.Random.Range(0, length));
+        int length = _roomList.Count;
+        _curRoomId = UnityEngine.Random.Range(0, length);
+        string name = _roomList[_curRoomId];
+        return name;
     }
 
     void BuildRoom(string name, int width, int height,Vector2 pos)

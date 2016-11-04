@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<rooms>
+  <room name="BigRoom" width="16" height="14" />
+  <room name="BigRoom1" width="18" height="12" />
+  <room name="MiddleRoom" width="12" height="10" />
+  <room name="MiddleRoom1" width="8" height="14" />
+  <room name="SmallRoom" width="10" height="10" />
+</rooms>

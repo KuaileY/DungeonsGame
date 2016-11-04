@@ -87,6 +87,7 @@ public sealed class GameSaveSystem:IReactiveSystem,ISetPools
                 XmlElement baseFloorE = (XmlElement)roomE.AppendChild(xdoc.CreateElement("baseFloor"));
                 XmlElement dataE = (XmlElement) roomE.AppendChild(xdoc.CreateElement("data"));
                 XmlElement itemsE = (XmlElement) roomE.AppendChild(xdoc.CreateElement("items"));
+                
                 baseFloorE.SetAttribute("encoding", "csv");
                 dataE.SetAttribute("encoding", "csv");
                 #region baseFloorE

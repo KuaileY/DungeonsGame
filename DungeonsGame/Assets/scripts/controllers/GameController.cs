@@ -1,10 +1,11 @@
 ﻿using Entitas;
+using Entitas.Unity.Serialization.Blueprints;
 using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
     Systems _systems;
-	void Start ()
+    void Start ()
 	{
 	    var pools = Pools.sharedInstance;
 	    pools.SetAllPools();
@@ -26,9 +27,7 @@ public class GameController : MonoBehaviour
 
     Systems createSystems(Pools pools)
     {
-        return new Feature("Systems")
-            //Test
-            .Add(pools.CreateSystem(new TestSystem()))
+        return new Feature("Systems")     
             //input
             .Add(pools.input.CreateSystem(new InputSystem()))
             .Add(pools.input.CreateSystem(new ProcessInputSystem()))
@@ -42,8 +41,8 @@ public class GameController : MonoBehaviour
             .Add(pools.CreateSystem(new DungeonItemsCacheSystem()))
             .Add(pools.board.CreateSystem(new CreateBoardSystem()))
             .Add(pools.board.CreateSystem(new LoadBoardSystem()))
-            .Add(pools.core.CreateSystem(new DungeonSystem()))
-            //behaviour
+            .Add(pools.core.CreateSystem(new CreateItemsSystem()))
+            //behavior
             .Add(pools.input.CreateSystem(new TurnSystem()))
             .Add(pools.core.CreateSystem(new MoveSystem()))
             //game logic
@@ -53,6 +52,10 @@ public class GameController : MonoBehaviour
             .Add(pools.CreateSystem(new RenderPositionSystem()))
             // Destroy
             .Add(pools.CreateSystem(new DestroyEntitySystem()))
+
+            //Test
+            //.Add(pools.CreateSystem(new TestSystem()))
+            .Add(pools.input.CreateSystem(new WatchDataSystem()))
             ;
     }
 }
