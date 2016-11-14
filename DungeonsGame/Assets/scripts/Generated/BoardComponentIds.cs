@@ -10,20 +10,22 @@ public static class BoardComponentIds {
 
     public const int Destroy = 0;
     public const int Holder = 1;
-    public const int Asset = 2;
-    public const int Pool = 3;
-    public const int Position = 4;
-    public const int View = 5;
-    public const int ViewObjectPool = 6;
-    public const int GameBoard = 7;
-    public const int LoadBoard = 8;
-    public const int Sprite = 9;
+    public const int Test = 2;
+    public const int Asset = 3;
+    public const int Pool = 4;
+    public const int Position = 5;
+    public const int View = 6;
+    public const int ViewObjectPool = 7;
+    public const int GameBoard = 8;
+    public const int LoadBoard = 9;
+    public const int Sprite = 10;
 
-    public const int TotalComponents = 10;
+    public const int TotalComponents = 11;
 
     public static readonly string[] componentNames = {
         "Destroy",
         "Holder",
+        "Test",
         "Asset",
         "Pool",
         "Position",
@@ -37,6 +39,7 @@ public static class BoardComponentIds {
     public static readonly System.Type[] componentTypes = {
         typeof(DestroyComponent),
         typeof(HolderComponent),
+        typeof(TestComponent),
         typeof(AssetComponent),
         typeof(PoolComponent),
         typeof(PositionComponent),

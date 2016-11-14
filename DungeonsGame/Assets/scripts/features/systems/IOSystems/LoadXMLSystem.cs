@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Xml;
+using System.Xml.Linq;
 using Entitas;
 using UnityEngine;
 
@@ -16,8 +16,7 @@ public sealed class LoadXMLSystem:IReactiveSystem,ISetPool
         foreach (var e in entities)
         {
             TextAsset textAsset = Resources.Load<TextAsset>(e.xML.name);
-            var _roomsXml = new XmlDocument();
-            _roomsXml.LoadXml(textAsset.text);
+            var _roomsXml = XDocument.Parse(textAsset.text);
             _pool.fileList.fileDic.Add(e.xML.name, _roomsXml);
             e.isDestroy = true;
         }

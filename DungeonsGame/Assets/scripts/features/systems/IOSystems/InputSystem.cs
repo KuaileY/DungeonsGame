@@ -1,7 +1,7 @@
 ﻿using Entitas;
 using UnityEngine;
 
-public sealed class InputSystem : ISetPool, IExecuteSystem, ICleanupSystem
+public sealed class InputSystem : ISetPool, IExecuteSystem
 {
     Pool _pool;
     Group _inputs;
@@ -42,12 +42,5 @@ public sealed class InputSystem : ISetPool, IExecuteSystem, ICleanupSystem
         }
     }
 
-    public void Cleanup()
-    {
-        foreach (var e in _inputs.GetEntities())
-        {
-            _pool.DestroyEntity(e);
-        }
-    }
 }
 

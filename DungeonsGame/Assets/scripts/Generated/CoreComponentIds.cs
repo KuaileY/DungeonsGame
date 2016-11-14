@@ -10,27 +10,29 @@ public static class CoreComponentIds {
 
     public const int Destroy = 0;
     public const int Holder = 1;
-    public const int Asset = 2;
-    public const int Pool = 3;
-    public const int Position = 4;
-    public const int View = 5;
-    public const int ViewObjectPool = 6;
-    public const int Camera = 7;
-    public const int Controlable = 8;
-    public const int Dir = 9;
-    public const int Dungeon = 10;
-    public const int DungeonItemsCache = 11;
-    public const int Interactive = 12;
-    public const int ItemBoard = 13;
-    public const int Movable = 14;
-    public const int Move = 15;
-    public const int Room = 16;
+    public const int Test = 2;
+    public const int Asset = 3;
+    public const int Pool = 4;
+    public const int Position = 5;
+    public const int View = 6;
+    public const int ViewObjectPool = 7;
+    public const int Camera = 8;
+    public const int Controlable = 9;
+    public const int Dir = 10;
+    public const int Dungeon = 11;
+    public const int DungeonItemsCache = 12;
+    public const int Interactive = 13;
+    public const int ItemBoard = 14;
+    public const int Movable = 15;
+    public const int Move = 16;
+    public const int Room = 17;
 
-    public const int TotalComponents = 17;
+    public const int TotalComponents = 18;
 
     public static readonly string[] componentNames = {
         "Destroy",
         "Holder",
+        "Test",
         "Asset",
         "Pool",
         "Position",
@@ -51,6 +53,7 @@ public static class CoreComponentIds {
     public static readonly System.Type[] componentTypes = {
         typeof(DestroyComponent),
         typeof(HolderComponent),
+        typeof(TestComponent),
         typeof(AssetComponent),
         typeof(PoolComponent),
         typeof(PositionComponent),

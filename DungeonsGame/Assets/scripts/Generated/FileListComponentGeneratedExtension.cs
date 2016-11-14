@@ -15,13 +15,13 @@ namespace Entitas {
         public FileListComponent fileList { get { return (FileListComponent)GetComponent(InputComponentIds.FileList); } }
         public bool hasFileList { get { return HasComponent(InputComponentIds.FileList); } }
 
-        public Entity AddFileList(System.Collections.Generic.Dictionary<string, System.Xml.XmlDocument> newFileDic) {
+        public Entity AddFileList(System.Collections.Generic.Dictionary<string, System.Xml.Linq.XDocument> newFileDic) {
             var component = CreateComponent<FileListComponent>(InputComponentIds.FileList);
             component.fileDic = newFileDic;
             return AddComponent(InputComponentIds.FileList, component);
         }
 
-        public Entity ReplaceFileList(System.Collections.Generic.Dictionary<string, System.Xml.XmlDocument> newFileDic) {
+        public Entity ReplaceFileList(System.Collections.Generic.Dictionary<string, System.Xml.Linq.XDocument> newFileDic) {
             var component = CreateComponent<FileListComponent>(InputComponentIds.FileList);
             component.fileDic = newFileDic;
             ReplaceComponent(InputComponentIds.FileList, component);
@@ -39,7 +39,7 @@ namespace Entitas {
         public FileListComponent fileList { get { return fileListEntity.fileList; } }
         public bool hasFileList { get { return fileListEntity != null; } }
 
-        public Entity SetFileList(System.Collections.Generic.Dictionary<string, System.Xml.XmlDocument> newFileDic) {
+        public Entity SetFileList(System.Collections.Generic.Dictionary<string, System.Xml.Linq.XDocument> newFileDic) {
             if(hasFileList) {
                 throw new EntitasException("Could not set fileList!\n" + this + " already has an entity with FileListComponent!",
                     "You should check if the pool already has a fileListEntity before setting it or use pool.ReplaceFileList().");
@@ -49,7 +49,7 @@ namespace Entitas {
             return entity;
         }
 
-        public Entity ReplaceFileList(System.Collections.Generic.Dictionary<string, System.Xml.XmlDocument> newFileDic) {
+        public Entity ReplaceFileList(System.Collections.Generic.Dictionary<string, System.Xml.Linq.XDocument> newFileDic) {
             var entity = fileListEntity;
             if(entity == null) {
                 entity = SetFileList(newFileDic);

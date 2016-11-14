@@ -1,8 +1,12 @@
 ﻿
+using System;
 using System.IO;
 using System.Xml;
 using Entitas;
+using NPOI.SS.UserModel;
 using OfficeOpenXml;
+using SQLite4Unity3d;
+using UniRx;
 using UnityEngine;
 
 
@@ -48,46 +52,44 @@ public static class ExcelExtension
         }
     }
 
-    public static void readExcel(string file,Pool pool)
+    public static void readExcel(string file, Pool pool, SQLiteConnection db)
     {
-        XmlDocument xdoc = new XmlDocument();
-        string[] names = file.Split('/');
-        string name = names[names.Length - 1].Split('.')[0];
-
-        var root = xdoc.AppendChild(xdoc.CreateElement(name));
         var bytes = File.ReadAllBytes(file);
         var workbook = GetWorkbook(bytes);
-        for (int i = 0; i < workbook.NumberOfSheets; i++)
-        {
-            var sheet= workbook.GetSheetAt(i);
-            var node1 = root.AppendChild(xdoc.CreateElement(sheet.SheetName));
-
-            var titles = sheet.GetRow(0);
-            var types = sheet.GetRow(1);
-            int rows = sheet.LastRowNum;
-            int columns = titles.LastCellNum;
-            for (int j = 1; j <= rows; j++)
+        //只读取第一页
+        var sheet = workbook.GetSheetAt(0);
+        var name = "config" + sheet.SheetName;
+        //删除原始表
+        db.Execute(string.Format("drop table if exists {0}", name));
+        //创建表
+        sheet.GetRow(0).ToObservable()
+            .Zip(sheet.GetRow(1).ToObservable(), (lhs, rhs) => string.Format("{0} {1}", lhs, rhs))
+            .ToArray<string>()
+            .Subscribe(xx =>
             {
-                if (sheet.GetRow(j).GetCell(0).ToString() == "")
-                    break;
-                XmlElement node2 = (XmlElement)node1.AppendChild(xdoc.CreateElement(sheet.GetRow(j).GetCell(1).ToString()));
-                for (int k = 0; k < columns; k++)
-                {
-                    if (sheet.GetRow(j).GetCell(k).ToString() == "")
-                        break;
-                    node2.SetAttribute(titles.GetCell(k).ToString(),sheet.GetRow(j).GetCell(k).ToString());
-                }
-            }
-        }
-
-        pool.fileList.fileDic.Add(name, xdoc);
-
-        //         var row = sheet.GetRow(0);
-        //         var cell = row.GetCell(0);
-        //         cell.SetCellType(NPOI.SS.UserModel.CellType.String);
-        //         var txt = cell.StringCellValue;
-        //         Debug.Log(txt);
-
+                var query = string.Format("create table {0} ( {1} );", name,
+                    xx.ConvertStringArrayToString(Res.xlsType.title));
+                db.Execute(query);
+            });
+        //插入数据
+        db.BeginTransaction();
+        Observable.Range(2, sheet.LastRowNum - 1)
+            .Where(x => sheet.GetRow(x).GetCell(0).ToString() != string.Empty)
+            .Select(x => sheet.GetRow(x))
+            .Do(x =>
+            {
+                x.ToObservable()
+                    .Select(y => y.ToString())
+                    .ToArray<string>()
+                    .Subscribe(yy =>
+                    {
+                        var query = string.Format("insert into {0} values({1});", name,
+                            yy.ConvertStringArrayToString(Res.xlsType.data));
+                        db.Execute(query);
+                    });
+            })
+            .Subscribe();
+        db.Commit();
 
     }
 

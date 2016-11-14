@@ -5,53 +5,20 @@ using UnityEngine;
 
 #region Data----
 //levelData---------------
+public enum Direction
+{
+    center,north,east,south,west
+}
 public enum TileType
 {
-    empty, floor, wall_in, wall_out, door, corner, roof, water, stairDown, stairUp, Obstacle, Normal,
-}
-public struct SingleRoom
-{
-    public string name;
-    public Vector2 dir;
-    public int id;
-    public int width;
-    public int height;
-    public Vector2 pos;
-    public TileType[,] grid;
-    public GameObject[,] tiles;
-    public int[] data;
-}
-public struct SingleGrid
-{
-    public List<SingleRoom> rooms;
-    public  Tile[,] grids;
-    public string name;
-    public int width;
-    public int height;
-    public struct Tile
-    {
-        public int roomID;
-        public int roomX;
-        public int roomY;
-        public TileType type;
-    }
-}
-public struct LevelData
-{
-    public static List<SingleGrid> grids;
-}
-//itemsData--------------
-public struct SingleItem
-{
-    public int id;
-    public int dungeonId;
-    public Res.InPools inPool;
-    public Dictionary<Component, Object> status;
+    nul,empty, floor, wall_in, wall_out, door, corner, roof, water, stairDown, stairUp, Obstacle, Normal
 }
 
-public struct ItemsData
+public struct Grids
 {
-    public static HashSet<SingleItem> items;
+    public int RoomId;
+    public string RoomName;
+    public TileType Tiletype;
 }
 #endregion
 
@@ -71,12 +38,17 @@ public static class Res
     public const float moveTime = 0.3f;
 
     #region configs----
-    public static readonly string dataBasePath = dataPath+ "/art/Resources/database/";
+    public static readonly string configPath = dataPath+ "/art/Resources/database/";
     public const string xlsxExtension = ".xlsx";
     public enum configs
     {
-        items,
         levels,
+    }
+
+    public enum xlsType
+    {
+        title,
+        data,
     }
     #endregion
 
@@ -92,6 +64,7 @@ public static class Res
         string.Empty;  
 #endif
 
+    public const string dbName = "database.sqlite3";
     public enum Files
     {
         levelData,
@@ -100,17 +73,10 @@ public static class Res
     #endregion
 
     #region Board----
-    public const int columns = 80;
-    public const int rows       = 80;
-    public const int roomCount = 3;
-    public const string RoomsXml = "database/dungeon_rooms";
+    public const int columns = 90;
+    public const int rows       = 90;
     public static string RoomsPath = "Tmxs/";
 
-
-    public enum Rooms
-    {
-        BigRoom, BigRoom1, MiddleRoom, MiddleRoom1, SmallRoom,
-    }
 
     public static readonly char[] TileTypeChar =
     {

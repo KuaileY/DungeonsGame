@@ -43,11 +43,11 @@ public sealed class TurnSystem : IReactiveSystem, ISetPools
     {
         _roomId = _player.room.roomId;
         _oldRoomId = _roomId;
-        if (TurnExtension.outsideRoom((int)pos.x, (int)pos.y, _pools.core.itemBoard.roomList.rooms[_oldRoomId]))
-        {
-            Debug.Log("input roomid:" + _pools.input.input.roomId);
-            _roomId = _pools.input.input.roomId - 1;
-        }
+//         if (TurnExtension.outsideRoom((int)pos.x, (int)pos.y, _pools.core.itemBoard.roomList.rooms[_oldRoomId]))
+//         {
+//             Debug.Log("input roomid:" + _pools.input.input.roomId);
+//             _roomId = _pools.input.input.roomId - 1;
+//         }
         _player.ReplaceRoom(_roomId, _oldRoomId);
     }
 

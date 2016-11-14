@@ -10,29 +10,33 @@ public static class InputComponentIds {
 
     public const int Destroy = 0;
     public const int Holder = 1;
-    public const int ActiveTurn = 2;
-    public const int FileList = 3;
-    public const int Input = 4;
-    public const int Load = 5;
-    public const int LoadGame = 6;
-    public const int NewGame = 7;
-    public const int Save = 8;
-    public const int SpriteList = 9;
-    public const int Tick = 10;
-    public const int Watch = 11;
-    public const int XML = 12;
+    public const int Test = 2;
+    public const int ActiveTurn = 3;
+    public const int FileList = 4;
+    public const int Input = 5;
+    public const int Load = 6;
+    public const int LoadGame = 7;
+    public const int NewGame = 8;
+    public const int RuntimeData = 9;
+    public const int Save = 10;
+    public const int SpriteList = 11;
+    public const int Tick = 12;
+    public const int Watch = 13;
+    public const int XML = 14;
 
-    public const int TotalComponents = 13;
+    public const int TotalComponents = 15;
 
     public static readonly string[] componentNames = {
         "Destroy",
         "Holder",
+        "Test",
         "ActiveTurn",
         "FileList",
         "Input",
         "Load",
         "LoadGame",
         "NewGame",
+        "RuntimeData",
         "Save",
         "SpriteList",
         "Tick",
@@ -43,12 +47,14 @@ public static class InputComponentIds {
     public static readonly System.Type[] componentTypes = {
         typeof(DestroyComponent),
         typeof(HolderComponent),
+        typeof(TestComponent),
         typeof(ActiveTurnComponent),
         typeof(FileListComponent),
         typeof(InputComponent),
         typeof(LoadComponent),
         typeof(LoadGameComponent),
         typeof(NewGameComponent),
+        typeof(RuntimeDataComponent),
         typeof(SaveComponent),
         typeof(SpriteListComponent),
         typeof(TickComponent),

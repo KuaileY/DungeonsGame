@@ -14,10 +14,6 @@ public sealed class ProcessInputSystem :ISetPools,IReactiveSystem
 
     public void Execute(List<Entity> entities)
     {
-        var inputEntity = entities.SingleEntity();
-        var input = inputEntity.input;
-
-
         //激活当前回合（触发TrunSystem)
         _pools.input.isActiveTurn = true;
     }

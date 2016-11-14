@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using System.Xml;
+using System.Xml.Linq;
 using Entitas;
 public sealed class GameLoadSystem : ISetPools, IReactiveSystem
 {
@@ -42,8 +42,7 @@ public sealed class GameLoadSystem : ISetPools, IReactiveSystem
             else
             {
                 string levelData = LoadElement(path.ToString(), Res.Files.levelData.ToString());
-                XmlDocument xdoc = new XmlDocument();
-                xdoc.LoadXml(levelData);
+                XDocument xdoc = XDocument.Parse(levelData);
                 _pools.input.fileList.fileDic.Add("levelData", xdoc);
                 return true;
             }

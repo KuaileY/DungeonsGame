@@ -6,6 +6,5 @@ using UnityEngine;
 [Core,SingleEntity]
 public sealed class ItemBoardComponent : IComponent
 {
-    public SingleGrid roomList;
 }
 
