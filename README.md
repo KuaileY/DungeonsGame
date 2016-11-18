@@ -7,6 +7,11 @@
 
 [gitter 讨论房间](https://gitter.im/DungeonsGame/Lobby)
 
+[美术资源enemy](http://opengameart.org/content/sideview-pixel-art-rpg-enemy-sprites)
+
+[美术资源tiles](https://forums.tigsource.com/index.php?topic=14166.0)
+
+
 ---
 整体模块
 ---
