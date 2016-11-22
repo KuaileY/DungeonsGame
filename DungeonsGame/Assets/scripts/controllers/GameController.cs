@@ -40,7 +40,6 @@ public class GameController : MonoBehaviour
             //.Add(pools.CreateSystem(new UISystem()))
             .Add(pools.board.CreateSystem(new CreateBackgroundSystem()))
             //.Add(pools.CreateSystem(new DungeonItemsCacheSystem()))
-            //.Add(pools.board.CreateSystem(new CreateBoardSystem()))
             //.Add(pools.board.CreateSystem(new LoadBoardSystem()))
             //.Add(pools.core.CreateSystem(new CreateItemsSystem()))
             //behavior

@@ -5,18 +5,15 @@ using UnityEngine;
 
 #region Data----
 //levelData---------------
-public enum Direction
-{
-    center,north,east,south,west
-}
 public enum TileType
 {
-    nul,empty, floor, wall_in, wall_out, door, corner, roof, water, stairDown, stairUp, Obstacle, Normal
+    nul,empty, floor, wall_in, wall_out, door, corner, roof, water, stairDown, stairUp, obstacle, Normal
 }
 
 public struct Grids
 {
     public int RoomId;
+    public int RoomHierarchy;
     public string RoomName;
     public TileType Tiletype;
 }
@@ -34,8 +31,16 @@ public static class Res
     }
     #endregion
 
+    #region path----
     public static string dataPath = Application.dataPath;
+    public static string editorPath = "Assets/art/Resources/";
+    public static string PrefabPath = "Prefabs/";
+    public static string AnimationControllerPath = "Animation/AnimatorControllers/";
+    public static string AnimationPath = "Animation/Animations/";
+    //加载地图
+    public static string mapsTexturePath = "Sprites/dungeon/";
     public const float moveTime = 0.3f;
+    #endregion
 
     #region configs----
     public static readonly string configPath = dataPath+ "/art/Resources/database/";
@@ -43,6 +48,15 @@ public static class Res
     public enum configs
     {
         levels,
+    }
+
+    public enum roomType
+    {
+        main,
+        common,
+        boss,
+        shop,
+        chest
     }
 
     public enum xlsType
@@ -106,8 +120,7 @@ public static class Res
     #endregion
 
     #region Maps----
-    public static string PrefabPath = "Prefabs/";
-    public static string mapsTexturePath = "Sprites/dungeon/";
+
 
     public static readonly string[] maps =
     {

@@ -60,7 +60,7 @@ namespace SyncDeploy
             process.OutputDataReceived += (sender, args1) => System.Console.WriteLine(args1.Data);
             process.ErrorDataReceived += (sender, args2) => System.Console.WriteLine(args2.Data);
 
-            bool processStarted = process.Start();
+            //bool processStarted = process.Start();
             process.BeginOutputReadLine();
             process.BeginErrorReadLine();
 

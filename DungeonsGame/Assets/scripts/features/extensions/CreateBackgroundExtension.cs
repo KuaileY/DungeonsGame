@@ -22,65 +22,103 @@ public static class CreateBackgroundExtension
         return null;
     }
 
-    public static void CreateBackground(List<Tables.Background> backgroundData,Pools pools,int floor,string map)
+    public static void CreateBackground(List<Tables.Background> backgroundData,Pools pools,int floor)
     {
         var grids = new Grids[Res.columns, Res.rows];
         //创建关卡
         if (backgroundData == null)
-            buildBackround(pools,floor,map, grids);
+            buildBackround(pools,floor, grids);
         else
-            loadBackground(pools, floor, map);
+            loadBackground(pools, floor);
     }
 
-    private static void buildBackround(Pools pools,int floor,string map, Grids[,] grids)
+    private static void buildBackround(Pools pools, int floor, Grids[,] grids)
     {
         var db = pools.input.runtimeData.db;
         var configLevel = db.Table<ConfigLevel>();
-        var roomList = new List<ConfigLevel>();
+        var roomList = null ?? new List<ConfigLevel>();
+        var specialRoomList = null ?? new List<ConfigLevel>();
+        specialRoomList.Clear();
+        roomList.Clear();
+
+        var num = 0;
+        var prob = new List<int>();
+        var tempList = new List<ConfigLevel>();
+        var count = 0;
         configLevel.ToObservable()
             .Where(x => x.Level == floor)
             .Do(x =>
             {
-                int num = UnityEngine.Random.Range(x.MinCount, x.MaxCount);
-                Observable.Range(0, num).Do(y =>
+                if (x.Probability >=100)
                 {
-                    var tmp = new ConfigLevel();
-                    tmp.RoomName = x.RoomName;
-                    tmp.Width = x.Width;
-                    tmp.Height = x.Height;
-                    roomList.Add(tmp);
-                }).Subscribe();
+                    num += x.Probability;
+                    prob.Add(num);
+                }
+
+                var tmp = new ConfigLevel();
+                tmp.RoomName = x.RoomName;
+                tmp.Type = x.Type;
+                tmp.Width = x.Width;
+                tmp.Height = x.Height;
+                tmp.Image = x.Image;
+                tmp.Probability = x.Probability;
+                tempList.Add(tmp);
+
+                count = x.TotalCount;
             })
             .Subscribe();
 
-        roomList = roomList.RandomSortList<ConfigLevel>();
+        //创建普通房间
+        for (int i = 0; i < count; i++)
+        {
+            var key = UnityEngine.Random.Range(1, prob[prob.Count - 1]);
+            var item = prob.Find(key);
+            roomList.Add(tempList[item]);
+        }
+
+        //创建特殊房间
+        var rand = UnityEngine.Random.Range(1, 4);
+        tempList.ToObservable()
+            .Where(x => x.Probability < 100)
+            .Do(x =>
+            {
+                if (x.Type == Res.roomType.shop.ToString())
+                    roomList.Add(x);
+                if (x.Type == Res.roomType.chest.ToString() && rand == x.Probability)
+                    roomList.Add(x);
+                if (x.Type == Res.roomType.boss.ToString() && rand == x.Probability)
+                    roomList.Add(x);
+            })
+            .Subscribe();
+
 
         var positionList = null ?? new List<Vector2>();
         positionList.Clear();
         var roomCount = 1;
         var dir = new Vector2(0, 0);
         var doorPos = new Vector2(-1, -1);
+
         foreach (var room in roomList)
         {
-            CreateRoom(ref dir,ref doorPos,pools,room,positionList,roomCount,map, grids);
+            CreateRoom(ref dir,ref doorPos,pools,room,positionList,roomCount, grids);
             if (dir.x != 0 || dir.y != 0)
             {
                 if (doorPos.x == -1)
                     throw new Exception("CreateBackgroundExtension buildBackround doorPos is wrong!");
-                CreateAisle(dir,doorPos,grids,room,pools,map);
+                CreateAisle(dir,doorPos,grids,room,pools);
             }
             roomCount++;
         }
-        roomList.Clear();
+
     }
 
-    static void CreateAisle(Vector2 dir, Vector2 doorPos, Grids[,] grids, ConfigLevel room, Pools pools, string map)
+    static void CreateAisle(Vector2 dir, Vector2 doorPos, Grids[,] grids, ConfigLevel room, Pools pools)
     {
         var top = new Vector2(0, 1);
         var bottom = new Vector2(0, -1);
         var left = new Vector2(-1, 0);
         var right = new Vector2(1, 0);
-
+        var map = room.Image;
         SetTile(grids, doorPos, pools, map);
         if (dir.y == 1)
         {
@@ -140,16 +178,13 @@ public static class CreateBackgroundExtension
             sp = UnityEngine.Random.Range(0, 7);
             grid.Tiletype = TileType.floor;
         }
-        var go = GetGameObject(grid.RoomId, grid.RoomName, pos);
+        var go = GetGameObject(grid.RoomId, grid.RoomHierarchy,grid.RoomName, pos);
         go.GetComponent<SpriteRenderer>().sprite = pools.input.spriteList.sprites[map][sp];
     }
 
-    private static void CreateRoom(ref Vector2 dir,ref Vector2 doorPos,Pools pools,ConfigLevel room,List<Vector2> pList,int roomCount,string sprite, Grids[,] grids)
+    private static void CreateRoom(ref Vector2 dir,ref Vector2 doorPos,Pools pools,ConfigLevel room,List<Vector2> pList,int roomCount, Grids[,] grids)
     {
-        //
-        GameObject go = new GameObject(roomCount + "_" + room.RoomName);
-        go.transform.SetParent(pools.input.holder.poolDic[Res.InPools.Board]);
-
+        //选择门的位置，和下一个房间起始位置
         int x=-1, y=-1;
         int count=0;
         do
@@ -159,26 +194,31 @@ public static class CreateBackgroundExtension
             SetOriginPoint(ref x, ref y, dir, room);
             count++;
         } while (!CheckArea(x, y,room, grids) && count<5000);
-
+        //检查选择函数是否出错
         if (x == -1||count==5000)
             throw new Exception("CreateBackgroundExtension SetOriginPoint is wrong!");
-
-        //var range = String.Format("range:{0},{1},{2},{3}", x, y, room.Width + x, room.Height + y);
-        //range.print();
-        //dir.print();
-
+        //上方的需要向下移动两格
         if (dir.y == 1)
             y -= 2;
-
+        //当前层次
+        int roomHierarchy;
+        if (roomCount == 1)
+            roomHierarchy = roomCount;
+        else
+            roomHierarchy = grids[(int)doorPos.x, (int)doorPos.y].RoomHierarchy + 1;
+        //建立保持对象
+        GameObject go = new GameObject(roomCount + "_" + roomHierarchy + "_" + room.RoomName);
+        go.transform.SetParent(pools.input.holder.poolDic[Res.InPools.Board]);
+        //根据图层创建房间
         TileMap map = TmxLoader.Parse(Res.RoomsPath + room.RoomName);
         foreach (var layer in map.Layers)
         {
-            BuildLayer(layer, room, x, y, pList, go, roomCount, pools, sprite, grids,dir);
+            BuildLayer(layer, room, x, y, pList, go, roomCount, pools, grids,dir, roomHierarchy);
         }
 
     }
 
-    static void BuildLayer(TiledLayer layer, ConfigLevel room, int x, int y, List<Vector2> pList, GameObject go,int roomCount,Pools pools,string sprite, Grids[,] grids,Vector2 dir)
+    static void BuildLayer(TiledLayer layer, ConfigLevel room, int x, int y, List<Vector2> pList, GameObject go,int roomCount,Pools pools, Grids[,] grids,Vector2 dir,int roomHierarchy)
     {
         for (int row = 0; row < layer.Height; row++)
         {
@@ -191,7 +231,7 @@ public static class CreateBackgroundExtension
                 int gid = layer.Data[col + row*layer.Width];
                 if (gid != 0)
                 {
-                    GameObject tile = AddTile(layer, row, col, gid, room, x, y, roomCount, pools, sprite, dir, grids);
+                    GameObject tile = AddTile(layer, row, col, gid, room, x, y, roomCount, pools, dir, grids,roomHierarchy);
                     if (tile != null)
                     {
                         tile.transform.SetParent(go.transform);
@@ -199,6 +239,7 @@ public static class CreateBackgroundExtension
                         var yy = (int) tile.transform.position.y;
                         grids[xx, yy].Tiletype = (TileType) Enum.Parse(typeof (TileType), layer.Name);
                         grids[xx, yy].RoomId = roomCount;
+                        grids[xx, yy].RoomHierarchy = roomHierarchy;
                         grids[xx, yy].RoomName = room.RoomName;
 
                         if (grids[xx, yy].Tiletype == TileType.roof)
@@ -211,7 +252,7 @@ public static class CreateBackgroundExtension
         }
     }
 
-    static GameObject AddTile(TiledLayer layer, int row, int col, int gid, ConfigLevel room, int x, int y,int roomcount,Pools pools,string sprite,Vector2 dir,Grids[,] grids)
+    static GameObject AddTile(TiledLayer layer, int row, int col, int gid, ConfigLevel room, int x, int y,int roomcount,Pools pools,Vector2 dir,Grids[,] grids,int roomHierarchy)
     {
         var pos = new Vector2(x + col, y + room.Height - row);
         var grid = grids[(int) pos.x, (int) pos.y];
@@ -221,20 +262,20 @@ public static class CreateBackgroundExtension
 
         if (dir.y == -1 && grid.Tiletype != TileType.nul && grid.Tiletype != TileType.empty)
         {
-            GameObject tmpGo = GetGameObject(grid.RoomId, grid.RoomName, pos);
+            GameObject tmpGo = GetGameObject(grid.RoomId,grid.RoomHierarchy, grid.RoomName, pos);
             if (tmpGo == null)
                 throw new Exception("CreateBackgroundExtension AddTile is wrong!");
             else
                 GameObject.Destroy(tmpGo);
         }
 
-        GameObject go = new GameObject(string.Format("{0},{1},{2}", roomcount, pos.x, pos.y), typeof(SpriteRenderer));
+        GameObject go = new GameObject(string.Format("{0}_{3},{1},{2}", roomcount, pos.x, pos.y, roomHierarchy), typeof(SpriteRenderer));
         go.AddComponent<BoxCollider2D>();
         go.transform.position = pos;
 
         //建立精灵
         SpriteRenderer sr = go.GetComponent<SpriteRenderer>();
-        sr.sprite = pools.input.spriteList.sprites[sprite][gid - 1];
+        sr.sprite = pools.input.spriteList.sprites[room.Image][gid - 1];
         return go;
     }
 
@@ -264,7 +305,13 @@ public static class CreateBackgroundExtension
         int fh = room.Height;
         if (dir.y == -1 || dir.y == 1)
         {
-            x -= Mathf.CeilToInt(fw*0.5f);
+            if (room.RoomName.Substring(0, 1) == "L")
+                x -= Mathf.CeilToInt(fw * 0.3f); 
+            else if (room.RoomName.Substring(0, 1) == "R")
+                x -= Mathf.CeilToInt(fw * 0.65f);
+            else
+                x -= Mathf.CeilToInt(fw*0.5f);
+
             if (dir.y == 1)
                 y += 1;
             else
@@ -272,7 +319,11 @@ public static class CreateBackgroundExtension
         }
         else
         {
-            y -= Mathf.CeilToInt(fh*0.5f);
+            if (room.RoomName.Substring(0, 1) == "L"|| room.RoomName.Substring(0, 1) == "R")
+                y -= Mathf.CeilToInt(fw * 0.35f);
+            else
+                y -= Mathf.CeilToInt(fh*0.5f);
+
             if (dir.x == 1)
                 x += 1;
             else
@@ -308,7 +359,7 @@ public static class CreateBackgroundExtension
 
                 if (top == TileType.nul && leftRight)
                     dir = new Vector2(0, 1);
-                else if (bottom == TileType.wall_out && leftRight)
+                else if (bottom == TileType.obstacle && leftRight)
                     dir = new Vector2(0, -1);
                 else if (left == TileType.nul && topBottom)
                     dir = new Vector2(-1, 0);
@@ -320,14 +371,15 @@ public static class CreateBackgroundExtension
         }
     }
 
-    static GameObject GetGameObject(int id, string name, Vector2 pos)
+    static GameObject GetGameObject(int id,int hierarchy, string name, Vector2 pos)
     {
-        var goName = String.Format("{0} Views/{1}_{2}/{1},{3},{4}", Res.InPools.Board, id, name, pos.x, pos.y);
+        var goName =
+            String.Format("{0} Views/{1}_{5}_{2}/{1}_{5},{3},{4}", Res.InPools.Board, id, name, pos.x, pos.y, hierarchy);
         GameObject tmpGo = GameObject.Find(goName);
         return tmpGo;
     }
 
-    private static void loadBackground(Pools pools,int floor,string map)
+    private static void loadBackground(Pools pools,int floor)
     {
         //
     }
@@ -338,12 +390,13 @@ public static class CreateBackgroundExtension
     {
         public int ID { get; set; }
         public int Level { get; set; }
+        public string Type { get; set; }
         public string RoomName { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
-        public int MinCount { get; set; }
-        public int MaxCount { get; set; }
-
+        public int TotalCount { get; set; }
+        public int Probability { get; set; }
+        public string Image { get; set; }
     }
 
 

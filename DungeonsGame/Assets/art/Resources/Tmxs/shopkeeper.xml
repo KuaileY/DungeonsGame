@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-up" width="7" height="9" tilewidth="24" tileheight="24" nextobjectid="5">
+ <tileset firstgid="1" name="dungeontiles-blue" tilewidth="24" tileheight="24" tilecount="60" columns="10">
+  <image source="../../../../../art/dungeontiles-blue.png" width="240" height="144"/>
+ </tileset>
+ <layer name="floor" width="7" height="9">
+  <data encoding="csv">
+0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,
+0,3,1,4,5,4,0,
+0,6,2,3,5,3,0,
+0,1,4,2,1,1,0,
+0,3,1,4,3,4,0,
+0,2,5,1,1,5,0,
+0,0,0,0,0,0,0,
+0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer name="obstacle" width="7" height="9">
+  <data encoding="csv">
+26,24,24,24,24,24,30,
+27,13,16,13,16,14,27,
+27,0,0,0,0,0,27,
+27,0,0,0,0,0,27,
+27,0,0,0,0,0,27,
+27,0,0,0,0,0,27,
+27,0,0,0,0,0,27,
+28,24,24,24,24,24,32,
+15,16,14,13,16,16,17
+</data>
+ </layer>
+ <objectgroup name="obj">
+  <object id="1" name="carpet" x="48" y="72" width="72" height="48"/>
+  <object id="2" name="shop" x="72" y="72" width="24" height="24"/>
+  <object id="3" name="candles" x="48" y="72" width="24" height="24"/>
+  <object id="4" name="candles" x="96" y="72" width="24" height="24"/>
+ </objectgroup>
+</map>

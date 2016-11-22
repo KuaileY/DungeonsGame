@@ -15,8 +15,7 @@ public class CreateBackgroundSystem:IReactiveSystem,ISetPools
         int floor = _pools.board.gameBoard.floor;
         _pools.board.DestroyEntity(_pools.board.gameBoardEntity);
         List<Tables.Background> backgroundData = CreateBackgroundExtension.Read(floor,_pools.input.runtimeData.db);
-        var map = Res.maps[0];
-        CreateBackgroundExtension.CreateBackground(backgroundData,_pools,floor,map);
+        CreateBackgroundExtension.CreateBackground(backgroundData,_pools,floor);
     }
 
 

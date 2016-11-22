@@ -4,6 +4,7 @@ using System.IO;
 using System.Xml;
 using Entitas;
 using NPOI.SS.UserModel;
+using NPOI.XSSF.UserModel;
 using OfficeOpenXml;
 using SQLite4Unity3d;
 using UniRx;
@@ -55,7 +56,7 @@ public static class ExcelExtension
     public static void readExcel(string file, Pool pool, SQLiteConnection db)
     {
         var bytes = File.ReadAllBytes(file);
-        var workbook = GetWorkbook(bytes);
+        IWorkbook workbook = GetWorkbook(bytes);
         //只读取第一页
         var sheet = workbook.GetSheetAt(0);
         var name = "config" + sheet.SheetName;
@@ -79,7 +80,7 @@ public static class ExcelExtension
             .Do(x =>
             {
                 x.ToObservable()
-                    .Select(y => y.ToString())
+                    .Select(y=> GetCellValue(y))
                     .ToArray<string>()
                     .Subscribe(yy =>
                     {
@@ -91,6 +92,45 @@ public static class ExcelExtension
             .Subscribe();
         db.Commit();
 
+    }
+
+    static string GetCellValue(ICell cell)
+    {
+        string value = String.Empty;
+        try
+        {
+            if (cell.CellType != CellType.Blank)
+            {
+                switch (cell.CellType)
+                {
+                    case CellType.Numeric:
+                        // Date comes here
+                        if (DateUtil.IsCellDateFormatted(cell))
+                            value = cell.DateCellValue.ToString();
+                        else
+                            value = cell.NumericCellValue.ToString();
+                        break;
+                    case CellType.Boolean:
+                        // Boolean type
+                        value = cell.BooleanCellValue.ToString();
+                        break;
+                        //公式
+                    case CellType.Formula:
+                        value = cell.NumericCellValue.ToString();
+                        break;
+                    default:
+                        // String type
+                        value = cell.StringCellValue;
+                        break;
+                }
+            }
+        }
+        catch (Exception)
+        {
+            value = "";
+        }
+
+        return value;
     }
 
     static NPOI.SS.UserModel.IWorkbook GetWorkbook(byte[] bytes)

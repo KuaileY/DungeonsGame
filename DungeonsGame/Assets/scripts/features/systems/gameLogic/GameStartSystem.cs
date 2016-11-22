@@ -39,7 +39,7 @@ public class GameStartSystem:IInitializeSystem,ISetPools,IReactiveSystem
         {
             Debug.Log("new game");
             //创建地图
-            _pools.board.CreateEntity().AddGameBoard(3).AddPool(Res.InPools.Board);
+            _pools.board.CreateEntity().AddGameBoard(1).AddPool(Res.InPools.Board);
             //_pools.core.CreateEntity().AddDungeon(1);
         }
         entities.SingleEntity().IsDestroy(true);
