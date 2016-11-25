@@ -32,7 +32,6 @@ public class GameController : MonoBehaviour
             .Add(pools.input.CreateSystem(new InputSystem()))
             .Add(pools.input.CreateSystem(new ProcessInputSystem()))
 
-            .Add(pools.input.CreateSystem(new LoadXMLSystem()))
             .Add(pools.input.CreateSystem(new LoadSpritesSystem()))
             .Add(pools.input.CreateSystem(new GameLoadSystem()))
             .Add(pools.input.CreateSystem(new GameSaveSystem()))
@@ -41,7 +40,7 @@ public class GameController : MonoBehaviour
             .Add(pools.board.CreateSystem(new CreateBackgroundSystem()))
             //.Add(pools.CreateSystem(new DungeonItemsCacheSystem()))
             //.Add(pools.board.CreateSystem(new LoadBoardSystem()))
-            //.Add(pools.core.CreateSystem(new CreateItemsSystem()))
+            .Add(pools.core.CreateSystem(new CreateInteractiveObjSystem()))
             //behavior
             .Add(pools.input.CreateSystem(new TurnSystem()))
             .Add(pools.core.CreateSystem(new MoveSystem()))

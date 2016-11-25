@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class SpriteExtensions
+public static class SpriteExtension
 {
     static Dictionary<Sprite[], Dictionary<string, Sprite>> _sprites =
         new Dictionary<Sprite[], Dictionary<string, Sprite>>();

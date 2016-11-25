@@ -19,15 +19,16 @@ public static class CoreComponentIds {
     public const int Camera = 8;
     public const int Controlable = 9;
     public const int Dir = 10;
-    public const int Dungeon = 11;
-    public const int DungeonItemsCache = 12;
-    public const int Interactive = 13;
-    public const int ItemBoard = 14;
-    public const int Movable = 15;
-    public const int Move = 16;
-    public const int Room = 17;
+    public const int Drop = 11;
+    public const int Dungeon = 12;
+    public const int DungeonItemsCache = 13;
+    public const int Interactive = 14;
+    public const int ItemBoard = 15;
+    public const int Movable = 16;
+    public const int Move = 17;
+    public const int Room = 18;
 
-    public const int TotalComponents = 18;
+    public const int TotalComponents = 19;
 
     public static readonly string[] componentNames = {
         "Destroy",
@@ -41,6 +42,7 @@ public static class CoreComponentIds {
         "Camera",
         "Controlable",
         "Dir",
+        "Drop",
         "Dungeon",
         "DungeonItemsCache",
         "Interactive",
@@ -62,6 +64,7 @@ public static class CoreComponentIds {
         typeof(CameraComponent),
         typeof(ControlableComponent),
         typeof(DirComponent),
+        typeof(DropComponent),
         typeof(DungeonComponent),
         typeof(DungeonItemsCacheComponent),
         typeof(InteractiveComponent),

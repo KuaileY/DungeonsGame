@@ -45,9 +45,39 @@ public static class Res
     #region configs----
     public static readonly string configPath = dataPath+ "/art/Resources/database/";
     public const string xlsxExtension = ".xlsx";
+    public const int tileSetWidth = 24;
     public enum configs
     {
         levels,
+        items,
+    }
+
+    public enum objectType
+    {
+        point,
+        rect
+    }
+
+    public enum cache
+    {
+        background,
+        Interactive
+    }
+
+    public enum interactive
+    {
+        door_Pos,
+        floor_Pos,
+        born_Point,
+        into_Point,
+        exit_Point,
+        boss_Point,
+        candles_Point,
+        treasureRare_Point,
+        treasureRandom_Point,
+        Hp_Point,
+        shop_Point,
+        carpet_Rect
     }
 
     public enum roomType

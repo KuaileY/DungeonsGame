@@ -116,7 +116,10 @@ public static class ExcelExtension
                         break;
                         //公式
                     case CellType.Formula:
-                        value = cell.NumericCellValue.ToString();
+                        if (cell.CachedFormulaResultType == CellType.String)
+                            value = cell.StringCellValue;
+                        else
+                            value = cell.NumericCellValue.ToString();
                         break;
                     default:
                         // String type

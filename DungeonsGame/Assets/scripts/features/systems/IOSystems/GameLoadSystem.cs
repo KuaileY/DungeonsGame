@@ -43,7 +43,7 @@ public sealed class GameLoadSystem : ISetPools, IReactiveSystem
             {
                 string levelData = LoadElement(path.ToString(), Res.Files.levelData.ToString());
                 XDocument xdoc = XDocument.Parse(levelData);
-                _pools.input.fileList.fileDic.Add("levelData", xdoc);
+                //_pools.input.fileList.fileDic.Add("levelData", xdoc);
                 return true;
             }
 

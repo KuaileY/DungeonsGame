@@ -34,7 +34,6 @@ public sealed class InputSystem : ISetPool, IExecuteSystem
         if (Input.GetKeyDown("s"))
         {
             Debug.Log("save");
-            _pool.CreateEntity().IsSave(true);
         }
         if (Input.GetKeyDown("n"))
         {

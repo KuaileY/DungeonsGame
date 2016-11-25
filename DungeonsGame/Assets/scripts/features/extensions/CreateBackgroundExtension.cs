@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Xml.Linq;
 using SQLite4Unity3d;
 using UniRx;
@@ -9,30 +10,14 @@ using Entitas;
 
 public static class CreateBackgroundExtension
 {
-    public static List<Tables.Background> Read(int floor, SQLiteConnection db)
-    {
-        //读取关卡数据
-        var query = string.Format("SELECT name FROM sqlite_master WHERE type='table' AND name='{0}'",
-            Res.configs.levels.ToString());
-        var table = db.Query<TableName>(query, null);
-        if (table.Count == 1)
-            Debug.Log("level is not null");
-        else
-            Debug.Log("level is null");
-        return null;
-    }
-
-    public static void CreateBackground(List<Tables.Background> backgroundData,Pools pools,int floor)
+    public static void CreateBackground(Pools pools,int floor,ref XElement[] board)
     {
         var grids = new Grids[Res.columns, Res.rows];
         //创建关卡
-        if (backgroundData == null)
-            buildBackround(pools,floor, grids);
-        else
-            loadBackground(pools, floor);
+        buildBackround(pools,floor, grids,board);
     }
 
-    private static void buildBackround(Pools pools, int floor, Grids[,] grids)
+    private static void buildBackround(Pools pools, int floor, Grids[,] grids, XElement[] XFloor)
     {
         var db = pools.input.runtimeData.db;
         var configLevel = db.Table<ConfigLevel>();
@@ -100,102 +85,120 @@ public static class CreateBackgroundExtension
 
         foreach (var room in roomList)
         {
-            CreateRoom(ref dir,ref doorPos,pools,room,positionList,roomCount, grids);
+            CreateRoom(ref dir,ref doorPos,pools,room,positionList,roomCount, grids, XFloor);
             if (dir.x != 0 || dir.y != 0)
             {
                 if (doorPos.x == -1)
                     throw new Exception("CreateBackgroundExtension buildBackround doorPos is wrong!");
-                CreateAisle(dir,doorPos,grids,room,pools);
+                CreateAisle(dir,doorPos,grids,room,pools, XFloor);
             }
             roomCount++;
         }
 
     }
 
-    static void CreateAisle(Vector2 dir, Vector2 doorPos, Grids[,] grids, ConfigLevel room, Pools pools)
+    static void CreateAisle(Vector2 dir, Vector2 doorPos, Grids[,] grids, ConfigLevel room, Pools pools, XElement[] XFloor)
     {
         var top = new Vector2(0, 1);
         var bottom = new Vector2(0, -1);
         var left = new Vector2(-1, 0);
         var right = new Vector2(1, 0);
         var map = room.Image;
-        SetTile(grids, doorPos, pools, map);
+        SetTile(grids, XFloor, doorPos, doorPos, pools, map);
         if (dir.y == 1)
         {
-            SetTile(grids, doorPos + right, pools, map, 22);
-            SetTile(grids, doorPos + left, pools, map, 24);
+            SetTile(grids, XFloor, doorPos, doorPos + right, pools, map, 22);
+            SetTile(grids, XFloor, doorPos, doorPos + left, pools, map, 24);
 
-            SetTile(grids, doorPos + bottom, pools, map);
-            SetTile(grids, doorPos + bottom + right, pools, map, 14);
-            SetTile(grids, doorPos + bottom + left, pools, map, 16);
+            SetTile(grids, XFloor, doorPos, doorPos + bottom, pools, map);
+            SetTile(grids, XFloor, doorPos, doorPos + bottom + right, pools, map, 14);
+            SetTile(grids, XFloor, doorPos, doorPos + bottom + left, pools, map, 16);
 
-            SetTile(grids, doorPos + top, pools, map);
-            SetTile(grids, doorPos + top + right, pools, map, 22);
-            SetTile(grids, doorPos + top + left, pools, map, 24);
+            SetTile(grids, XFloor, doorPos, doorPos + top, pools, map);
+            SetTile(grids, XFloor, doorPos, doorPos + top + right, pools, map, 22);
+            SetTile(grids, XFloor, doorPos, doorPos + top + left, pools, map, 24);
         }
         if (dir.y == -1)
         {
-            SetTile(grids, doorPos + right, pools, map, 22);
-            SetTile(grids, doorPos + left, pools, map, 24);
+            SetTile(grids, XFloor, doorPos, doorPos + right, pools, map, 22);
+            SetTile(grids, XFloor, doorPos, doorPos + left, pools, map, 24);
 
-            SetTile(grids, doorPos + bottom, pools, map);
-            SetTile(grids, doorPos + bottom + right, pools, map, 22);
-            SetTile(grids, doorPos + bottom + left, pools, map, 24);
+            SetTile(grids, XFloor, doorPos, doorPos + bottom, pools, map);
+            SetTile(grids, XFloor, doorPos, doorPos + bottom + right, pools, map, 22);
+            SetTile(grids, XFloor, doorPos, doorPos + bottom + left, pools, map, 24);
 
-            SetTile(grids, doorPos + bottom+ bottom, pools, map);
-            SetTile(grids, doorPos + bottom+ bottom + right, pools, map, 14);
-            SetTile(grids, doorPos + bottom+ bottom + left, pools, map, 16);
+            SetTile(grids, XFloor, doorPos, doorPos + bottom+ bottom, pools, map);
+            SetTile(grids, XFloor, doorPos, doorPos + bottom+ bottom + right, pools, map, 14);
+            SetTile(grids, XFloor, doorPos, doorPos + bottom+ bottom + left, pools, map, 16);
         }
         if (dir.x == 1)
         {
-            SetTile(grids, doorPos + top, pools, map, 10);
-            SetTile(grids, doorPos + top + top, pools, map, 20);
-            SetTile(grids, doorPos + bottom, pools, map, 21);
+            SetTile(grids, XFloor, doorPos, doorPos + top, pools, map, 10);
+            SetTile(grids, XFloor, doorPos, doorPos + top + top, pools, map, 20);
+            SetTile(grids, XFloor, doorPos, doorPos + bottom, pools, map, 21);
 
-            SetTile(grids, doorPos + right, pools, map);
-            SetTile(grids, doorPos + top + right, pools, map, 10);
-            SetTile(grids, doorPos + top + top + right, pools, map, 20);
-            SetTile(grids, doorPos + bottom + right, pools, map, 21);
+            SetTile(grids, XFloor, doorPos, doorPos + right, pools, map);
+            SetTile(grids, XFloor, doorPos, doorPos + top + right, pools, map, 10);
+            SetTile(grids, XFloor, doorPos, doorPos + top + top + right, pools, map, 20);
+            SetTile(grids, XFloor, doorPos, doorPos + bottom + right, pools, map, 21);
         }
         if (dir.x == -1)
         {
-            SetTile(grids, doorPos + top, pools, map, 10);
-            SetTile(grids, doorPos + top + top, pools, map, 20);
-            SetTile(grids, doorPos + bottom, pools, map, 21);
+            SetTile(grids, XFloor, doorPos, doorPos + top, pools, map, 10);
+            SetTile(grids, XFloor, doorPos, doorPos + top + top, pools, map, 20);
+            SetTile(grids, XFloor, doorPos, doorPos + bottom, pools, map, 21);
 
-            SetTile(grids, doorPos + left, pools, map);
-            SetTile(grids, doorPos + top + left, pools, map, 10);
-            SetTile(grids, doorPos + top + top + left, pools, map, 20);
-            SetTile(grids, doorPos + bottom + left, pools, map, 21);
+            SetTile(grids, XFloor, doorPos, doorPos + left, pools, map);
+            SetTile(grids, XFloor, doorPos, doorPos + top + left, pools, map, 10);
+            SetTile(grids, XFloor, doorPos, doorPos + top + top + left, pools, map, 20);
+            SetTile(grids, XFloor, doorPos, doorPos + bottom + left, pools, map, 21);
         }
     }
 
-    static void SetTile(Grids[,] grids,Vector2 pos,Pools pools,string map,int sp=0)
+    static void SetTile(Grids[,] grids, XElement[] XFloor,Vector2 doorPos,Vector2 pos,Pools pools,string map,int sp=0)
     {
         var grid = grids[(int) pos.x, (int) pos.y];
         if (sp == 0)
         {
             sp = UnityEngine.Random.Range(0, 7);
             grid.Tiletype = TileType.floor;
+
+            XFloor[1].Elements().ToObservable()
+                .Where(x => int.Parse(x.Attribute("id").Value) == grid.RoomId)
+                .Do(x =>
+                {
+                    if (doorPos == pos)
+                    {
+                        if (x.Element("door") == null)
+                            x.Add(new XElement("door"));
+                        x.Element("door").Add(String.Format("{0}|{1},", pos.x, pos.y));
+                    }
+                    else
+                        x.Element("floorData").Add(String.Format("{0}|{1},", pos.x, pos.y));
+                })
+                .Subscribe();
         }
+        if (doorPos == pos) { }
         var go = GetGameObject(grid.RoomId, grid.RoomHierarchy,grid.RoomName, pos);
         go.GetComponent<SpriteRenderer>().sprite = pools.input.spriteList.sprites[map][sp];
     }
 
-    private static void CreateRoom(ref Vector2 dir,ref Vector2 doorPos,Pools pools,ConfigLevel room,List<Vector2> pList,int roomCount, Grids[,] grids)
+    private static void CreateRoom(ref Vector2 dir, ref Vector2 doorPos, Pools pools, ConfigLevel room,
+        List<Vector2> pList, int roomCount, Grids[,] grids, XElement[] XFloor)
     {
         //选择门的位置，和下一个房间起始位置
-        int x=-1, y=-1;
-        int count=0;
+        int x = -1, y = -1;
+        int count = 0;
+
         do
         {
             SelectDoorPoint(ref x, ref y, ref dir, pList, grids);
             doorPos = new Vector2(x, y);
             SetOriginPoint(ref x, ref y, dir, room);
             count++;
-        } while (!CheckArea(x, y,room, grids) && count<5000);
+        } while (!CheckArea(x, y, room, grids) && count < 5000);
         //检查选择函数是否出错
-        if (x == -1||count==5000)
+        if (x == -1 || count == 5000)
             throw new Exception("CreateBackgroundExtension SetOriginPoint is wrong!");
         //上方的需要向下移动两格
         if (dir.y == 1)
@@ -205,21 +208,76 @@ public static class CreateBackgroundExtension
         if (roomCount == 1)
             roomHierarchy = roomCount;
         else
-            roomHierarchy = grids[(int)doorPos.x, (int)doorPos.y].RoomHierarchy + 1;
+            roomHierarchy = grids[(int) doorPos.x, (int) doorPos.y].RoomHierarchy + 1;
         //建立保持对象
         GameObject go = new GameObject(roomCount + "_" + roomHierarchy + "_" + room.RoomName);
         go.transform.SetParent(pools.input.holder.poolDic[Res.InPools.Board]);
+        //建立背景输出数据
+        XElement XRoom = new XElement("room");
+        XRoom.Add(new XAttribute("id", roomCount));
+        XRoom.Add(new XAttribute("name", room.RoomName));
+        XRoom.Add(new XAttribute("x", x));
+        XRoom.Add(new XAttribute("y", y));
+        XRoom.Add(new XAttribute("width", room.Width));
+        XRoom.Add(new XAttribute("height", room.Height));
+        XRoom.Add(new XAttribute("image", room.Image));
+        var roomData = new string[room.Width*room.Height];
+        var floorData = new List<string>();
+        XFloor[0].Add(XRoom);
         //根据图层创建房间
         TileMap map = TmxLoader.Parse(Res.RoomsPath + room.RoomName);
         foreach (var layer in map.Layers)
         {
-            BuildLayer(layer, room, x, y, pList, go, roomCount, pools, grids,dir, roomHierarchy);
+            BuildLayer(layer, room, x, y, pList, go, roomCount, pools, grids, dir, roomHierarchy, roomData, floorData);
         }
+        if (floorData.Count < 1)
+            throw new Exception("floorData is null!");
+        //建立交互输出
+        var XInteractive = new XElement("room");
+        XInteractive.Add(new XAttribute("id", roomCount));
+        XInteractive.Add(new XAttribute("name", room.RoomName));
+        XInteractive.Add(new XAttribute("x", x));
+        XInteractive.Add(new XAttribute("y", y));
+        XInteractive.Add(new XAttribute("width", room.Width));
+        XInteractive.Add(new XAttribute("height", room.Height));
+        XFloor[1].Add(XInteractive);
+        foreach (var OG in map.ObjectGroups)
+        {
+            var objectGroup = new XElement("objectGroup");
+            objectGroup.Add(new XAttribute("name", OG.Name));
+            outObjectGroup(OG, objectGroup);
+            XInteractive.Add(objectGroup);
+        }
+        XInteractive.Add(new XElement("floorData", floorData));
+        XRoom.Add(new XElement("data", roomData));
 
     }
 
-    static void BuildLayer(TiledLayer layer, ConfigLevel room, int x, int y, List<Vector2> pList, GameObject go,int roomCount,Pools pools, Grids[,] grids,Vector2 dir,int roomHierarchy)
+    static void outObjectGroup(TiledObjectGroup objectGroup,XElement parent)
     {
+        objectGroup.Objects.ToObservable()
+            .Do(x =>
+            {
+                var obj = new XElement("object");
+                obj.Add(new XAttribute("name", x.Name));
+                obj.Add(new XAttribute("x", x.X/Res.tileSetWidth));
+                obj.Add(new XAttribute("y", x.Y/Res.tileSetWidth));
+                if (x.Width == Res.tileSetWidth)
+                    obj.Add(new XAttribute("type", Res.objectType.point));
+                else
+                {
+                    obj.Add(new XAttribute("type", Res.objectType.rect));
+                    obj.Add(new XAttribute("width", x.Width/Res.tileSetWidth));
+                    obj.Add(new XAttribute("height", x.Height/Res.tileSetWidth));
+                }
+                parent.Add(obj);
+            })
+            .Subscribe();
+    }
+
+    static void BuildLayer(TiledLayer layer, ConfigLevel room, int x, int y, List<Vector2> pList, GameObject go,int roomCount,Pools pools, Grids[,] grids,Vector2 dir,int roomHierarchy,string[] roomData,List<string> floorData)
+    {
+        int i = 0;
         for (int row = 0; row < layer.Height; row++)
         {
             for (int col = 0; col < layer.Width; col++)
@@ -244,10 +302,14 @@ public static class CreateBackgroundExtension
 
                         if (grids[xx, yy].Tiletype == TileType.roof)
                             pList.Add(new Vector2(xx, yy));
+                        //输出数据
+                        roomData[i] = gid.ToString()+',';
+                        if (layer.Name == "floor")
+                            floorData.Add(String.Format("{0}|{1},", xx, yy));
                     }
 
                 }
-
+                i++;
             }
         }
     }
@@ -388,7 +450,6 @@ public static class CreateBackgroundExtension
 
     public class ConfigLevel
     {
-        public int ID { get; set; }
         public int Level { get; set; }
         public string Type { get; set; }
         public string RoomName { get; set; }

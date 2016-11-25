@@ -16,6 +16,7 @@ public class GameStartSystem:IInitializeSystem,ISetPools,IReactiveSystem
     public void Initialize()
     {
         //一些初始化的东西
+        BuildFileList();
         //加载配置文件
         loadConfig();
         //创建保持对象
@@ -40,7 +41,8 @@ public class GameStartSystem:IInitializeSystem,ISetPools,IReactiveSystem
             Debug.Log("new game");
             //创建地图
             _pools.board.CreateEntity().AddGameBoard(1).AddPool(Res.InPools.Board);
-            //_pools.core.CreateEntity().AddDungeon(1);
+            //创建交互对象
+            _pools.core.CreateEntity().AddDungeon(1);
         }
         entities.SingleEntity().IsDestroy(true);
 
@@ -50,8 +52,6 @@ public class GameStartSystem:IInitializeSystem,ISetPools,IReactiveSystem
 
     void loadConfig()
     {
-        //加载文件管理
-        _pools.input.CreateEntity().AddFileList(new Dictionary<string, XDocument>());
         //创建连接
         var dbPath = Res.PathURL + Res.dbName;
         var connection = new SQLiteConnection(dbPath, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create);
@@ -65,6 +65,17 @@ public class GameStartSystem:IInitializeSystem,ISetPools,IReactiveSystem
         }
 
 
+    }
+
+    void BuildFileList()
+    {
+        var fileList = new Dictionary<string, XDocument>();
+        //当前层背景数据
+        fileList.Add(Res.cache.background.ToString(), new XDocument());
+        //当前层交互对象数据
+        fileList.Add(Res.cache.Interactive.ToString(), new XDocument());
+        //加载文件管理
+        _pools.input.CreateEntity().AddFileList(fileList);
     }
 }
 
