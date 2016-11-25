@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UniRx;
 using Entitas;
+using Object = UnityEngine.Object;
+
 public class CreateInteractiveObjSystem : IReactiveSystem, ISetPools
 {
     public TriggerOnEvent trigger { get { return CoreMatcher.Dungeon.OnEntityAdded(); } }
@@ -13,7 +16,14 @@ public class CreateInteractiveObjSystem : IReactiveSystem, ISetPools
     }
     public void Execute(List<Entity> entities)
     {
-        var data=_pools.input.fileList.fileDic[Res.cache.Interactive.ToString()].Elements().First();
+        CreateInteractiveObjExtension.CreateObj(_pools, "door", 1, 1);
+        //清除实体
+        _pools.core.DestroyEntity(_pools.core.dungeonEntity);
+    }
+
+    private void CreateDoor()
+    {
+        var data = _pools.input.fileList.fileDic[Res.cache.Interactive.ToString()].Elements().First();
         GameObject go = Resources.Load<GameObject>(Res.PrefabPath + Res.Prefabs.food);
 
         data.Elements().ToObservable()
@@ -30,11 +40,6 @@ public class CreateInteractiveObjSystem : IReactiveSystem, ISetPools
             })
             .Subscribe();
 
-    }
-
-    private void CreateDoor()
-    {
-        
     }
 
 }

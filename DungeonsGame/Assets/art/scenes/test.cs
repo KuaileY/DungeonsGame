@@ -9,11 +9,15 @@ using UnityEngine;
 public class test : MonoBehaviour {
 
 	// Use this for initialization
-	void Start () {
-
-        GameObject go = Resources.Load<GameObject>(Res.PrefabPath+Res.Prefabs.food);
-	    Object.Instantiate(go, new Vector2(0, 0), Quaternion.identity);
+	void Start ()
+	{
+	    aa();
 	}
+
+    void aa(Vector2 pos=default(Vector2))
+    {
+        pos.x.ToString().print();
+    }
 	
 	// Update is called once per frame
 	void Update () {
