@@ -58,21 +58,20 @@ public sealed class TurnSystem : IReactiveSystem, ISetPools
 
     void move(Vector2 pos)
     {
-        _player.ReplacePosition(0,0,pos).AddMove(0);
     }
 
     void dirGet()
     {
         var input = _pools.input.input;
         int _roomId=-1;
-        _pools.core.GetEntities()
-            .ToObservable()
-            .Where(x => x.hasAsset)
-            .Where(x => x.asset.name == Res.Prefabs.player)
-            .Subscribe(xx =>
-            {
-                _dir = InputExtension.getDir(new Vector3(input.x, input.y, 0) - xx.position.value);
-            });
+//         _pools.core.GetEntities()
+//             .ToObservable()
+//             .Where(x => x.hasAsset)
+//             .Where(x => x.asset.name == Res.Prefabs.player)
+//             .Subscribe(xx =>
+//             {
+//                 _dir = InputExtension.getDir(new Vector3(input.x, input.y, 0) - xx.position.value);
+//             });
     }
 
 }

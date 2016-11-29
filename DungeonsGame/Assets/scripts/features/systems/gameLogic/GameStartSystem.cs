@@ -21,6 +21,8 @@ public class GameStartSystem:IInitializeSystem,ISetPools,IReactiveSystem
         loadConfig();
         //创建保持对象
         _pools.input.CreateEntity().AddHolder(new Dictionary<Res.InPools, UnityEngine.Transform>());
+        //创建对象池
+        _pools.input.CreateEntity().AddViewObjectPool(CreateObjectPoolExtension.createObjectPool());
         //建立摄像机
         var camera = GameObject.FindObjectOfType<Camera>();
         _pools.core.CreateEntity()

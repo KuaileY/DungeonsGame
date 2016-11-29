@@ -25,9 +25,8 @@ public static class Res
     #region prefabs----
     public static class Prefabs
     {
-        public const string player = "GameElements/Player";
         public const string food = "GameElements/Food";
-        public const string door = "Items/door_close";
+        public const string M_bossb = "Monster/M_bossb";
     }
     #endregion
 
@@ -50,6 +49,7 @@ public static class Res
     {
         levels,
         items,
+        monster
     }
 
     public enum objectType
@@ -226,7 +226,6 @@ public static class Res
         Board,
         Core,
         Input,
-        Blueprints,
     }
 
 }

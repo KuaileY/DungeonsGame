@@ -12,54 +12,37 @@ namespace Entitas {
 
     public partial class Entity {
 
-        public ViewObjectPoolComponent viewObjectPool { get { return (ViewObjectPoolComponent)GetComponent(BoardComponentIds.ViewObjectPool); } }
-        public bool hasViewObjectPool { get { return HasComponent(BoardComponentIds.ViewObjectPool); } }
+        public ViewObjectPoolComponent viewObjectPool { get { return (ViewObjectPoolComponent)GetComponent(InputComponentIds.ViewObjectPool); } }
+        public bool hasViewObjectPool { get { return HasComponent(InputComponentIds.ViewObjectPool); } }
 
-        public Entity AddViewObjectPool(Entitas.ObjectPool<UnityEngine.GameObject> newPool) {
-            var component = CreateComponent<ViewObjectPoolComponent>(BoardComponentIds.ViewObjectPool);
+        public Entity AddViewObjectPool(Entitas.MyObjectPool<UnityEngine.GameObject> newPool) {
+            var component = CreateComponent<ViewObjectPoolComponent>(InputComponentIds.ViewObjectPool);
             component.pool = newPool;
-            return AddComponent(BoardComponentIds.ViewObjectPool, component);
+            return AddComponent(InputComponentIds.ViewObjectPool, component);
         }
 
-        public Entity ReplaceViewObjectPool(Entitas.ObjectPool<UnityEngine.GameObject> newPool) {
-            var component = CreateComponent<ViewObjectPoolComponent>(BoardComponentIds.ViewObjectPool);
+        public Entity ReplaceViewObjectPool(Entitas.MyObjectPool<UnityEngine.GameObject> newPool) {
+            var component = CreateComponent<ViewObjectPoolComponent>(InputComponentIds.ViewObjectPool);
             component.pool = newPool;
-            ReplaceComponent(BoardComponentIds.ViewObjectPool, component);
+            ReplaceComponent(InputComponentIds.ViewObjectPool, component);
             return this;
         }
 
         public Entity RemoveViewObjectPool() {
-            return RemoveComponent(BoardComponentIds.ViewObjectPool);
+            return RemoveComponent(InputComponentIds.ViewObjectPool);
         }
     }
 }
 
-    public partial class BoardMatcher {
+    public partial class InputMatcher {
 
         static IMatcher _matcherViewObjectPool;
 
         public static IMatcher ViewObjectPool {
             get {
                 if(_matcherViewObjectPool == null) {
-                    var matcher = (Matcher)Matcher.AllOf(BoardComponentIds.ViewObjectPool);
-                    matcher.componentNames = BoardComponentIds.componentNames;
-                    _matcherViewObjectPool = matcher;
-                }
-
-                return _matcherViewObjectPool;
-            }
-        }
-    }
-
-    public partial class CoreMatcher {
-
-        static IMatcher _matcherViewObjectPool;
-
-        public static IMatcher ViewObjectPool {
-            get {
-                if(_matcherViewObjectPool == null) {
-                    var matcher = (Matcher)Matcher.AllOf(CoreComponentIds.ViewObjectPool);
-                    matcher.componentNames = CoreComponentIds.componentNames;
+                    var matcher = (Matcher)Matcher.AllOf(InputComponentIds.ViewObjectPool);
+                    matcher.componentNames = InputComponentIds.componentNames;
                     _matcherViewObjectPool = matcher;
                 }
 
