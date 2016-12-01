@@ -2,7 +2,7 @@
 using Entitas;
 using Entitas.CodeGenerator;
 
-[Core,SingleEntity]
+[Board,SingleEntity]
 public sealed class DungeonItemsCacheComponent : IComponent
 {
     public List<Entity[,]> roomList;

@@ -7,22 +7,15 @@ using UnityEngine;
 public sealed class LoadBoardSystem:IReactiveSystem, ISetPools
 {
     public TriggerOnEvent trigger { get { return BoardMatcher.LoadBoard.OnEntityAdded(); } }
-    Pools _pools;
-    //保持对象
-    Transform _trans;
-    //当前画布
-    //SingleGrid _grid;
-    //精灵图片
-    Sprite[] _sprites;
+
     public void SetPools(Pools pools)
     {
-        _pools = pools;
     }
     public void Execute(List<Entity> entities)
     {
 
-        _trans = _pools.input.holder.poolDic[entities[0].pool.name];
-        int floor = _pools.board.loadBoard.floor;
+        //_trans = _pools.input.holder.poolDic[entities[0].pool.name];
+        //int floor = _pools.board.loadBoard.floor;
         //createBoard(floor);
     }
 

@@ -62,6 +62,7 @@ public static class ObjectsIndeies{
     public const string I_R_normalChest="I_R_normalChest";
     public const string I_R_rareChest="I_R_rareChest";
     public const string I_S_trap="I_S_trap";
+    public const string I_S_candles="I_S_candles";
     public const string M_bossa="M_bossa";
     public const string M_bossb="M_bossb";
     public const string M_bossc="M_bossc";
@@ -135,6 +136,7 @@ public static class ObjectsIndeies{
         "I_R_normalChest",
         "I_R_rareChest",
         "I_S_trap",
+        "I_S_candles",
         "M_bossa",
         "M_bossb",
         "M_bossc",

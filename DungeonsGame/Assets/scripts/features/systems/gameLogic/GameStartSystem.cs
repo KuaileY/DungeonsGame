@@ -1,6 +1,7 @@
 ﻿using System;
 using Entitas;
 using System.Collections.Generic;
+using System.Linq;
 using System.Xml.Linq;
 using UnityEngine;
 using SQLite4Unity3d;
@@ -42,9 +43,9 @@ public class GameStartSystem:IInitializeSystem,ISetPools,IReactiveSystem
         {
             Debug.Log("new game");
             //创建地图
-            _pools.board.CreateEntity().AddGameBoard(1).AddPool(Res.InPools.Board);
+            _pools.board.CreateEntity().AddGameBoard(0).AddPool(Res.InPools.Board);
             //创建交互对象
-            _pools.core.CreateEntity().AddDungeon(1);
+            _pools.core.CreateEntity().AddDungeon(0);
         }
         entities.SingleEntity().IsDestroy(true);
 

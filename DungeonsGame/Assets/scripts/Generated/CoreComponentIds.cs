@@ -20,12 +20,12 @@ public static class CoreComponentIds {
     public const int Dir = 9;
     public const int Drop = 10;
     public const int Dungeon = 11;
-    public const int DungeonItemsCache = 12;
-    public const int Interactive = 13;
-    public const int ItemBoard = 14;
-    public const int Movable = 15;
-    public const int Move = 16;
-    public const int Room = 17;
+    public const int Interactive = 12;
+    public const int ItemType = 13;
+    public const int Movable = 14;
+    public const int Move = 15;
+    public const int Room = 16;
+    public const int ViewObject = 17;
 
     public const int TotalComponents = 18;
 
@@ -42,12 +42,12 @@ public static class CoreComponentIds {
         "Dir",
         "Drop",
         "Dungeon",
-        "DungeonItemsCache",
         "Interactive",
-        "ItemBoard",
+        "ItemType",
         "Movable",
         "Move",
-        "Room"
+        "Room",
+        "ViewObject"
     };
 
     public static readonly System.Type[] componentTypes = {
@@ -63,11 +63,11 @@ public static class CoreComponentIds {
         typeof(DirComponent),
         typeof(DropComponent),
         typeof(DungeonComponent),
-        typeof(DungeonItemsCacheComponent),
         typeof(InteractiveComponent),
-        typeof(ItemBoardComponent),
+        typeof(ItemTypeComponent),
         typeof(MovableComponent),
         typeof(MoveComponent),
-        typeof(RoomComponent)
+        typeof(RoomComponent),
+        typeof(ViewObjectComponent)
     };
 }

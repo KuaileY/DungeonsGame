@@ -10,6 +10,11 @@ public enum TileType
     nul,empty, floor, wall_in, wall_out, door, corner, roof, water, stairDown, stairUp, obstacle, Normal
 }
 
+public enum ItemType
+{
+    into,item,monster,obstacle,door
+}
+
 public struct Grids
 {
     public int RoomId;

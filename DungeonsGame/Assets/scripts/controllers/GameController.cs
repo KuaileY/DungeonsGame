@@ -38,7 +38,7 @@ public class GameController : MonoBehaviour
             //create
             //.Add(pools.CreateSystem(new UISystem()))
             .Add(pools.board.CreateSystem(new CreateBackgroundSystem()))
-            //.Add(pools.CreateSystem(new DungeonItemsCacheSystem()))
+            .Add(pools.CreateSystem(new DungeonItemsCacheSystem()))
             //.Add(pools.board.CreateSystem(new LoadBoardSystem()))
             .Add(pools.core.CreateSystem(new CreateInteractiveObjSystem()))
             //behavior
@@ -48,6 +48,7 @@ public class GameController : MonoBehaviour
             .Add(pools.input.CreateSystem(new GameStartSystem()))
             //common
             .Add(pools.CreateSystem(new AddViewSystem()))
+            .Add(pools.core.CreateSystem(new AddViewFromObjectPoolSystem()))
             .Add(pools.CreateSystem(new RenderPositionSystem()))
             // Destroy
             .Add(pools.CreateSystem(new DestroyEntitySystem()))

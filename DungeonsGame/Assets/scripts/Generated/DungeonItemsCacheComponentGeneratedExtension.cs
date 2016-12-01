@@ -12,30 +12,30 @@ namespace Entitas {
 
     public partial class Entity {
 
-        public DungeonItemsCacheComponent dungeonItemsCache { get { return (DungeonItemsCacheComponent)GetComponent(CoreComponentIds.DungeonItemsCache); } }
-        public bool hasDungeonItemsCache { get { return HasComponent(CoreComponentIds.DungeonItemsCache); } }
+        public DungeonItemsCacheComponent dungeonItemsCache { get { return (DungeonItemsCacheComponent)GetComponent(BoardComponentIds.DungeonItemsCache); } }
+        public bool hasDungeonItemsCache { get { return HasComponent(BoardComponentIds.DungeonItemsCache); } }
 
         public Entity AddDungeonItemsCache(System.Collections.Generic.List<Entitas.Entity[,]> newRoomList) {
-            var component = CreateComponent<DungeonItemsCacheComponent>(CoreComponentIds.DungeonItemsCache);
+            var component = CreateComponent<DungeonItemsCacheComponent>(BoardComponentIds.DungeonItemsCache);
             component.roomList = newRoomList;
-            return AddComponent(CoreComponentIds.DungeonItemsCache, component);
+            return AddComponent(BoardComponentIds.DungeonItemsCache, component);
         }
 
         public Entity ReplaceDungeonItemsCache(System.Collections.Generic.List<Entitas.Entity[,]> newRoomList) {
-            var component = CreateComponent<DungeonItemsCacheComponent>(CoreComponentIds.DungeonItemsCache);
+            var component = CreateComponent<DungeonItemsCacheComponent>(BoardComponentIds.DungeonItemsCache);
             component.roomList = newRoomList;
-            ReplaceComponent(CoreComponentIds.DungeonItemsCache, component);
+            ReplaceComponent(BoardComponentIds.DungeonItemsCache, component);
             return this;
         }
 
         public Entity RemoveDungeonItemsCache() {
-            return RemoveComponent(CoreComponentIds.DungeonItemsCache);
+            return RemoveComponent(BoardComponentIds.DungeonItemsCache);
         }
     }
 
     public partial class Pool {
 
-        public Entity dungeonItemsCacheEntity { get { return GetGroup(CoreMatcher.DungeonItemsCache).GetSingleEntity(); } }
+        public Entity dungeonItemsCacheEntity { get { return GetGroup(BoardMatcher.DungeonItemsCache).GetSingleEntity(); } }
         public DungeonItemsCacheComponent dungeonItemsCache { get { return dungeonItemsCacheEntity.dungeonItemsCache; } }
         public bool hasDungeonItemsCache { get { return dungeonItemsCacheEntity != null; } }
 
@@ -66,15 +66,15 @@ namespace Entitas {
     }
 }
 
-    public partial class CoreMatcher {
+    public partial class BoardMatcher {
 
         static IMatcher _matcherDungeonItemsCache;
 
         public static IMatcher DungeonItemsCache {
             get {
                 if(_matcherDungeonItemsCache == null) {
-                    var matcher = (Matcher)Matcher.AllOf(CoreComponentIds.DungeonItemsCache);
-                    matcher.componentNames = CoreComponentIds.componentNames;
+                    var matcher = (Matcher)Matcher.AllOf(BoardComponentIds.DungeonItemsCache);
+                    matcher.componentNames = BoardComponentIds.componentNames;
                     _matcherDungeonItemsCache = matcher;
                 }
 

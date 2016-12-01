@@ -15,11 +15,12 @@ public static class BoardComponentIds {
     public const int Pool = 4;
     public const int Position = 5;
     public const int View = 6;
-    public const int GameBoard = 7;
-    public const int LoadBoard = 8;
-    public const int Sprite = 9;
+    public const int DungeonItemsCache = 7;
+    public const int GameBoard = 8;
+    public const int LoadBoard = 9;
+    public const int Sprite = 10;
 
-    public const int TotalComponents = 10;
+    public const int TotalComponents = 11;
 
     public static readonly string[] componentNames = {
         "Destroy",
@@ -29,6 +30,7 @@ public static class BoardComponentIds {
         "Pool",
         "Position",
         "View",
+        "DungeonItemsCache",
         "GameBoard",
         "LoadBoard",
         "Sprite"
@@ -42,6 +44,7 @@ public static class BoardComponentIds {
         typeof(PoolComponent),
         typeof(PositionComponent),
         typeof(ViewComponent),
+        typeof(DungeonItemsCacheComponent),
         typeof(GameBoardComponent),
         typeof(LoadBoardComponent),
         typeof(SpriteComponent)

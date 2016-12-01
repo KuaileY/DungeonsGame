@@ -4,6 +4,19 @@ using System.Text.RegularExpressions;
 
 public static class StringExtension
 {
+    public static string cleanEnd(this string value)
+    {
+        if (value.EndsWith(","))
+            return value.TrimEnd(',');
+        else
+            return value;
+    }
+
+    public static int toInt(this string value)
+    {
+        return int.Parse(value);
+    }
+
     public static Res.InPools GetInPools(string name)
     {
         return (Res.InPools) Enum.Parse(typeof (Res.InPools), name);

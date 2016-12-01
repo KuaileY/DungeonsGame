@@ -4,11 +4,9 @@ using UnityEngine;
 public sealed class InputSystem : ISetPool, IExecuteSystem
 {
     Pool _pool;
-    Group _inputs;
     public void SetPool(Pool pool)
     {
         _pool = pool;
-        _inputs = pool.GetGroup(InputMatcher.Input);
     }
 
     public void Execute()

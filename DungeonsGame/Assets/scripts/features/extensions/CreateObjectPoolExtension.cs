@@ -20,7 +20,8 @@ public static class CreateObjectPoolExtension
             if (path == String.Empty)
                 throw new Exception("objectPoolName is wrong!");
 
-            var go = Assets.Instantiate<GameObject>(path);
+            var go = AssetsExtension.Instantiate<GameObject>(path);
+            go.SetActive(false);
             go.transform.SetParent(parent);
             objectPool.Pop(go, indeies[i]);
         }

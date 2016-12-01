@@ -1,7 +1,8 @@
 ﻿using Entitas;
+using Entitas.CodeGenerator;
 using UnityEngine;
 
-[Input]
+[Input,SingleEntity]
 public sealed class ViewObjectPoolComponent:IComponent
 {
     public MyObjectPool<GameObject> pool;
