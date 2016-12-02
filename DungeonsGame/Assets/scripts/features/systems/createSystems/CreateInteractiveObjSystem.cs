@@ -31,6 +31,12 @@ public class CreateInteractiveObjSystem : IReactiveSystem, ISetPools
             else
             {
                 createDoor(data);
+                createPlayer(data);
+                //建立摄像机
+                _pools.core.cameraEntity.view.controller.position =
+                    _pools.core.controlableEntity.position.value + new Vector3(0, 0, -10);
+                //建立视野
+                _pools.input.CreateEntity().IsFov(true);
             }
         }
         //清除实体
@@ -72,6 +78,7 @@ public class CreateInteractiveObjSystem : IReactiveSystem, ISetPools
             .Where(x => x.Element("objectGroup") != null)
             .Do(x =>
             {
+                var roomId = x.Attribute("id").Value.toInt();
                 int roomx = x.Attribute("x").Value.toInt();
                 int roomy = x.Attribute("y").Value.toInt();
                 int roomH = x.Attribute("height").Value.toInt();
@@ -82,10 +89,10 @@ public class CreateInteractiveObjSystem : IReactiveSystem, ISetPools
                         int xx = roomx + e.Attribute("x").Value.toInt();
                         int yy = roomy + roomH - e.Attribute("y").Value.toInt();
                         _pools.core.CreateEntity()
-                            .AddPosition(0, new Vector3(xx, yy))
+                            .AddPosition(roomId, new Vector3(xx, yy))
                             .AddPool(Res.InPools.Core)
-                            .AddAsset("Player")
-                            .AddRoom(1, 1)
+                            .AddAsset("P_Player")
+                            .AddRoom(roomId, roomId)
                             .IsControlable(true)
                             .IsInteractive(true);
                     }

@@ -12,27 +12,31 @@ public static class InputComponentIds {
     public const int Holder = 1;
     public const int Test = 2;
     public const int ActiveTurn = 3;
-    public const int FileList = 4;
-    public const int Input = 5;
-    public const int Load = 6;
-    public const int LoadGame = 7;
-    public const int NewGame = 8;
-    public const int RuntimeData = 9;
-    public const int Save = 10;
-    public const int SpriteList = 11;
-    public const int Tick = 12;
-    public const int ViewObjectPool = 13;
-    public const int Watch = 14;
-    public const int XML = 15;
+    public const int BGHolder = 4;
+    public const int FileList = 5;
+    public const int Fov = 6;
+    public const int Input = 7;
+    public const int Load = 8;
+    public const int LoadGame = 9;
+    public const int NewGame = 10;
+    public const int RuntimeData = 11;
+    public const int Save = 12;
+    public const int SpriteList = 13;
+    public const int Tick = 14;
+    public const int ViewObjectPool = 15;
+    public const int Watch = 16;
+    public const int XML = 17;
 
-    public const int TotalComponents = 16;
+    public const int TotalComponents = 18;
 
     public static readonly string[] componentNames = {
         "Destroy",
         "Holder",
         "Test",
         "ActiveTurn",
+        "BGHolder",
         "FileList",
+        "Fov",
         "Input",
         "Load",
         "LoadGame",
@@ -51,7 +55,9 @@ public static class InputComponentIds {
         typeof(HolderComponent),
         typeof(TestComponent),
         typeof(ActiveTurnComponent),
+        typeof(BGHolderComponent),
         typeof(FileListComponent),
+        typeof(FovComponent),
         typeof(InputComponent),
         typeof(LoadComponent),
         typeof(LoadGameComponent),

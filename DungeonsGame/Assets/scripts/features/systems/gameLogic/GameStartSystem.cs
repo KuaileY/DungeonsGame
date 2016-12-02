@@ -22,6 +22,8 @@ public class GameStartSystem:IInitializeSystem,ISetPools,IReactiveSystem
         loadConfig();
         //创建保持对象
         _pools.input.CreateEntity().AddHolder(new Dictionary<Res.InPools, UnityEngine.Transform>());
+        //创建背景持有对象
+        _pools.input.CreateEntity().AddBGHolder(new GameObject[Res.columns, Res.rows]);
         //创建对象池
         _pools.input.CreateEntity().AddViewObjectPool(CreateObjectPoolExtension.createObjectPool());
         //建立摄像机
@@ -43,9 +45,9 @@ public class GameStartSystem:IInitializeSystem,ISetPools,IReactiveSystem
         {
             Debug.Log("new game");
             //创建地图
-            _pools.board.CreateEntity().AddGameBoard(0).AddPool(Res.InPools.Board);
+            _pools.board.CreateEntity().AddGameBoard(1).AddPool(Res.InPools.Board);
             //创建交互对象
-            _pools.core.CreateEntity().AddDungeon(0);
+            _pools.core.CreateEntity().AddDungeon(1);
         }
         entities.SingleEntity().IsDestroy(true);
 
@@ -77,6 +79,8 @@ public class GameStartSystem:IInitializeSystem,ISetPools,IReactiveSystem
         fileList.Add(Res.cache.background.ToString(), new XDocument());
         //当前层交互对象数据
         fileList.Add(Res.cache.Interactive.ToString(), new XDocument());
+        //当前层玩家视野数据
+        fileList.Add(Res.cache.fovData.ToString(), new XDocument());
         //加载文件管理
         _pools.input.CreateEntity().AddFileList(fileList);
     }

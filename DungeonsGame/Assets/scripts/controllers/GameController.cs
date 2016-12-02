@@ -50,6 +50,7 @@ public class GameController : MonoBehaviour
             .Add(pools.CreateSystem(new AddViewSystem()))
             .Add(pools.core.CreateSystem(new AddViewFromObjectPoolSystem()))
             .Add(pools.CreateSystem(new RenderPositionSystem()))
+            .Add(pools.input.CreateSystem(new FovSystem()))
             // Destroy
             .Add(pools.CreateSystem(new DestroyEntitySystem()))
 

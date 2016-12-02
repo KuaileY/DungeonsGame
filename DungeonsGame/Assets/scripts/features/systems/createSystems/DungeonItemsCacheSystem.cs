@@ -61,23 +61,38 @@ public sealed class DungeonItemsCacheSystem:ISystem,ISetPools
             .ToObservable()
             .Do(x =>
             {
-                var grid = new Entity[x.Attribute("width").Value.toInt(), x.Attribute("height").Value.toInt()-1];
+                var grid = new Entity[x.Attribute("width").Value.toInt(), x.Attribute("height").Value.toInt()];
                 var posArray=x.Element("obstacleData").Value.cleanEnd().Split(',');
+                var waterArray = x.Element("waterData").Value.cleanEnd().Split(',');
                 int xx = x.Attribute("x").Value.toInt();
                 int yy = x.Attribute("y").Value.toInt();
                 int id = x.Attribute("id").Value.toInt();
                 foreach (var pos in posArray)
                 {
                     var p = pos.Split('|');
-                    if (p[1].toInt() > 1 )
+                    if (p[1].toInt() > 0 )
                     {
                         var entity = pools.core.CreateEntity()
                             .AddPosition(id, new Vector3(p[0].toInt() + xx, p[1].toInt() + yy))
                             .AddPool(Res.InPools.Core)
                             .AddViewObject(ObjectsIndeies.I_P_shadow);
 
-                        grid[p[0].toInt(), p[1].toInt()-2] = entity;
+                        grid[p[0].toInt(), p[1].toInt()-1] = entity;
                     }
+                }
+                foreach (var pos in waterArray)
+                {
+                    if (pos != string.Empty)
+                    {
+                        var p = pos.Split('|');
+                        var entity = pools.core.CreateEntity()
+                            .AddPosition(id, new Vector3(p[0].toInt() + xx, p[1].toInt() + yy))
+                            .AddPool(Res.InPools.Core)
+                            .AddViewObject(ObjectsIndeies.I_D_apple);
+
+                        grid[p[0].toInt(), p[1].toInt() - 1] = entity;
+                    }
+
                 }
                 entityList.Add(grid);
             })

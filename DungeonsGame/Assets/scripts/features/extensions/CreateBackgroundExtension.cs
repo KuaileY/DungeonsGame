@@ -10,14 +10,14 @@ using Entitas;
 
 public static class CreateBackgroundExtension
 {
-    public static void CreateBackground(Pools pools,int floor,ref XElement[] board)
+    public static void CreateBackground(Pools pools,int floor,ref XElement[] board,ref GameObject[,] bgHolder)
     {
         var grids = new Grids[Res.columns, Res.rows];
         //创建关卡
-        buildBackround(pools,floor, grids,board);
+        buildBackround(pools,floor, grids,board, bgHolder);
     }
 
-    private static void buildBackround(Pools pools, int floor, Grids[,] grids, XElement[] XFloor)
+    private static void buildBackround(Pools pools, int floor, Grids[,] grids, XElement[] XFloor, GameObject[,] bgHolder)
     {
         var db = pools.input.runtimeData.db;
         var configLevel = db.Table<ConfigLevel>();
@@ -82,22 +82,35 @@ public static class CreateBackgroundExtension
         var roomCount = 1;
         var dir = new Vector2(0, 0);
         var doorPos = new Vector2(-1, -1);
-
+        var fovChar = new char[Res.columns, Res.rows];
         foreach (var room in roomList)
         {
-            CreateRoom(ref dir, ref doorPos, pools, room, positionList, roomCount, grids, XFloor);
+            CreateRoom(ref dir, ref doorPos, pools, room, positionList, roomCount, grids, XFloor, bgHolder,fovChar);
             if (dir.x != 0 || dir.y != 0)
             {
                 if (doorPos.x == -1)
                     throw new Exception("CreateBackgroundExtension buildBackround doorPos is wrong!");
-                CreateAisle(dir, doorPos, grids, room, pools, XFloor);
+                CreateAisle(dir, doorPos, grids, room, pools, XFloor,fovChar);
             }
             roomCount++;
         }
+        var ss = string.Empty;
+        for (int x = Res.columns-1; x >=0; x--)
+        {
+            ss += "\n";
+            for (int y = 0; y < Res.rows; y++)
+            {
+                if (fovChar[y, x] == char.MinValue)
+                    ss += Res.TileTypeChar[(int) TileType.nul];
+                else
+                    ss += fovChar[y, x];
+            }
+        }
+        XFloor[2].Value = ss;
 
     }
 
-    static void CreateAisle(Vector2 dir, Vector2 doorPos, Grids[,] grids, ConfigLevel room, Pools pools, XElement[] XFloor)
+    static void CreateAisle(Vector2 dir, Vector2 doorPos, Grids[,] grids, ConfigLevel room, Pools pools, XElement[] XFloor,char[,] fovchar)
     {
         var top = new Vector2(0, 1);
         var bottom = new Vector2(0, -1);
@@ -106,66 +119,66 @@ public static class CreateBackgroundExtension
         var map = room.Image;
         if (dir.y == 1)
         {
-            SetTile(grids, XFloor, doorPos, pools, map, 0, true);
-            SetTile(grids, XFloor, doorPos + right, pools, map, 22);
-            SetTile(grids, XFloor, doorPos + left, pools, map, 24);
+            SetTile(grids, XFloor,fovchar, doorPos, pools, map, 0, true);
+            SetTile(grids, XFloor,fovchar, doorPos + right, pools, map, 22);
+            SetTile(grids, XFloor,fovchar, doorPos + left, pools, map, 24);
 
-            SetTile(grids, XFloor, doorPos + bottom, pools, map);
-            SetTile(grids, XFloor, doorPos + bottom + right, pools, map, 14);
-            SetTile(grids, XFloor, doorPos + bottom + left, pools, map, 16);
+            SetTile(grids, XFloor,fovchar, doorPos + bottom, pools, map);
+            SetTile(grids, XFloor,fovchar, doorPos + bottom + right, pools, map, 14);
+            SetTile(grids, XFloor,fovchar, doorPos + bottom + left, pools, map, 16);
 
-            SetTile(grids, XFloor, doorPos + top, pools, map);
-            SetTile(grids, XFloor, doorPos + top + right, pools, map, 22);
-            SetTile(grids, XFloor, doorPos + top + left, pools, map, 24);
+            SetTile(grids, XFloor,fovchar, doorPos + top, pools, map);
+            SetTile(grids, XFloor,fovchar, doorPos + top + right, pools, map, 22);
+            SetTile(grids, XFloor,fovchar, doorPos + top + left, pools, map, 24);
         }
         if (dir.y == -1)
         {
-            SetTile(grids, XFloor, doorPos, pools, map);
-            SetTile(grids, XFloor, doorPos + right, pools, map, 22);
-            SetTile(grids, XFloor, doorPos + left, pools, map, 24);
+            SetTile(grids, XFloor,fovchar, doorPos, pools, map);
+            SetTile(grids, XFloor,fovchar, doorPos + right, pools, map, 22);
+            SetTile(grids, XFloor,fovchar, doorPos + left, pools, map, 24);
 
-            SetTile(grids, XFloor, doorPos + bottom, pools, map, 0, true);
-            SetTile(grids, XFloor, doorPos + bottom + right, pools, map, 22);
-            SetTile(grids, XFloor, doorPos + bottom + left, pools, map, 24);
+            SetTile(grids, XFloor,fovchar, doorPos + bottom, pools, map, 0, true);
+            SetTile(grids, XFloor,fovchar, doorPos + bottom + right, pools, map, 22);
+            SetTile(grids, XFloor,fovchar, doorPos + bottom + left, pools, map, 24);
 
-            SetTile(grids, XFloor, doorPos + bottom+ bottom, pools, map);
-            SetTile(grids, XFloor, doorPos + bottom+ bottom + right, pools, map, 14);
-            SetTile(grids, XFloor, doorPos + bottom+ bottom + left, pools, map, 16);
+            SetTile(grids, XFloor,fovchar, doorPos + bottom+ bottom, pools, map);
+            SetTile(grids, XFloor,fovchar, doorPos + bottom+ bottom + right, pools, map, 14);
+            SetTile(grids, XFloor,fovchar, doorPos + bottom+ bottom + left, pools, map, 16);
         }
         if (dir.x == 1)
         {
-            SetTile(grids, XFloor, doorPos, pools, map,0,true);
-            SetTile(grids, XFloor, doorPos + top, pools, map, 10);
-            SetTile(grids, XFloor, doorPos + top + top, pools, map, 20);
-            SetTile(grids, XFloor, doorPos + bottom, pools, map, 21);
+            SetTile(grids, XFloor,fovchar, doorPos, pools, map,0,true);
+            SetTile(grids, XFloor,fovchar, doorPos + top, pools, map, 10);
+            SetTile(grids, XFloor,fovchar, doorPos + top + top, pools, map, 20);
+            SetTile(grids, XFloor,fovchar, doorPos + bottom, pools, map, 21);
 
-            SetTile(grids, XFloor, doorPos + right, pools, map);
-            SetTile(grids, XFloor, doorPos + top + right, pools, map, 10);
-            SetTile(grids, XFloor, doorPos + top + top + right, pools, map, 20);
-            SetTile(grids, XFloor, doorPos + bottom + right, pools, map, 21);
+            SetTile(grids, XFloor,fovchar, doorPos + right, pools, map);
+            SetTile(grids, XFloor,fovchar, doorPos + top + right, pools, map, 10);
+            SetTile(grids, XFloor,fovchar, doorPos + top + top + right, pools, map, 20);
+            SetTile(grids, XFloor,fovchar, doorPos + bottom + right, pools, map, 21);
         }
         if (dir.x == -1)
         {
-            SetTile(grids, XFloor, doorPos, pools, map, 0, true);
-            SetTile(grids, XFloor, doorPos + top, pools, map, 10);
-            SetTile(grids, XFloor, doorPos + top + top, pools, map, 20);
-            SetTile(grids, XFloor, doorPos + bottom, pools, map, 21);
+            SetTile(grids, XFloor,fovchar, doorPos, pools, map, 0, true);
+            SetTile(grids, XFloor,fovchar, doorPos + top, pools, map, 10);
+            SetTile(grids, XFloor,fovchar, doorPos + top + top, pools, map, 20);
+            SetTile(grids, XFloor,fovchar, doorPos + bottom, pools, map, 21);
 
-            SetTile(grids, XFloor, doorPos + left, pools, map);
-            SetTile(grids, XFloor, doorPos + top + left, pools, map, 10);
-            SetTile(grids, XFloor, doorPos + top + top + left, pools, map, 20);
-            SetTile(grids, XFloor, doorPos + bottom + left, pools, map, 21);
+            SetTile(grids, XFloor,fovchar, doorPos + left, pools, map);
+            SetTile(grids, XFloor,fovchar, doorPos + top + left, pools, map, 10);
+            SetTile(grids, XFloor,fovchar, doorPos + top + top + left, pools, map, 20);
+            SetTile(grids, XFloor,fovchar, doorPos + bottom + left, pools, map, 21);
         }
     }
 
-    static void SetTile(Grids[,] grids, XElement[] XFloor,Vector2 pos,Pools pools,string map,int sp=0,bool doorPos=false)
+    static void SetTile(Grids[,] grids, XElement[] XFloor,char[,] fovchar,Vector2 pos,Pools pools,string map,int sp=0,bool doorPos=false)
     {
         var grid = grids[(int) pos.x, (int) pos.y];
         if (sp == 0)
         {
             sp = UnityEngine.Random.Range(0, 7);
             grid.Tiletype = TileType.floor;
-
+            fovchar[(int) pos.x, (int) pos.y] = Res.TileTypeChar[(int) TileType.floor];
             XFloor[1].Elements().ToObservable()
                 .Where(x => x.Attribute("id").Value.toInt() == grid.RoomId)
                 .Do(x =>
@@ -194,7 +207,7 @@ public static class CreateBackgroundExtension
     }
 
     private static void CreateRoom(ref Vector2 dir, ref Vector2 doorPos, Pools pools, ConfigLevel room,
-        List<Vector2> pList, int roomCount, Grids[,] grids, XElement[] XFloor)
+        List<Vector2> pList, int roomCount, Grids[,] grids, XElement[] XFloor, GameObject[,] bgHolder,char[,] fovChar)
     {
         //选择门的位置，和下一个房间起始位置
         int x = -1, y = -1;
@@ -212,7 +225,7 @@ public static class CreateBackgroundExtension
             throw new Exception("CreateBackgroundExtension SetOriginPoint is wrong!");
         //上方的需要向下移动两格
         if (dir.y == 1)
-            y -= 2;
+            y -= 1;
         //当前层次
         int roomHierarchy;
         if (roomCount == 1)
@@ -232,19 +245,20 @@ public static class CreateBackgroundExtension
         XRoom.Add(new XAttribute("height", room.Height));
         XRoom.Add(new XAttribute("image", room.Image));
         var roomData = new string[room.Width*room.Height];
+        //建立交互输出数据
         var floorData = new List<string>();
         var obstacleData = new List<string>();
+        var waterData = new List<string>();
         XFloor[0].Add(XRoom);
         //根据图层创建房间
         TileMap map = TmxLoader.Parse(Res.RoomsPath + room.RoomName);
-        int j = 0;
         foreach (var layer in map.Layers)
         {
-            BuildLayer(layer, room, x, y, pList, go, roomCount, pools, grids, dir, roomHierarchy, roomData, floorData, obstacleData,ref j);
+            BuildLayer(layer, room, x, y, pList, go, roomCount, pools, grids, dir, roomHierarchy, roomData, floorData,
+                obstacleData, waterData, bgHolder, fovChar);
         }
         if (floorData.Count < 1)
             throw new Exception("floorData is null!");
-
         //建立交互输出
         var XInteractive = new XElement("room"+roomCount);
         XInteractive.Add(new XAttribute("id", roomCount));
@@ -263,6 +277,8 @@ public static class CreateBackgroundExtension
         }
         XInteractive.Add(new XElement("floorData", floorData));
         XInteractive.Add(new XElement("obstacleData", obstacleData));
+        XInteractive.Add(new XElement("waterData", waterData));
+
         XRoom.Add(new XElement("data", roomData));
 
     }
@@ -289,7 +305,9 @@ public static class CreateBackgroundExtension
             .Subscribe();
     }
 
-    static void BuildLayer(TiledLayer layer, ConfigLevel room, int x, int y, List<Vector2> pList, GameObject go,int roomCount,Pools pools, Grids[,] grids,Vector2 dir,int roomHierarchy,string[] roomData,List<string> floorData,List<string> obstacleData,ref int j)
+    static void BuildLayer(TiledLayer layer, ConfigLevel room, int x, int y, List<Vector2> pList, GameObject go,
+        int roomCount, Pools pools, Grids[,] grids, Vector2 dir, int roomHierarchy, string[] roomData,
+        List<string> floorData, List<string> obstacleData, List<string> waterData, GameObject[,] bgHolder,char[,] fovChar)
     {
         int i = 0;
         for (int row = 0; row < layer.Height; row++)
@@ -303,10 +321,10 @@ public static class CreateBackgroundExtension
                 int gid = layer.Data[col + row*layer.Width];
                 if (gid != 0)
                 {
-                    GameObject tile = AddTile(layer, row, col, gid, room, x, y, roomCount, pools, dir, grids,roomHierarchy);
+                    GameObject tile = AddTile(layer, row, col, gid, room, x, y, roomCount, pools, dir, grids,
+                        roomHierarchy);
                     if (tile != null)
                     {
-                        j++;
                         tile.transform.SetParent(go.transform);
                         var xx = (int) tile.transform.position.x;
                         var yy = (int) tile.transform.position.y;
@@ -314,15 +332,28 @@ public static class CreateBackgroundExtension
                         grids[xx, yy].RoomId = roomCount;
                         grids[xx, yy].RoomHierarchy = roomHierarchy;
                         grids[xx, yy].RoomName = room.RoomName;
+                        bgHolder[xx, yy] = tile;
+
 
                         if (grids[xx, yy].Tiletype == TileType.roof)
                             pList.Add(new Vector2(xx, yy));
                         //输出数据
-                        roomData[i] = gid.ToString()+',';
-                        if (layer.Name == "floor")
-                            floorData.Add(String.Format("{0}|{1},", xx-x, yy-y));
+                        roomData[i] = gid.ToString() + ',';
+                        if (layer.Name == TileType.floor.ToString())
+                        {
+                            floorData.Add(String.Format("{0}|{1},", xx - x, yy - y));
+                            fovChar[xx, yy] = Res.TileTypeChar[(int)TileType.floor];
+                        }
+                        else if (layer.Name == TileType.water.ToString())
+                        {
+                            waterData.Add(String.Format("{0}|{1},", xx - x, yy - y));
+                            fovChar[xx, yy] = Res.TileTypeChar[(int) TileType.water];
+                        }
                         else
-                            obstacleData.Add(String.Format("{0}|{1},", xx-x, yy-y));
+                        {
+                            obstacleData.Add(String.Format("{0}|{1},", xx - x, yy - y));
+                            fovChar[xx, yy] = Res.TileTypeChar[(int) TileType.obstacle];
+                        }
                     }
 
                 }
@@ -334,23 +365,11 @@ public static class CreateBackgroundExtension
     static GameObject AddTile(TiledLayer layer, int row, int col, int gid, ConfigLevel room, int x, int y,int roomcount,Pools pools,Vector2 dir,Grids[,] grids,int roomHierarchy)
     {
         var pos = new Vector2(x + col, y + room.Height - row);
-        var grid = grids[(int) pos.x, (int) pos.y];
-
-        if (dir.y == 1 && grid.Tiletype != TileType.nul && grid.Tiletype != TileType.empty)
-            return null;
-
-        if (dir.y == -1 && grid.Tiletype != TileType.nul && grid.Tiletype != TileType.empty)
-        {
-            GameObject tmpGo = GetGameObject(grid.RoomId,grid.RoomHierarchy, grid.RoomName, pos);
-            if (tmpGo == null)
-                throw new Exception("CreateBackgroundExtension AddTile is wrong!");
-            else
-                GameObject.Destroy(tmpGo);
-        }
 
         GameObject go = new GameObject(string.Format("{0}_{3},{1},{2}", roomcount, pos.x, pos.y, roomHierarchy), typeof(SpriteRenderer));
         go.AddComponent<BoxCollider2D>();
         go.transform.position = pos;
+        go.GetComponent<Renderer>().enabled = false;
 
         //建立精灵
         SpriteRenderer sr = go.GetComponent<SpriteRenderer>();
@@ -369,7 +388,7 @@ public static class CreateBackgroundExtension
 
         for (int i = x; i < room.Width+x; i++)
         {
-            for (int j = y; j < room.Height+y; j++)
+            for (int j = y; j <= room.Height+y; j++)
             {
                 if (grids[i, j].Tiletype != TileType.nul)
                     return false;
@@ -438,7 +457,7 @@ public static class CreateBackgroundExtension
 
                 if (top == TileType.nul && leftRight)
                     dir = new Vector2(0, 1);
-                else if (bottom == TileType.obstacle && leftRight)
+                else if (bottom == TileType.nul && leftRight)
                     dir = new Vector2(0, -1);
                 else if (left == TileType.nul && topBottom)
                     dir = new Vector2(-1, 0);
@@ -458,10 +477,6 @@ public static class CreateBackgroundExtension
         return tmpGo;
     }
 
-    private static void loadBackground(Pools pools,int floor)
-    {
-        //
-    }
 
     public class TableName { public string Name { get; private set; } }
 

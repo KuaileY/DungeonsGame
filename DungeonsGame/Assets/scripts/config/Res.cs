@@ -7,7 +7,7 @@ using UnityEngine;
 //levelData---------------
 public enum TileType
 {
-    nul,empty, floor, wall_in, wall_out, door, corner, roof, water, stairDown, stairUp, obstacle, Normal
+    nul,empty, floor, wall, door, roof, water, stairDown, stairUp, obstacle, Normal
 }
 
 public enum ItemType
@@ -66,7 +66,8 @@ public static class Res
     public enum cache
     {
         background,
-        Interactive
+        Interactive,
+        fovData
     }
 
     public enum interactive
@@ -129,17 +130,16 @@ public static class Res
 
     public static readonly char[] TileTypeChar =
     {
-        '-',    //empty
+        ' ',    //nul
+        ' ',    //empty
         '.',    //floor
-        '#',   //wall_in
-        '#',    //wall_out
+        '#',    //wall
         '+',    //door
-        '*',    //corner
-        '*',    //roof
+        '#',    //roof
         '~',    //water
         '<',    //stairDown
         '>',    //stairUp
-        '^',    //Obstacle
+        '*',    //Obstacle
         '.',    //Normal
     };
 
