@@ -7,7 +7,7 @@ using UnityEngine;
 
 public sealed class DungeonItemsCacheSystem:ISystem,ISetPools
 {
-    List<Entity[,]> entityList = new List<Entity[,]>();
+    Entity[,] grid = new Entity[Res.columns,Res.rows];
     public void SetPools(Pools pools)
     {
         //初始化GameItemsCache
@@ -23,15 +23,12 @@ public sealed class DungeonItemsCacheSystem:ISystem,ISetPools
         gameItem.OnEntityAdded += (group, entity, index, component) =>
         {
             //TestLoadConfig.log.Trace("dungeonItem.OnEntityAdded");
-            var data = pools.input.fileList.fileDic[Res.cache.Interactive.ToString()];
-            var room = data.Elements().First().Element("room" + entity.room.roomId);
-            int xx = (int) entity.position.value.x - room.Attribute("x").Value.toInt();
-            int yy = (int) entity.position.value.y - room.Attribute("y").Value.toInt();
 
-            var grid = pools.board.dungeonItemsCache.roomList[entity.room.roomId - 1];
-            grid[xx, yy - 2] = entity;
-            entityList[entity.room.roomId - 1] = grid;
-            pools.board.ReplaceDungeonItemsCache(entityList);
+            int xx = (int) entity.position.value.x;
+            int yy = (int) entity.position.value.y;
+            grid[xx, yy] = entity;
+
+            pools.board.ReplaceDungeonItemsCache(grid);
         };
 
 //         gameItem.OnEntityRemoved += (group, entity, index, component) =>
@@ -54,14 +51,12 @@ public sealed class DungeonItemsCacheSystem:ISystem,ISetPools
 
     void CreateGameItemsCache(Pools pools)
     {
-        entityList.Clear();
         var data = pools.input.fileList.fileDic[Res.cache.Interactive.ToString()];
         data.Elements().First().Elements()
             .OrderBy(x=>x.Attribute("id").Value.toInt())
             .ToObservable()
             .Do(x =>
             {
-                var grid = new Entity[x.Attribute("width").Value.toInt(), x.Attribute("height").Value.toInt()];
                 var posArray=x.Element("obstacleData").Value.cleanEnd().Split(',');
                 var waterArray = x.Element("waterData").Value.cleanEnd().Split(',');
                 int xx = x.Attribute("x").Value.toInt();
@@ -73,11 +68,11 @@ public sealed class DungeonItemsCacheSystem:ISystem,ISetPools
                     if (p[1].toInt() > 0 )
                     {
                         var entity = pools.core.CreateEntity()
-                            .AddPosition(id, new Vector3(p[0].toInt() + xx, p[1].toInt() + yy))
+                            .AddPosition(new Vector3(p[0].toInt() + xx, p[1].toInt() + yy))
                             .AddPool(Res.InPools.Core)
                             .AddViewObject(ObjectsIndeies.I_P_shadow);
 
-                        grid[p[0].toInt(), p[1].toInt()-1] = entity;
+                        grid[p[0].toInt() + xx, p[1].toInt() + yy - 1] = entity;
                     }
                 }
                 foreach (var pos in waterArray)
@@ -86,18 +81,17 @@ public sealed class DungeonItemsCacheSystem:ISystem,ISetPools
                     {
                         var p = pos.Split('|');
                         var entity = pools.core.CreateEntity()
-                            .AddPosition(id, new Vector3(p[0].toInt() + xx, p[1].toInt() + yy))
+                            .AddPosition(new Vector3(p[0].toInt() + xx, p[1].toInt() + yy))
                             .AddPool(Res.InPools.Core)
                             .AddViewObject(ObjectsIndeies.I_D_apple);
 
-                        grid[p[0].toInt(), p[1].toInt() - 1] = entity;
+                        grid[p[0].toInt() + xx, p[1].toInt() + yy - 1] = entity;
                     }
 
                 }
-                entityList.Add(grid);
             })
             .Subscribe();
-        pools.board.ReplaceDungeonItemsCache(entityList);
+        pools.board.ReplaceDungeonItemsCache(grid);
     }
 
 }

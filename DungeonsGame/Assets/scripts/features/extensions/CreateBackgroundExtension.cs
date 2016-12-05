@@ -348,6 +348,10 @@ public static class CreateBackgroundExtension
                         {
                             waterData.Add(String.Format("{0}|{1},", xx - x, yy - y));
                             fovChar[xx, yy] = Res.TileTypeChar[(int) TileType.water];
+                        }else if (layer.Name == TileType.wall.ToString())
+                        {
+                            obstacleData.Add(String.Format("{0}|{1},", xx - x, yy - y));
+                            fovChar[xx, yy] = Res.TileTypeChar[(int)TileType.wall];
                         }
                         else
                         {
@@ -369,6 +373,7 @@ public static class CreateBackgroundExtension
         GameObject go = new GameObject(string.Format("{0}_{3},{1},{2}", roomcount, pos.x, pos.y, roomHierarchy), typeof(SpriteRenderer));
         go.AddComponent<BoxCollider2D>();
         go.transform.position = pos;
+        go.transform.position += new Vector3(0, 0, 1);
         go.GetComponent<Renderer>().enabled = false;
 
         //建立精灵

@@ -15,15 +15,15 @@ namespace Entitas {
         public DungeonItemsCacheComponent dungeonItemsCache { get { return (DungeonItemsCacheComponent)GetComponent(BoardComponentIds.DungeonItemsCache); } }
         public bool hasDungeonItemsCache { get { return HasComponent(BoardComponentIds.DungeonItemsCache); } }
 
-        public Entity AddDungeonItemsCache(System.Collections.Generic.List<Entitas.Entity[,]> newRoomList) {
+        public Entity AddDungeonItemsCache(Entitas.Entity[,] newGrid) {
             var component = CreateComponent<DungeonItemsCacheComponent>(BoardComponentIds.DungeonItemsCache);
-            component.roomList = newRoomList;
+            component.grid = newGrid;
             return AddComponent(BoardComponentIds.DungeonItemsCache, component);
         }
 
-        public Entity ReplaceDungeonItemsCache(System.Collections.Generic.List<Entitas.Entity[,]> newRoomList) {
+        public Entity ReplaceDungeonItemsCache(Entitas.Entity[,] newGrid) {
             var component = CreateComponent<DungeonItemsCacheComponent>(BoardComponentIds.DungeonItemsCache);
-            component.roomList = newRoomList;
+            component.grid = newGrid;
             ReplaceComponent(BoardComponentIds.DungeonItemsCache, component);
             return this;
         }
@@ -39,22 +39,22 @@ namespace Entitas {
         public DungeonItemsCacheComponent dungeonItemsCache { get { return dungeonItemsCacheEntity.dungeonItemsCache; } }
         public bool hasDungeonItemsCache { get { return dungeonItemsCacheEntity != null; } }
 
-        public Entity SetDungeonItemsCache(System.Collections.Generic.List<Entitas.Entity[,]> newRoomList) {
+        public Entity SetDungeonItemsCache(Entitas.Entity[,] newGrid) {
             if(hasDungeonItemsCache) {
                 throw new EntitasException("Could not set dungeonItemsCache!\n" + this + " already has an entity with DungeonItemsCacheComponent!",
                     "You should check if the pool already has a dungeonItemsCacheEntity before setting it or use pool.ReplaceDungeonItemsCache().");
             }
             var entity = CreateEntity();
-            entity.AddDungeonItemsCache(newRoomList);
+            entity.AddDungeonItemsCache(newGrid);
             return entity;
         }
 
-        public Entity ReplaceDungeonItemsCache(System.Collections.Generic.List<Entitas.Entity[,]> newRoomList) {
+        public Entity ReplaceDungeonItemsCache(Entitas.Entity[,] newGrid) {
             var entity = dungeonItemsCacheEntity;
             if(entity == null) {
-                entity = SetDungeonItemsCache(newRoomList);
+                entity = SetDungeonItemsCache(newGrid);
             } else {
-                entity.ReplaceDungeonItemsCache(newRoomList);
+                entity.ReplaceDungeonItemsCache(newGrid);
             }
 
             return entity;

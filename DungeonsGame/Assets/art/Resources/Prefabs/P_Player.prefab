@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 21246652}
   - component: {fileID: 9546652}
   - component: {fileID: 5046652}
+  - component: {fileID: 61483416690421446}
   - component: {fileID: 114579554796747416}
   m_Layer: 8
   m_Name: P_Player
@@ -119,6 +120,20 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 146652}
   m_IsPrefabParent: 1
+--- !u!61 &61483416690421446
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 146652}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
 --- !u!114 &114579554796747416
 MonoBehaviour:
   m_ObjectHideFlags: 1

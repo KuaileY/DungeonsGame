@@ -19,15 +19,17 @@ public static class InputComponentIds {
     public const int Load = 8;
     public const int LoadGame = 9;
     public const int NewGame = 10;
-    public const int RuntimeData = 11;
-    public const int Save = 12;
-    public const int SpriteList = 13;
-    public const int Tick = 14;
-    public const int ViewObjectPool = 15;
-    public const int Watch = 16;
-    public const int XML = 17;
+    public const int Processing = 11;
+    public const int RuntimeData = 12;
+    public const int Save = 13;
+    public const int SpriteList = 14;
+    public const int Tick = 15;
+    public const int Turn = 16;
+    public const int ViewObjectPool = 17;
+    public const int Watch = 18;
+    public const int XML = 19;
 
-    public const int TotalComponents = 18;
+    public const int TotalComponents = 20;
 
     public static readonly string[] componentNames = {
         "Destroy",
@@ -41,10 +43,12 @@ public static class InputComponentIds {
         "Load",
         "LoadGame",
         "NewGame",
+        "Processing",
         "RuntimeData",
         "Save",
         "SpriteList",
         "Tick",
+        "Turn",
         "ViewObjectPool",
         "Watch",
         "XML"
@@ -62,10 +66,12 @@ public static class InputComponentIds {
         typeof(LoadComponent),
         typeof(LoadGameComponent),
         typeof(NewGameComponent),
+        typeof(ProcessingComponent),
         typeof(RuntimeDataComponent),
         typeof(SaveComponent),
         typeof(SpriteListComponent),
         typeof(TickComponent),
+        typeof(TurnComponent),
         typeof(ViewObjectPoolComponent),
         typeof(WatchComponent),
         typeof(XMLComponent)

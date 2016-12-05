@@ -183,6 +183,8 @@ public class BuildMonster : Editor {
         Animator animator = go.AddComponent<Animator>();
         animator.runtimeAnimatorController = controller;
         animator.applyRootMotion = true;
+        var box2d = go.AddComponent<BoxCollider2D>();
+        box2d.size = new Vector2(1.0f, 1.0f);
         go.AddComponent<ViewController>();
         PrefabUtility.CreatePrefab(Res.editorPath + Res.PrefabPath + parent + "/" + name + ".prefab", go);
         DestroyImmediate(go);

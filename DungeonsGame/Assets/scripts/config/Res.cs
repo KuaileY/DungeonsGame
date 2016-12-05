@@ -10,6 +10,13 @@ public enum TileType
     nul,empty, floor, wall, door, roof, water, stairDown, stairUp, obstacle, Normal
 }
 
+public enum playerBehavior
+{
+    attack,
+    pick,
+    astar
+}
+
 public enum ItemType
 {
     into,item,monster,obstacle,door

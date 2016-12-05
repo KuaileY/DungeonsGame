@@ -15,17 +15,17 @@ namespace Entitas {
         public InputComponent input { get { return (InputComponent)GetComponent(InputComponentIds.Input); } }
         public bool hasInput { get { return HasComponent(InputComponentIds.Input); } }
 
-        public Entity AddInput(int newRoomId, int newX, int newY) {
+        public Entity AddInput(string newName, int newX, int newY) {
             var component = CreateComponent<InputComponent>(InputComponentIds.Input);
-            component.roomId = newRoomId;
+            component.name = newName;
             component.x = newX;
             component.y = newY;
             return AddComponent(InputComponentIds.Input, component);
         }
 
-        public Entity ReplaceInput(int newRoomId, int newX, int newY) {
+        public Entity ReplaceInput(string newName, int newX, int newY) {
             var component = CreateComponent<InputComponent>(InputComponentIds.Input);
-            component.roomId = newRoomId;
+            component.name = newName;
             component.x = newX;
             component.y = newY;
             ReplaceComponent(InputComponentIds.Input, component);
@@ -43,22 +43,22 @@ namespace Entitas {
         public InputComponent input { get { return inputEntity.input; } }
         public bool hasInput { get { return inputEntity != null; } }
 
-        public Entity SetInput(int newRoomId, int newX, int newY) {
+        public Entity SetInput(string newName, int newX, int newY) {
             if(hasInput) {
                 throw new EntitasException("Could not set input!\n" + this + " already has an entity with InputComponent!",
                     "You should check if the pool already has a inputEntity before setting it or use pool.ReplaceInput().");
             }
             var entity = CreateEntity();
-            entity.AddInput(newRoomId, newX, newY);
+            entity.AddInput(newName, newX, newY);
             return entity;
         }
 
-        public Entity ReplaceInput(int newRoomId, int newX, int newY) {
+        public Entity ReplaceInput(string newName, int newX, int newY) {
             var entity = inputEntity;
             if(entity == null) {
-                entity = SetInput(newRoomId, newX, newY);
+                entity = SetInput(newName, newX, newY);
             } else {
-                entity.ReplaceInput(newRoomId, newX, newY);
+                entity.ReplaceInput(newName, newX, newY);
             }
 
             return entity;

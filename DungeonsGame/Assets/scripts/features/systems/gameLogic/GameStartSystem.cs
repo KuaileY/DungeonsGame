@@ -21,7 +21,7 @@ public class GameStartSystem:IInitializeSystem,ISetPools,IReactiveSystem
         //加载配置文件
         loadConfig();
         //创建保持对象
-        _pools.input.CreateEntity().AddHolder(new Dictionary<Res.InPools, UnityEngine.Transform>());
+        _pools.input.CreateEntity().AddHolder(new Dictionary<Res.InPools, Transform>());
         //创建背景持有对象
         _pools.input.CreateEntity().AddBGHolder(new GameObject[Res.columns, Res.rows]);
         //创建对象池

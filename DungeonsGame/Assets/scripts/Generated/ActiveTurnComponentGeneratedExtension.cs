@@ -12,43 +12,58 @@ namespace Entitas {
 
     public partial class Entity {
 
-        static readonly ActiveTurnComponent activeTurnComponent = new ActiveTurnComponent();
+        public ActiveTurnComponent activeTurn { get { return (ActiveTurnComponent)GetComponent(InputComponentIds.ActiveTurn); } }
+        public bool hasActiveTurn { get { return HasComponent(InputComponentIds.ActiveTurn); } }
 
-        public bool isActiveTurn {
-            get { return HasComponent(InputComponentIds.ActiveTurn); }
-            set {
-                if(value != isActiveTurn) {
-                    if(value) {
-                        AddComponent(InputComponentIds.ActiveTurn, activeTurnComponent);
-                    } else {
-                        RemoveComponent(InputComponentIds.ActiveTurn);
-                    }
-                }
-            }
+        public Entity AddActiveTurn(UnityEngine.Vector2 newPos, string newType) {
+            var component = CreateComponent<ActiveTurnComponent>(InputComponentIds.ActiveTurn);
+            component.pos = newPos;
+            component.type = newType;
+            return AddComponent(InputComponentIds.ActiveTurn, component);
         }
 
-        public Entity IsActiveTurn(bool value) {
-            isActiveTurn = value;
+        public Entity ReplaceActiveTurn(UnityEngine.Vector2 newPos, string newType) {
+            var component = CreateComponent<ActiveTurnComponent>(InputComponentIds.ActiveTurn);
+            component.pos = newPos;
+            component.type = newType;
+            ReplaceComponent(InputComponentIds.ActiveTurn, component);
             return this;
+        }
+
+        public Entity RemoveActiveTurn() {
+            return RemoveComponent(InputComponentIds.ActiveTurn);
         }
     }
 
     public partial class Pool {
 
         public Entity activeTurnEntity { get { return GetGroup(InputMatcher.ActiveTurn).GetSingleEntity(); } }
+        public ActiveTurnComponent activeTurn { get { return activeTurnEntity.activeTurn; } }
+        public bool hasActiveTurn { get { return activeTurnEntity != null; } }
 
-        public bool isActiveTurn {
-            get { return activeTurnEntity != null; }
-            set {
-                var entity = activeTurnEntity;
-                if(value != (entity != null)) {
-                    if(value) {
-                        CreateEntity().isActiveTurn = true;
-                    } else {
-                        DestroyEntity(entity);
-                    }
-                }
+        public Entity SetActiveTurn(UnityEngine.Vector2 newPos, string newType) {
+            if(hasActiveTurn) {
+                throw new EntitasException("Could not set activeTurn!\n" + this + " already has an entity with ActiveTurnComponent!",
+                    "You should check if the pool already has a activeTurnEntity before setting it or use pool.ReplaceActiveTurn().");
             }
+            var entity = CreateEntity();
+            entity.AddActiveTurn(newPos, newType);
+            return entity;
+        }
+
+        public Entity ReplaceActiveTurn(UnityEngine.Vector2 newPos, string newType) {
+            var entity = activeTurnEntity;
+            if(entity == null) {
+                entity = SetActiveTurn(newPos, newType);
+            } else {
+                entity.ReplaceActiveTurn(newPos, newType);
+            }
+
+            return entity;
+        }
+
+        public void RemoveActiveTurn() {
+            DestroyEntity(activeTurnEntity);
         }
     }
 }

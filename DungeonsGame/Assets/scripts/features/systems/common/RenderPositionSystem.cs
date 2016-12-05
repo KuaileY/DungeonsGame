@@ -21,6 +21,7 @@ public sealed class RenderPositionSystem : ISetPools, IEntityCollectorSystem
         TestLoadConfig.log.Trace("RenderPositionSystem Execute");
         foreach (var e in entities)
         {
+            
             e.view.controller.position = e.position.value;
         }
     }

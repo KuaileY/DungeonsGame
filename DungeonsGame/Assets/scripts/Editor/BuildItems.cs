@@ -151,7 +151,7 @@ public class BuildItems:Editor
         animator.applyRootMotion = true;
         go.AddComponent<ViewController>();
         var box2d = go.AddComponent<BoxCollider2D>();
-        box2d.size = new Vector2(0.9f, 0.9f);
+        box2d.size = new Vector2(1.0f, 1.0f);
         PrefabUtility.CreatePrefab(Res.editorPath + Res.PrefabPath + parent + "/" + name + ".prefab", go);
         DestroyImmediate(go);
     }

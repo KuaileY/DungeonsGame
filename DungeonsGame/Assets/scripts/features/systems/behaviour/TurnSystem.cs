@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Entitas;
 using UniRx;
 using UnityEngine;
@@ -7,71 +8,95 @@ public sealed class TurnSystem : IReactiveSystem, ISetPools
 {
     public TriggerOnEvent trigger { get { return InputMatcher.ActiveTurn.OnEntityAdded(); } }
     Pools _pools;
-    //跨房间
-    int _oldRoomId = -1, _roomId = -1;
-    //玩家对象
-    Entity _player;
-    //行动方向
-    Vector2 _dir;
-    //行动位置
-    Vector2 _pos;
+
     public void SetPools(Pools pools)
     {
         _pools = pools;
     }
+
     public void Execute(List<Entity> entities)
     {
-        init();
-        //超出边界，直接返回
+        foreach (var entity in entities)
+        {
+            if (isNeighbor(entity))
+            {
+                ExeBehavior(entity,true);
+                _pools.input.isProcessing = false;
+            }
+            else
+                ExeBehavior(entity,false);
+            _pools.input.DestroyEntity(_pools.input.activeTurnEntity);
+        }
 
-        //判断是否跨房间
-        checkOutRoom(_pos);
-        //玩家行为
-        RoleBehaviour(_pos);
-        _pools.input.DestroyEntity(entities.SingleEntity());
     }
 
-    void init()
+    private void ExeBehavior(Entity entity,bool neighbor)
     {
-        _player = _pools.core.controlableEntity;
-        dirGet();
-        _player.ReplaceDir(_dir);
-        _pos = (Vector2)_player.view.controller.position + _dir;
+        var type =(playerBehavior)Enum.Parse(typeof(playerBehavior),entity.activeTurn.type);
+        switch (type)
+        {
+            case playerBehavior.attack:
+                if (neighbor)
+                    Debug.Log("attack");
+                else if (isAttackRange())
+                    Debug.Log("attack");
+                else
+                {
+                    Debug.Log("describe");
+                    _pools.input.isProcessing = false;
+                }
+                break;
+            case playerBehavior.pick:
+                if (neighbor)
+                    Debug.Log("pick");
+                else
+                {
+                    Debug.Log("describe");
+                    _pools.input.isProcessing = false;
+                }
+                break;
+            case playerBehavior.astar:
+                pathFinding(entity);
+                break;
+            default:
+                throw new Exception("playerBehavior is wrong!");
+        }
     }
 
-    void checkOutRoom(Vector2 pos)
+    private bool isAttackRange()
     {
-        _roomId = _player.room.roomId;
-        _oldRoomId = _roomId;
-//         if (TurnExtension.outsideRoom((int)pos.x, (int)pos.y, _pools.core.itemBoard.roomList.rooms[_oldRoomId]))
-//         {
-//             Debug.Log("input roomid:" + _pools.input.input.roomId);
-//             _roomId = _pools.input.input.roomId - 1;
-//         }
-        _player.ReplaceRoom(_roomId, _oldRoomId);
+        return false;
     }
 
-    void RoleBehaviour(Vector2 pos)
+    bool isNeighbor(Entity entity)
     {
-        move(pos);
+        var player = _pools.core.controlableEntity;
+        var dis = Vector2.Distance(entity.activeTurn.pos, player.position.value);
+        return dis - 1 < 0.0001;
     }
 
-    void move(Vector2 pos)
+    void pathFinding(Entity entity)
     {
+        //是否有路线
+        //是否超过50步
+        //是否超过10回合
+        //路线是否封堵
+        //是否遭到攻击
+        //否则循环执行玩家步进
+        var player = _pools.core.controlableEntity;
+        _pools.board.dungeonItemsCache.grid[(int)player.position.value.x, (int)player.position.value.y] = null;
+        AstarExtension.PathFind(player.position.value, entity.activeTurn.pos, _pools, ProcessEnd);
+
+
     }
 
-    void dirGet()
+    void ProcessEnd(List<Vector2> posList)
     {
-        var input = _pools.input.input;
-        int _roomId=-1;
-//         _pools.core.GetEntities()
-//             .ToObservable()
-//             .Where(x => x.hasAsset)
-//             .Where(x => x.asset.name == Res.Prefabs.player)
-//             .Subscribe(xx =>
-//             {
-//                 _dir = InputExtension.getDir(new Vector3(input.x, input.y, 0) - xx.position.value);
-//             });
+        foreach (var pos in posList )
+        {
+            pos.print();
+        }
+        _pools.input.isProcessing = false;
     }
 
 }

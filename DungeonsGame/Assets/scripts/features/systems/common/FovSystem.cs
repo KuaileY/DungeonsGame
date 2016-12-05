@@ -43,7 +43,7 @@ public sealed class FovSystem:ISetPools,IReactiveSystem
         int radius = 9;
         ShadowCaster.ComputeFieldOfViewWithShadowCasting(
             playerX, playerY, radius,
-            (x1, y1) => map[x1, y1] == Res.TileTypeChar[(int)TileType.wall],
+            (x1, y1) => map[x1, y1] == Res.TileTypeChar[(int)TileType.obstacle],
             (x2, y2) => { lit[x2, y2] = true; });
         var sb = new StringBuilder();
         for (int y = Res.rows - 1; y >= 0; --y)
@@ -55,11 +55,10 @@ public sealed class FovSystem:ISetPools,IReactiveSystem
                     if (x == playerX && y == playerY)
                         sb.Append("P");
                     else
-                    {
                         sb.Append(map[x, y]);
-                        if (_pools.input.bGHolder.goArray[x, y] != null)
-                            _pools.input.bGHolder.goArray[x, y].GetComponent<Renderer>().enabled = true;
-                    }
+                    if (_pools.input.bGHolder.goArray[x, y] != null)
+                        _pools.input.bGHolder.goArray[x, y].GetComponent<Renderer>().enabled = true;
+
                 }
                 else
                     sb.Append(' ');

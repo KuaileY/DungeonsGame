@@ -18,7 +18,7 @@
  <layer name="obstacle" width="7" height="8">
   <data encoding="csv">
 26,24,24,24,24,24,30,
-27,13,16,13,16,14,27,
+27,0,0,0,0,0,27,
 27,0,0,0,0,0,27,
 27,0,0,0,0,0,27,
 27,0,0,0,0,0,27,
@@ -34,4 +34,16 @@
   <object id="4" name="candles" x="96" y="72" width="24" height="24"/>
   <object id="6" name="born" x="72" y="120" width="24" height="24"/>
  </objectgroup>
+ <layer name="wall" width="7" height="8">
+  <data encoding="csv">
+0,0,0,0,0,0,0,
+0,13,16,13,16,14,0,
+0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,
+0,0,0,0,0,0,0
+</data>
+ </layer>
 </map>
