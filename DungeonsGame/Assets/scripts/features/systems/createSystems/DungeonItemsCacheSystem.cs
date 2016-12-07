@@ -70,7 +70,7 @@ public sealed class DungeonItemsCacheSystem:ISystem,ISetPools
                         var entity = pools.core.CreateEntity()
                             .AddPosition(new Vector3(p[0].toInt() + xx, p[1].toInt() + yy))
                             .AddPool(Res.InPools.Core)
-                            .AddViewObject(ObjectsIndeies.I_P_shadow);
+                            .AddViewObject(ObjectsIndeies.I_P_null);
 
                         grid[p[0].toInt() + xx, p[1].toInt() + yy - 1] = entity;
                     }

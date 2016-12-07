@@ -321,8 +321,14 @@ public static class CreateBackgroundExtension
                 int gid = layer.Data[col + row*layer.Width];
                 if (gid != 0)
                 {
-                    GameObject tile = AddTile(layer, row, col, gid, room, x, y, roomCount, pools, dir, grids,
-                        roomHierarchy);
+                    var pos = new Vector2(x + col, y + room.Height - row);
+                    GameObject tile = new GameObject(string.Format("{0}_{3},{1},{2}", roomCount, pos.x, pos.y, roomHierarchy), typeof(SpriteRenderer));
+                    tile.transform.position = pos;
+                    tile.AddComponent<BoxCollider2D>();
+                    SpriteRenderer sr = tile.GetComponent<SpriteRenderer>();
+                    sr.sprite = pools.input.spriteList.sprites[room.Image][gid - 1];
+                    tile.GetComponent<Renderer>().enabled = false;
+
                     if (tile != null)
                     {
                         tile.transform.SetParent(go.transform);
@@ -343,20 +349,29 @@ public static class CreateBackgroundExtension
                         {
                             floorData.Add(String.Format("{0}|{1},", xx - x, yy - y));
                             fovChar[xx, yy] = Res.TileTypeChar[(int)TileType.floor];
+                            tile.GetComponent<SpriteRenderer>().material =
+                                Resources.Load<Material>("Material/dungeon/floor");
                         }
                         else if (layer.Name == TileType.water.ToString())
                         {
                             waterData.Add(String.Format("{0}|{1},", xx - x, yy - y));
                             fovChar[xx, yy] = Res.TileTypeChar[(int) TileType.water];
-                        }else if (layer.Name == TileType.wall.ToString())
+                            tile.GetComponent<SpriteRenderer>().material =
+                                Resources.Load<Material>("Material/dungeon/water");
+                        }
+                        else if (layer.Name == TileType.wall.ToString())
                         {
                             obstacleData.Add(String.Format("{0}|{1},", xx - x, yy - y));
                             fovChar[xx, yy] = Res.TileTypeChar[(int)TileType.wall];
+                            tile.GetComponent<SpriteRenderer>().material =
+                                Resources.Load<Material>("Material/dungeon/wall");
                         }
                         else
                         {
                             obstacleData.Add(String.Format("{0}|{1},", xx - x, yy - y));
                             fovChar[xx, yy] = Res.TileTypeChar[(int) TileType.obstacle];
+                            tile.GetComponent<SpriteRenderer>().material =
+                                Resources.Load<Material>("Material/dungeon/wall");
                         }
                     }
 

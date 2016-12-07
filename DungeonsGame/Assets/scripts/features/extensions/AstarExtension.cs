@@ -41,11 +41,11 @@ public static class AstarExtension
 
         if (xx < 1)
             xx = 1;
-        if ((xx + map_size / 2) > Res.columns)
+        if ((xx + map_size / 2) >= Res.columns)
             xx = Res.columns - map_size;
         if (yy < 1)
             yy = 1;
-        if ((yy + map_size / 2) > Res.rows)
+        if ((yy + map_size / 2) >= Res.rows)
             yy = Res.rows - map_size;
 
         for (int i = 0; i < map_size*map_size; i++)

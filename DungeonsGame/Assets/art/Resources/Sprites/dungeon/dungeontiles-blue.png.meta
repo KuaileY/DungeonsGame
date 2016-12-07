@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 2d9051445debc154ea54c131a6f7b6b0
-timeCreated: 1481016297
+timeCreated: 1481028051
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
@@ -123,7 +123,7 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
-  isReadable: 1
+  isReadable: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -131,7 +131,7 @@ TextureImporter:
   textureFormat: 1
   maxTextureSize: 2048
   textureSettings:
-    filterMode: 0
+    filterMode: 1
     aniso: -1
     mipBias: -1
     wrapMode: 1
@@ -198,7 +198,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: floor_1
+      name: 1
       rect:
         serializedVersion: 2
         x: 0
@@ -211,7 +211,7 @@ TextureImporter:
       outline: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: floor_2
+      name: 2
       rect:
         serializedVersion: 2
         x: 24
@@ -224,7 +224,7 @@ TextureImporter:
       outline: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: floor_3
+      name: 3
       rect:
         serializedVersion: 2
         x: 48
@@ -237,7 +237,7 @@ TextureImporter:
       outline: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: floor_4
+      name: 4
       rect:
         serializedVersion: 2
         x: 72
@@ -250,7 +250,7 @@ TextureImporter:
       outline: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: floor_5
+      name: 5
       rect:
         serializedVersion: 2
         x: 96
@@ -263,7 +263,7 @@ TextureImporter:
       outline: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: floor_6
+      name: 6
       rect:
         serializedVersion: 2
         x: 120
@@ -276,7 +276,7 @@ TextureImporter:
       outline: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: floor_damaged_1
+      name: 7
       rect:
         serializedVersion: 2
         x: 144
@@ -289,7 +289,7 @@ TextureImporter:
       outline: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: floor_damaged_2
+      name: 8
       rect:
         serializedVersion: 2
         x: 168
@@ -302,7 +302,7 @@ TextureImporter:
       outline: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: floor_damaged_3
+      name: 9
       rect:
         serializedVersion: 2
         x: 192
@@ -315,7 +315,7 @@ TextureImporter:
       outline: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: floor_damaged_4
+      name: 10
       rect:
         serializedVersion: 2
         x: 216
@@ -328,7 +328,7 @@ TextureImporter:
       outline: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: wall_single
+      name: 11
       rect:
         serializedVersion: 2
         x: 0
@@ -341,7 +341,7 @@ TextureImporter:
       outline: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: wall_2
+      name: 12
       rect:
         serializedVersion: 2
         x: 24
@@ -354,7 +354,7 @@ TextureImporter:
       outline: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: wall_damage_1
+      name: 13
       rect:
         serializedVersion: 2
         x: 48
@@ -367,7 +367,7 @@ TextureImporter:
       outline: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: wall_damage_2
+      name: 14
       rect:
         serializedVersion: 2
         x: 72
@@ -380,7 +380,7 @@ TextureImporter:
       outline: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: wall_left
+      name: 15
       rect:
         serializedVersion: 2
         x: 96
@@ -393,7 +393,7 @@ TextureImporter:
       outline: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: wall_1
+      name: 16
       rect:
         serializedVersion: 2
         x: 120
@@ -406,7 +406,7 @@ TextureImporter:
       outline: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: wall_right
+      name: 17
       rect:
         serializedVersion: 2
         x: 144
@@ -419,7 +419,7 @@ TextureImporter:
       outline: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: star_down
+      name: 18
       rect:
         serializedVersion: 2
         x: 168
@@ -432,7 +432,7 @@ TextureImporter:
       outline: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: stair_up
+      name: 19
       rect:
         serializedVersion: 2
         x: 192
@@ -445,7 +445,7 @@ TextureImporter:
       outline: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: roof_single
+      name: 20
       rect:
         serializedVersion: 2
         x: 216
@@ -458,7 +458,7 @@ TextureImporter:
       outline: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: roof_single_bottom
+      name: 21
       rect:
         serializedVersion: 2
         x: 0
@@ -471,7 +471,7 @@ TextureImporter:
       outline: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: roof_single_top
+      name: 22
       rect:
         serializedVersion: 2
         x: 24
@@ -484,7 +484,7 @@ TextureImporter:
       outline: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: roof_single_left
+      name: 23
       rect:
         serializedVersion: 2
         x: 48
@@ -497,7 +497,7 @@ TextureImporter:
       outline: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: roof_single_middle
+      name: 24
       rect:
         serializedVersion: 2
         x: 72
@@ -510,7 +510,7 @@ TextureImporter:
       outline: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: roof_single_right
+      name: 25
       rect:
         serializedVersion: 2
         x: 96
@@ -523,7 +523,7 @@ TextureImporter:
       outline: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: roof_top_left
+      name: 26
       rect:
         serializedVersion: 2
         x: 120
@@ -536,7 +536,7 @@ TextureImporter:
       outline: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: roof_vertical
+      name: 27
       rect:
         serializedVersion: 2
         x: 144
@@ -549,7 +549,7 @@ TextureImporter:
       outline: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: roof_bottom_left
+      name: 28
       rect:
         serializedVersion: 2
         x: 168
@@ -562,7 +562,7 @@ TextureImporter:
       outline: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: roof_fourway
+      name: 29
       rect:
         serializedVersion: 2
         x: 192
@@ -575,7 +575,7 @@ TextureImporter:
       outline: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: roof_top_right
+      name: 30
       rect:
         serializedVersion: 2
         x: 216
@@ -588,7 +588,7 @@ TextureImporter:
       outline: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: roof_right_tee
+      name: 31
       rect:
         serializedVersion: 2
         x: 0
@@ -601,7 +601,7 @@ TextureImporter:
       outline: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: roof_bottom_right
+      name: 32
       rect:
         serializedVersion: 2
         x: 24
@@ -614,7 +614,7 @@ TextureImporter:
       outline: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: roof_bottom_tee
+      name: 33
       rect:
         serializedVersion: 2
         x: 48
@@ -627,7 +627,7 @@ TextureImporter:
       outline: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: roof_left_tee
+      name: 34
       rect:
         serializedVersion: 2
         x: 72
@@ -640,7 +640,7 @@ TextureImporter:
       outline: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: water_left
+      name: 35
       rect:
         serializedVersion: 2
         x: 96
@@ -653,7 +653,7 @@ TextureImporter:
       outline: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: water_1
+      name: 36
       rect:
         serializedVersion: 2
         x: 120
@@ -666,7 +666,7 @@ TextureImporter:
       outline: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: water_right
+      name: 37
       rect:
         serializedVersion: 2
         x: 144
@@ -679,7 +679,7 @@ TextureImporter:
       outline: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: water_single_left
+      name: 38
       rect:
         serializedVersion: 2
         x: 168
@@ -692,7 +692,7 @@ TextureImporter:
       outline: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: water_single_middle
+      name: 39
       rect:
         serializedVersion: 2
         x: 192
@@ -705,7 +705,7 @@ TextureImporter:
       outline: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: water_single_right
+      name: 40
       rect:
         serializedVersion: 2
         x: 216
@@ -718,7 +718,7 @@ TextureImporter:
       outline: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: water_out_top_left
+      name: 41
       rect:
         serializedVersion: 2
         x: 0
@@ -731,7 +731,7 @@ TextureImporter:
       outline: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: water_out_top_middle
+      name: 42
       rect:
         serializedVersion: 2
         x: 24
@@ -744,7 +744,7 @@ TextureImporter:
       outline: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: water_out_top_right
+      name: 43
       rect:
         serializedVersion: 2
         x: 48
@@ -757,7 +757,7 @@ TextureImporter:
       outline: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: water_single
+      name: 44
       rect:
         serializedVersion: 2
         x: 72
@@ -770,7 +770,7 @@ TextureImporter:
       outline: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: water_bottom_left
+      name: 45
       rect:
         serializedVersion: 2
         x: 96
@@ -783,7 +783,7 @@ TextureImporter:
       outline: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: water_bottom_middle
+      name: 46
       rect:
         serializedVersion: 2
         x: 120
@@ -796,7 +796,7 @@ TextureImporter:
       outline: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: water_bottom_right
+      name: 47
       rect:
         serializedVersion: 2
         x: 144
@@ -809,7 +809,7 @@ TextureImporter:
       outline: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: water_2
+      name: 48
       rect:
         serializedVersion: 2
         x: 168
@@ -822,7 +822,7 @@ TextureImporter:
       outline: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: water_in_bottom_right
+      name: 49
       rect:
         serializedVersion: 2
         x: 192
@@ -835,7 +835,7 @@ TextureImporter:
       outline: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: water_in_bottom_left
+      name: 50
       rect:
         serializedVersion: 2
         x: 216
@@ -848,7 +848,7 @@ TextureImporter:
       outline: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: water_in_top_right
+      name: 51
       rect:
         serializedVersion: 2
         x: 0
@@ -861,7 +861,7 @@ TextureImporter:
       outline: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: water_in_top_left
+      name: 52
       rect:
         serializedVersion: 2
         x: 24

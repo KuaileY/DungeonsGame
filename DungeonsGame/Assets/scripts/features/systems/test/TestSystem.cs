@@ -21,7 +21,7 @@ public sealed class TestSystem : IInitializeSystem, IEntityCollectorSystem,ISetP
     public void Initialize()
     {
         // 创建保持对象
-        _pools.input.CreateEntity().AddHolder(new Dictionary<Res.InPools, Transform>());
+        //_pools.input.CreateEntity().AddHolder(new Dictionary<Res.InPools, Transform>());
     }
 
 

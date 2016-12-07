@@ -31,6 +31,7 @@ public class GameController : MonoBehaviour
             //input
             .Add(pools.input.CreateSystem(new InputSystem()))
             .Add(pools.input.CreateSystem(new ProcessInputSystem()))
+            .Add(pools.input.CreateSystem(new IncrementTickSystem()))
 
             .Add(pools.input.CreateSystem(new LoadSpritesSystem()))
             .Add(pools.input.CreateSystem(new GameLoadSystem()))
@@ -51,6 +52,7 @@ public class GameController : MonoBehaviour
             .Add(pools.core.CreateSystem(new AddViewFromObjectPoolSystem()))
             .Add(pools.CreateSystem(new RenderPositionSystem()))
             .Add(pools.input.CreateSystem(new FovSystem()))
+            .Add(pools.core.CreateSystem(new MainLightSystem()))
             // Destroy
             .Add(pools.CreateSystem(new DestroyEntitySystem()))
 
